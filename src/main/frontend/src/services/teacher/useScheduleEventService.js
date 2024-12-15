@@ -17,6 +17,11 @@ export const useScheduleEventService = () => {
         const {id, ...data} = eventData;
         return await put(data, {}, `/api/v1/calendar/${id}`);
     };
+    // 일정 수정
+    const updateEvent2 = async (eventData) => {
+        const {id, ...data} = eventData;
+        return await put(data, {}, `/${id}`);
+    };
 
     // 일정 삭제
     const deleteEvent = async (eventId) => {
