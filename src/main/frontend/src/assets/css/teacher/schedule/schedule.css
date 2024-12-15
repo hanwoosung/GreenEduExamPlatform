@@ -1,0 +1,30 @@
+/* 전체 캘린더 텍스트 크기 */
+.fc {
+    font-size: 25px;
+}
+
+/* 요일(월, 화, 수...) 텍스트 크기 */
+.fc .fc-col-header-cell {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* 날짜 텍스트 크기 */
+.fc-daygrid-day-number {
+    font-size: 20px;
+}
+
+/* 이벤트 텍스트 크기 */
+.fc-event-title {
+    font-size: 20px;
+}
+
+/* 토요일 텍스트 색상 지정 */
+.fc-day-sat {
+    color: blue;
+}
+
+/* 일요일 텍스트 색상 지정 */
+.fc-day-sun {
+    color: red;
+}
