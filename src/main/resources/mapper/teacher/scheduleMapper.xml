@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.teacher.ScheduleDao">
+
+    <select id="findSubjectList" resultType="org.green.hckh.entity.teacher.schedule.ScheduleEntity">
+        SELECT a.schedule_name, a.start_date, a.end_date
+        FROM tbl_schedule a
+                 LEFT JOIN tbl_class b ON a.class_no = b.class_no
+                 LEFT JOIN tbl_user c ON b.user_id = c.user_id
+        WHERE b.user_id = #{id}
+          AND a.delete_yn = 'N'
+          AND b.delete_yn = 'N'
+          AND c.delete_yn = 'N'
+    </select>
+
+    <select id="findCalendarList" resultType="org.green.hckh.entity.teacher.schedule.CalendarEntity">
+        SELECT *
+        FROM tbl_calendar
+        WHERE user_id = #{id}
+    </select>
+
+    <insert id="insertCalendarEvent" parameterType="org.green.hckh.entity.teacher.schedule.CalendarEntity">
+        INSERT INTO tbl_calendar (user_id, calendar_title, calendar_content, start_date, important_yn)
+        VALUES (#{userId}, #{calendarTitle}, #{calendarContent}, #{startDate}, #{importantYn})
+    </insert>
+
+    <update id="updateCalendarEvent" parameterType="org.green.hckh.entity.teacher.schedule.CalendarEntity">
+        UPDATE tbl_calendar
+        SET calendar_title   = #{calendarTitle},
+            calendar_content = #{calendarContent},
+            start_date       = #{startDate},
+            important_yn     = #{importantYn}
+        WHERE calendar_no = #{calendarNo}
+    </update>
+
+    <delete id="deleteCalendarEvent" parameterType="int">
+        DELETE
+        FROM tbl_calendar
+        WHERE calendar_no = #{calendarNo}
+    </delete>
+
+    <select id="maxCountCalendar">
+        SELECT Max(calendar_no)
+        FROM tbl_calendar;
+    </select>
+
+</mapper>

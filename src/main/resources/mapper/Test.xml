@@ -3,5 +3,8 @@
 
 <mapper namespace="org.green.hckh.repository.dao.TestDao">
 
+    <select id="test">
+        select * from test;
+    </select>
 
 </mapper>
