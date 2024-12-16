@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import koLocale from "@fullcalendar/core/locales/ko";
 import useFetch from "../../hooks/useFetch";
+import "../../assets/css/spotmanager/classAdd.css";
 
 const ClassAdd = () => {
 
@@ -140,20 +141,19 @@ const ClassAdd = () => {
                     </button>
                 </form>
                 <div className="mt-6">
-                    <h2 className="text-lg font-semibold mb-4">등록된 강의 목록</h2>
+                    <h2 style={{color: "#000000", fontWeight: "bold", fontSize: "18px"}}>
+                        등록된 강의 목록
+                    </h2>
                     {classData && classData.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <div className="button-grid">
                             {classData.map((clazz) => (
-                                <button
-                                    key={clazz.id}
-                                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition duration-200"
-                                >
+                                <button key={clazz.id} className="button-item">
                                     {clazz.className}
                                 </button>
                             ))}
                         </div>
                     ) : (
-                        <p className="text-gray-500">등록된 강의가 없습니다.</p>
+                        <p style={{color: "#808080"}}>등록된 강의가 없습니다.</p>
                     )}
                 </div>
             </div>

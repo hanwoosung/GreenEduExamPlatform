@@ -1,8 +1,10 @@
-import {Link, Route, Router, Routes} from 'react-router-dom';
+import {Link, Route, Routes} from 'react-router-dom';
 import Layout from "./components/common/Layout";
+import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
-import './index.css';
+import Regist from "./pages/Regist";
+// import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
 
@@ -12,39 +14,41 @@ import React from "react";
 function App() {
     return (
         <>
-            {/*/!* 네비게이션 바 *!/*/}
-            <ul className="flex space-x-4">
-                <li>
-                    <Link to="/" className="hover:underline">
-                        홈
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/test2" className="hover:underline">
-                        테스트 페이지 2
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/schedule" className="hover:underline">
-                        스케줄
-                    </Link>
-                </li>
-                <li>
-                    <Link to="/class-register" className="hover:underline">
-                        강의 등록
-                    </Link>
-                </li>
-            </ul>
-
-            {/* 라우터 설정 */
-            }
+            {/* 라우터 설정 */}
             <main className="p-6">
                 <Routes>
-                    {/*<Route path="/" element={*/}
-                    {/*    <Layout>*/}
-                    {/*        <Home />*/}
-                    {/*    </Layout>*/}
-                    {/*} />*/}
+                    <Route path="/" element={
+                        <Layout>
+                            {/*/!* 네비게이션 바 *!/*/}
+                            <ul className="flex space-x-4">
+                                <li>
+                                    <Link to={"/"} className="hover:underline">
+                                        홈
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/test2"} className="hover:underline">
+                                        테스트 페이지 2
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/schedule"} className="hover:underline">
+                                        스케줄
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/class-register"} className="hover:underline">
+                                        강의 등록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/regist"} className="hover:underline">
+                                        회원가입
+                                    </Link>
+                                </li>
+                            </ul>
+                        </Layout>
+                    }/>
                     <Route path="/test2" element={
                         <Layout>
                             <TestPage2/>
@@ -58,6 +62,11 @@ function App() {
                     <Route path="/class-register" element={
                         <Layout>
                             <ClassAdd/>
+                        </Layout>
+                    }/>
+                    <Route path="/Regist" element={
+                        <Layout>
+                            <Regist/>
                         </Layout>
                     }/>
                 </Routes>
