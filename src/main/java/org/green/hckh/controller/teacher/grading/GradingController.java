@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.green.hckh.dto.teacher.grading.GradingScheduleDTO;
 import org.green.hckh.entity.teacher.grading.GradingClassEntity;
 import org.green.hckh.service.teacher.grading.GradingService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,9 +23,10 @@ public class GradingController {
     }
 
     @GetMapping("/schedule/{id}")
-    public List<GradingScheduleDTO> getSchuduleList(@PathVariable String id) {
-        // TODO :로그인 완료 시 처리해야함
-        return gradingService.findAllByUserIdScheduleList("teacher1");
+    public List<GradingScheduleDTO> getSchuduleList(@PathVariable String id, @RequestParam int num) {
+        //TODO : 로그인 완료 시 처리해야함
+        return gradingService.findAllByUserIdScheduleList("teacher1", num);
     }
+
 
 }

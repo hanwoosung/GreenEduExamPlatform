@@ -20,9 +20,10 @@ public interface GradingRepository extends JpaRepository<GradingClassEntity, Int
             "FROM tbl_schedule s " +
             "JOIN tbl_class c ON s.class_no = c.class_no " +
             "WHERE c.user_id = :userId " +
+            "AND s.class_no = :num " +
             "AND c.delete_yn = 'N' " +
             "AND s.delete_yn = 'N'",
             nativeQuery = true)
-    List<Object[]> findAllByUserIdScheduleList(@Param("userId") String userId);
+    List<Object[]> findAllByUserIdScheduleList(@Param("userId") String userId, @Param("num") int num);
 
 }

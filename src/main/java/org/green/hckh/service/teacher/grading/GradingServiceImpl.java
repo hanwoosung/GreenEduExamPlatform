@@ -24,8 +24,8 @@ public class GradingServiceImpl implements GradingService {
 
     @Override
     //TODO: 추후 알아보기
-    public List<GradingScheduleDTO> findAllByUserIdScheduleList(String userId) {
-        List<Object[]> rawResults = gradingRepository.findAllByUserIdScheduleList(userId);
+    public List<GradingScheduleDTO> findAllByUserIdScheduleList(String userId, int num) {
+        List<Object[]> rawResults = gradingRepository.findAllByUserIdScheduleList(userId,num);
 
         return rawResults.stream().map(result ->
                 GradingScheduleDTO.builder()

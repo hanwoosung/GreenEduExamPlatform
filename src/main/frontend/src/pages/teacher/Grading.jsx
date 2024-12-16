@@ -10,7 +10,8 @@ import useFetch from "../../hooks/useFetch";
 
 const Grading = () => {
     const { data: lectures, loading } = useFetch("/api/v1/grading/class/teacher1");
-    const { data: subjects, loading2} = useFetch("/api/v1/grading/schedule/teacher1");
+    const [subjects, setSubjects] = useState([]);
+
 
     const grades = [ //과제에맞는 학생성적을 들고온다.c v에라잉!@#!@@#!@#@!#안들고올래
         {id: 1, name: '김철수', grade: 'A'},
