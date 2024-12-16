@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import useFetch from "../../hooks/useFetch";
 import useApi from "../../hooks/useApi";
 
@@ -6,7 +6,7 @@ export const useRegistHandler = () => {
 
     const {post, get} = useApi("/api/v1/regist", {
         headers: {
-            "Content-Type": "application/json"
+            // "Content-Type": "application/json"
         },
     });
 
@@ -16,18 +16,39 @@ export const useRegistHandler = () => {
         idChk: false,
         userName: "",
         userPassword: "",
+        userRoleCode: "STUDENT",
         userBirth: new Date().toISOString().split("T")[0],
         confirmPassword: "",
     });
     const [errors, setErrors] = useState({});
 
+    const [alignment, setAlignment] = useState('STUDENT');
+
+    const handleToggle = (event, newAlignment) => {
+        setReigstData((prevData) => ({
+            ...prevData,
+            userRoleCode: newAlignment,
+        }));
+        setAlignment(newAlignment);
+    };
 
     const handleDuplicate = async () => {
-        let result = await get({reigstData}, {}, `/api/v1/regist/cnt`);
+        if (reigstData.userId) {
+
+            let result = await get({}, {}, `/api/v1/regist/cnt/${reigstData.userId}`);
+
+            setReigstData((prevData) => ({
+                ...prevData,
+                idChk: result == 0
+            }));
+            console.log(result == 0);
+            console.log(reigstData)
+
+        }
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setReigstData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -66,6 +87,8 @@ export const useRegistHandler = () => {
     return {
         reigstData,
         errors,
+        alignment,
+        handleToggle,
         handleChange,
         handleDuplicate,
         handleSubmit,
