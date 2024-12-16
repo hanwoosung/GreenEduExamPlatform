@@ -1,7 +1,9 @@
-import {Link, Route, Router, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Layout from "./components/common/Layout";
+import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
+import Regist from "./pages/Regist";
 import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
@@ -58,6 +60,11 @@ function App() {
                     <Route path="/class-register" element={
                         <Layout>
                             <ClassAdd/>
+                        </Layout>
+                    }/>
+                    <Route path="/Regist" element={
+                        <Layout>
+                            <Regist />
                         </Layout>
                     }/>
                 </Routes>
