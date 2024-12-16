@@ -1,15 +1,13 @@
 import {useState} from "react";
 import useFetch from "../../hooks/useFetch";
 import useApi from "../../hooks/useApi";
+import {useRegistEventService} from "../../services/common/useRegistEventService";
+import { useNavigate } from 'react-router-dom';
 
 export const useRegistHandler = () => {
 
-    const {post, get} = useApi("/api/v1/regist", {
-        headers: {
-            // "Content-Type": "application/json"
-        },
-    });
-
+    const navigate = useNavigate();
+    const {insertEvent, getEvent} = useRegistEventService();
 
     const [reigstData, setReigstData] = useState({
         userId: "",
@@ -35,14 +33,23 @@ export const useRegistHandler = () => {
     const handleDuplicate = async () => {
         if (reigstData.userId) {
 
-            let result = await get({}, {}, `/api/v1/regist/cnt/${reigstData.userId}`);
+            try {
 
-            setReigstData((prevData) => ({
-                ...prevData,
-                idChk: result == 0
-            }));
-            console.log(result == 0);
-            console.log(reigstData)
+                let res = await getEvent(reigstData.userId);
+
+                setReigstData((prevData) => ({
+                    ...prevData,
+                    idChk: res.body <= 0
+                }));
+
+                setErrors((prevData) => ({
+                    ...prevData,
+                    userId: res.body <= 0 ? '' : '이미 사용중인 ID 입니다.'
+                }));
+
+            } catch (e) {
+                console.log(e)
+            }
 
         }
     };
@@ -58,7 +65,7 @@ export const useRegistHandler = () => {
 
     const validate = () => {
         return {
-            userId: reigstData.userId ? "" : "아이디를 입력해주세요.",
+            userId: reigstData.userId ? (reigstData.idChk ? "" : "중복체크를 진행해 주세요.") : "아이디를 입력해주세요.",
             userName: reigstData.userName ? "" : "이름을 입력해주세요.",
             userBirth: reigstData.userBirth ? "" : "생년월일을 입력해주세요.",
             idChk: reigstData.idChk ? "" : "중복체크를 진행해 주세요.",
@@ -72,13 +79,24 @@ export const useRegistHandler = () => {
         };
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         setErrors(validationErrors);
 
         if (Object.values(validationErrors).every((x) => x === "")) {
-            console.log("회원가입 성공");
+
+            try {
+
+                const res = await insertEvent(reigstData);
+
+                if (res.status == "SUCCESS") {
+                    navigate("/login");
+                }
+
+            } catch (e) {
+                console.log(e);
+            }
         } else {
             console.log("회원가입 실패");
         }

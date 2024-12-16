@@ -17,4 +17,9 @@ public class RegistController {
         return registService.findCntById(userId);
     }
 
+    @PostMapping("/regist")
+    public int regist(@RequestBody UserDto user) {
+        return registService.save(user);
+    }
+
 }

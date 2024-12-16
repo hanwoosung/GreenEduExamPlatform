@@ -27,8 +27,6 @@ const Regist = () => {
         handleSubmit
     } = useRegistHandler();
 
-
-
     return (
         <Container component="main" maxWidth="xs">
             <Box
