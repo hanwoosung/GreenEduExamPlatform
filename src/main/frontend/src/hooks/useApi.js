@@ -44,6 +44,7 @@ const useApi = (baseUrl, initialConfig = {}) => {
         data,
         loading,
         error,
+        get: (payload, config, url = null) => request(url, "get", payload, config),
         post: (payload, config, url = null) => request(url, "post", payload, config),
         put: (payload, config, url = null) => request(url, "put", payload, config),
         del: (id, config, url = null) => request(url ? `${url}/${id}` : `${baseUrl}/${id}`, "delete", null, config),
