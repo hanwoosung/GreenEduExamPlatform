@@ -14,13 +14,13 @@ export const useRegistHandler = () => {
         idChk: false,
         userName: "",
         userPassword: "",
-        userRoleCode: "STUDENT",
+        userRoleCode: "ROLE_STUDENT",
         userBirth: new Date().toISOString().split("T")[0],
         confirmPassword: "",
     });
     const [errors, setErrors] = useState({});
 
-    const [alignment, setAlignment] = useState('STUDENT');
+    const [alignment, setAlignment] = useState('ROLE_STUDENT');
 
     const handleToggle = (event, newAlignment) => {
         setReigstData((prevData) => ({

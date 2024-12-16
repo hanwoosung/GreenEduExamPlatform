@@ -52,8 +52,8 @@ const Regist = () => {
                     aria-label="userRoleCode"
                     sx={{mt: 3, mb: 2}}
                 >
-                    <ToggleButton value="STUDENT">학생</ToggleButton>
-                    <ToggleButton value="TEACHER">선생님</ToggleButton>
+                    <ToggleButton value="ROLE_STUDENT">학생</ToggleButton>
+                    <ToggleButton value="ROLE_TEACHER">선생님</ToggleButton>
                 </ToggleButtonGroup>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                     <Grid container spacing={2}>
