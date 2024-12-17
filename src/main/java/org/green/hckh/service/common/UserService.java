@@ -1,9 +1,9 @@
-package org.green.hckh.service.common.regist;
+package org.green.hckh.service.common;
 
 
 import org.green.hckh.dto.common.UserDto;
 
-public interface RegistService {
+public interface UserService {
 
     int findCntById(String userId);
 
