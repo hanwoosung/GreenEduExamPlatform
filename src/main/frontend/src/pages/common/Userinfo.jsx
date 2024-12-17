@@ -51,6 +51,12 @@ const Userinfo = () => {
                 >
                     <ToggleButton value="ROLE_STUDENT">학생</ToggleButton>
                     <ToggleButton value="ROLE_TEACHER">선생님</ToggleButton>
+                    {userData.userRoleCode === "ROLE_SPOT_MANAGER"
+                        ? <ToggleButton value="ROLE_SPOT_MANAGER">지점관리자</ToggleButton>
+                        : null}
+                    {userData.userRoleCode === "ROLE_MANAGER"
+                        ? <ToggleButton value="ROLE_MANAGER">관리자</ToggleButton>
+                        : null}
                 </ToggleButtonGroup>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                     <Grid container spacing={2}>
@@ -113,39 +119,43 @@ const Userinfo = () => {
                                 helperText={errors.confirmPassword}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Autocomplete
-                                open={open}
-                                onOpen={handleOpen}
-                                onClose={handleClose}
-                                onChange={(event, newValue) => {
-                                    console.log(newValue);
-                                    handleAutocomplete("spot", newValue);
-                                }}
-                                value={userData.spot}
-                                isOptionEqualToValue={(option, value) => option.spotNo === value.spotNo}
-                                getOptionLabel={(option) => option.spotName}
-                                options={options}
-                                loading={loading}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="지점"
-                                        slotProps={{
-                                            input: {
-                                                ...params.InputProps,
-                                                endAdornment: (
-                                                    <Fragment>
-                                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                                        {params.InputProps.endAdornment}
-                                                    </Fragment>
-                                                ),
-                                            },
-                                        }}
-                                    />
-                                )}
-                            />
-                        </Grid>
+                        {userData.userRoleCode === "ROLE_TEACHER" ?
+                            <Grid item xs={12}>
+                                <Autocomplete
+                                    open={open}
+                                    onOpen={handleOpen}
+                                    onClose={handleClose}
+                                    onChange={(event, newValue) => {
+                                        // console.log(newValue);
+                                        handleAutocomplete("spotName", newValue?.spotName);
+                                        handleAutocomplete("spotNo", newValue?.spotNo);
+                                    }}
+                                    value={{spotName: userData.spotName, spotNo: userData.spotNo}}
+                                    isOptionEqualToValue={(option, value) => option.spotNo === value.spotNo}
+                                    getOptionLabel={(option) => option.spotName}
+                                    options={options}
+                                    loading={loading}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="지점"
+                                            slotProps={{
+                                                input: {
+                                                    ...params.InputProps,
+                                                    endAdornment: (
+                                                        <Fragment>
+                                                            {loading ?
+                                                                <CircularProgress color="inherit" size={20} /> : null}
+                                                            {params.InputProps.endAdornment}
+                                                        </Fragment>
+                                                    ),
+                                                },
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Grid> : null
+                        }
                         <Grid item xs={12}>
                             <TextField
                                 required

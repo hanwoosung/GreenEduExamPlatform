@@ -8,10 +8,13 @@ const LogoutBtn = ({sessionValues, removeSession, setSession, getSession}) => {
 
     useEffect(() => {
         const session = getSession("user");
-        if(session != null) {
+        if (session != null) {
             session.lastMoveDate = new Date();
-            setSession("user", session);
+            setSession("user", session); // 세션 업데이트
+        } else {
+            setSession("user", { lastMoveDate: new Date() });
         }
+        console.log(session);
     }, []);
 
     const {post} = useApi("/logout", {
@@ -32,7 +35,7 @@ const LogoutBtn = ({sessionValues, removeSession, setSession, getSession}) => {
 
     return (
         <div>
-            {sessionValues?.user ? (
+            {sessionValues?.user?.userId ? (
                 // 로그인된 경우 로그아웃 버튼 표시
                 <>
                     <a>{sessionValues?.user.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;

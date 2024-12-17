@@ -12,4 +12,6 @@ public interface UserDao {
     UserDto findById(String userId);
 
     int save(@Param("user") UserDto user);
+
+    int update(@Param("user") UserDto user);
 }
