@@ -41,7 +41,8 @@ const TestExam = () => {
                 <span>과목</span>
                 <select
                     id={"schedule"}
-                    value={scheduleNo}
+                    value={scheduleNo}d
+
                     onChange={(e) => setScheduleNo(e.target.value)}
                 >
                     <option value={""}>선택</option>
