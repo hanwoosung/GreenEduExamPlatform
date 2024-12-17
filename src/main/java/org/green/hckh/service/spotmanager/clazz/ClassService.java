@@ -1,6 +1,6 @@
-package org.green.hckh.service.spotmanager;
+package org.green.hckh.service.spotmanager.clazz;
 
-import org.green.hckh.entity.teacher.schedule.ClassEntity;
+import org.green.hckh.entity.ClassEntity;
 
 import java.util.List;
 

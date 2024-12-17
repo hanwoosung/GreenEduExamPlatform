@@ -5,42 +5,52 @@ import interactionPlugin from "@fullcalendar/interaction";
 import koLocale from "@fullcalendar/core/locales/ko";
 import useFetch from "../../hooks/useFetch";
 import "../../assets/css/spotmanager/classAdd.css";
+import useApi2 from "../../hooks/useApi2";
+import {handleDelete} from "../../modal/common/swals";
+import Swal from 'sweetalert2';
 
 const ClassAdd = () => {
-    const { data, isLoading, error } = useFetch('/api/v1/spot-manager/class/1');
+    const {get} = useApi2();
     const [classData, setClassData] = useState(null);
     const [selectedClass, setSelectedClass] = useState(null);
-    const [instructors, setInstructors] = useState([]); // 강사 목록
+    const [teachers, setTeachers] = useState([]); // 강사 목록
     const [selectedInstructor, setSelectedInstructor] = useState("");
     const [calendarEvents, setCalendarEvents] = useState([]);
     const [schedules, setSchedules] = useState([]); // 스케줄 목록
     const [rooms, setRooms] = useState([]); // 강의실 목록
     const [selectedRoom, setSelectedRoom] = useState("");
 
-    useEffect(() => {
-        if (data) {
-            setClassData(data);
-            console.log(data);
-        }
-    }, [data]);
-
     // 강사 목록 가져오기 (예시)
     useEffect(() => {
-        useApi2
-    }, []);
+        const getClass = async () => {
+            const result = await get("api/v1/spot-manager/class/1");
+            console.log(result);
+            setClassData(result);
+        }
 
-    // 강의실 목록 가져오기 (예시)
-    useEffect(() => {
-        fetch("/api/v1/spot-manager/rooms")
-            .then((res) => res.json())
-            .then((roomData) => setRooms(roomData));
+        const getTeachers = async () => {
+            const result = await get("api/v1/spot-manager/teacher/1");
+            console.log(result);
+            setTeachers(result);
+        }
+
+        const getClassRoom = async () => {
+            const result = await get("api/v1/spot-manager/class-room/1");
+            console.log(result);
+            setRooms(result);
+        }
+        getClass();
+        getTeachers();
+        getClassRoom();
     }, []);
 
     const [formData, setFormData] = useState({
         title: "",
         startDate: "",
         endDate: "",
+        maxPeople: "",
     });
+
 
     const [errors, setErrors] = useState({});
 
@@ -55,18 +65,18 @@ const ClassAdd = () => {
     const handleScheduleAdd = () => {
         setSchedules((prevSchedules) => [
             ...prevSchedules,
-            { name: "", startDate: "", endDate: "" },
+            {name: "", startDate: "", endDate: ""},
         ]);
     };
 
     const handleScheduleDelete = (index) => {
-        setSchedules((prevSchedules) => prevSchedules.filter((_, i) => i !== index));
+        handleDelete(() => setSchedules((prevSchedules) => prevSchedules.filter((_, i) => i !== index)));
     };
 
     const handleScheduleChange = (index, e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         const updatedSchedules = schedules.map((schedule, i) =>
-            i === index ? { ...schedule, [name]: value } : schedule
+            i === index ? {...schedule, [name]: value} : schedule
         );
         setSchedules(updatedSchedules);
     };
@@ -96,17 +106,29 @@ const ClassAdd = () => {
             newErrors.room = "강의실을 선택해주세요.";
         }
 
+        if (!formData.capacity || formData.capacity <= 0) {
+            newErrors.capacity = "수강 정원은 1명 이상이어야 합니다.";
+        }
+
         setErrors(newErrors);
 
         return Object.keys(newErrors).length === 0;
     };
+
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
             console.log("Form Data: ", formData, "Instructor: ", selectedInstructor, "Room: ", selectedRoom);
             console.log("Schedules: ", schedules);
-            alert("강의가 성공적으로 등록되었습니다!");
+            Swal.fire({
+                icon: 'success',
+                title: '강의가 성공적으로 등록되었습니다!',
+                showConfirmButton: false,
+                timer: 1500
+            });
             setCalendarEvents((prevEvents) => [
                 ...prevEvents,
                 ...schedules.map((sch) => ({
@@ -119,12 +141,14 @@ const ClassAdd = () => {
                 title: "",
                 startDate: "",
                 endDate: "",
+                maxPeople: "",
             });
             setSelectedInstructor("");
             setSelectedRoom("");
             setSchedules([]);
         }
     };
+
 
     const handleClassSelect = (classNo) => {
         setSelectedClass(!!classNo && classNo === selectedClass ? null : classNo);
@@ -181,6 +205,22 @@ const ClassAdd = () => {
                             <p className="error-message">{errors.endDate}</p>
                         )}
                     </div>
+                    <div>
+                        <label htmlFor="capacity">수강 정원</label>
+                        <input
+                            type="number"
+                            id="capacity"
+                            name="capacity"
+                            value={formData.capacity}
+                            onChange={handleChange}
+                            className={errors.capacity ? "error-input" : ""}
+                            min="1" // 최소값 설정
+                            placeholder="수강 정원을 입력하세요"
+                        />
+                        {errors.capacity && (
+                            <p className="error-message">{errors.capacity}</p>
+                        )}
+                    </div>
 
                     <div className="instructor-select">
                         <label htmlFor="instructor">강사 선택</label>
@@ -191,9 +231,9 @@ const ClassAdd = () => {
                             className={errors.instructor ? "error-input" : ""}
                         >
                             <option value="">강사를 선택하세요</option>
-                            {instructors.map((inst) => (
-                                <option key={inst.id} value={inst.name}>
-                                    {inst.name}
+                            {teachers && teachers.map((teacher) => (
+                                <option key={teacher.userId} value={teacher.userId}>
+                                    {teacher.name + '\t' + teacher.userBirth}
                                 </option>
                             ))}
                         </select>
@@ -212,8 +252,8 @@ const ClassAdd = () => {
                         >
                             <option value="">강의실을 선택하세요</option>
                             {rooms.map((room) => (
-                                <option key={room.id} value={room.name}>
-                                    {room.name}
+                                <option key={room.id} value={room.roomNo}>
+                                    {room.roomName}
                                 </option>
                             ))}
                         </select>

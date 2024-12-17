@@ -113,13 +113,14 @@ body {
     border: 1px solid #1d4ed8;
 }
 
-
 .no-courses {
     font-size: 14px;
     color: #6b7280;
 }
 
 .calendar-container {
+    position: sticky;
+    height: 100%;
     width: 100%;
     max-width: 700px;
 }

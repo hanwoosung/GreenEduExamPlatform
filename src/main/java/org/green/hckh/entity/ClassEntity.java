@@ -1,8 +1,9 @@
-package org.green.hckh.entity.teacher.schedule;
+package org.green.hckh.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @Table(name = "tbl_class")
 @NoArgsConstructor
 @AllArgsConstructor
+@Where(clause = "delete_yn = 'n'") // deleteYn이 'n'인 것만 조회
 public class ClassEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,7 @@ public class ClassEntity {
     @Column(name = "spot_no", nullable = false)
     private Integer spotNo;
 
+    @Transient
     private String spotName;
 
     @Column(name = "class_name", length = 50)
@@ -44,4 +47,6 @@ public class ClassEntity {
     @Column(name = "delete_yn")
     private Character deleteYn;
 
+    @Column(name = "max_people")
+    private Integer maxPeople;
 }

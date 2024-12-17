@@ -1,8 +1,7 @@
-package org.green.hckh.repository.jpa;
+package org.green.hckh.repository.jpa.spotmanager;
 
-import org.green.hckh.entity.teacher.schedule.ClassEntity;
+import org.green.hckh.entity.ClassEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.Optional;
 public interface ClassRepository extends JpaRepository<ClassEntity, Integer> {
     @Query(value = "SELECT * " +
             "FROM tbl_class " +
-            "WHERE spot_no = :spotNo " +
+            "WHERE spot_no = :spotNo AND delete_yn = 'N'" +
             "ORDER BY CASE " +
             "WHEN NOW() >= end_date THEN 99 " +
             "ELSE start_date END",

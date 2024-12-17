@@ -2,8 +2,8 @@ package org.green.hckh.controller.spotmanager.clazz;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.green.hckh.entity.teacher.schedule.ClassEntity;
-import org.green.hckh.service.spotmanager.ClassService;
+import org.green.hckh.entity.ClassEntity;
+import org.green.hckh.service.spotmanager.clazz.ClassService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

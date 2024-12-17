@@ -1,8 +1,8 @@
-package org.green.hckh.service.spotmanager;
+package org.green.hckh.service.spotmanager.clazz;
 
 import lombok.RequiredArgsConstructor;
-import org.green.hckh.entity.teacher.schedule.ClassEntity;
-import org.green.hckh.repository.jpa.ClassRepository;
+import org.green.hckh.entity.ClassEntity;
+import org.green.hckh.repository.jpa.spotmanager.ClassRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
