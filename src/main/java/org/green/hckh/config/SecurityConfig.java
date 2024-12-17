@@ -61,10 +61,11 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/login"
-                                , "logout"
+                                , "/logout"
+
                         ).permitAll()
 
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 );
 
         http
