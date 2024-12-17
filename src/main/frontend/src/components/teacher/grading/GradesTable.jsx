@@ -1,6 +1,7 @@
 import GradeRow from "./GradeRow";
 
-const GradesTable = ({ grades, checkedStudents, onCheckAll, onCheckStudent }) => (
+// GradesTable.js
+const GradesTable = ({ grades, checkedStudents, onCheckAll, onCheckStudent, onStudentClick }) => (
     <div className="grades-container">
         <div className="list-header">
             <input
@@ -16,9 +17,9 @@ const GradesTable = ({ grades, checkedStudents, onCheckAll, onCheckStudent }) =>
                     key={student.userId}
                     student={student}
                     isChecked={[...checkedStudents].some((s) => s.userId === student.userId)}
-                    onCheck={() => onCheckStudent(student)} // 학생 객체 전달
+                    onCheck={() => onCheckStudent(student)}
+                    onStudentClick={onStudentClick}
                 />
-
             ))}
         </div>
     </div>
