@@ -1,7 +1,7 @@
 import useApi from "../../hooks/useApi";
 
 export const useLoginEventService = () => {
-    const {post, get} = useApi("", {
+    const {post} = useApi("/loginProc", {
         withCredentials: true,
         headers: {
             // "Content-Type": "application/json",
@@ -13,9 +13,5 @@ export const useLoginEventService = () => {
         return await post(userData, {}, "");
     };
 
-    const spotEvent = async () => {
-        return await get("all", {}, "/spot");
-    };
-
-    return {loginEvent, spotEvent};
+    return {loginEvent};
 };

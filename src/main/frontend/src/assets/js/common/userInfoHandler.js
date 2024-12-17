@@ -1,12 +1,12 @@
 import {useState} from "react";
-import {useLoginEventService} from "../../../services/common/useLoginEventService";
+import {useUserinfoService} from "../../../services/common/useUserinfoService";
 import {useNavigate} from 'react-router-dom';
 import useSessionStorage from "../../../hooks/useSessionStorage";
 
 export const useUserInfoHandler = () => {
 
     const navigate = useNavigate();
-    const {updateEvent, spotEvent} = useLoginEventService();
+    const {updateEvent, spotEvent} = useUserinfoService();
 
     const {sessionValues, getSession} = useSessionStorage();
 
