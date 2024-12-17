@@ -4,28 +4,31 @@ import {useEffect} from "react";
 const HandleQuestion = (props) => {
 
     useEffect(() => {
+        console.log(props.test)
         for (let qno = 1; qno <= props.number; qno++) {
             addElement(qno);
             for (let dno = 1; dno <= 4; dno++) {
                 addDetail(qno,dno);
             }
         }
-    }, []);
+    }, [props.number]);
 
     const addElement = (qno) => {
         props.setQuestions((questions) => [...questions, {
-            qno: qno,
-            title: "",
-            code: "N",
-            score: 0
+            testNo: props.test.testNo,
+            questionNo: qno,
+            questionTitle: "",
+            questionCode: "N",
+            questionScore: 0
         }]);
     }
 
     const addDetail = (qno, dno) => {
         props.setDetails((details) => [...details, {
-            qno: qno,
-            dno: dno,
-            content: "",
+            testNo: props.test.testNo,
+            questionNo: qno,
+            questionDetailNo: dno,
+            questionContent: "",
             correctYn: "N"
         }]);
     }
@@ -39,7 +42,7 @@ const HandleQuestion = (props) => {
 
     const editQuestion = (e, qno, field) => {
         const updatedQuestions = props.questions.map((question) => {
-            if(question.qno === qno){
+            if(question.questionNo === qno){
                 return { ...question, [field]: e.target.value }
             }
             return { ...question}
@@ -49,7 +52,7 @@ const HandleQuestion = (props) => {
 
     const editDetailContent = (e,qno,dno,field) => {
         const updatedDetails = props.details.map((detail) =>{
-            if(detail.qno === qno && detail.dno === dno){
+            if(detail.questionNo === qno && detail.questionDetailNo === dno){
                 return { ...detail, [field]: e.target.value }
             }
             return { ...detail}
@@ -59,7 +62,7 @@ const HandleQuestion = (props) => {
 
     const editCorrect = (e, qno, dno) => {
         const updateDetail = props.details.map((detail) =>{
-            if(detail.qno === qno && detail.dno === dno){
+            if(detail.questionNo === qno && detail.questionNo === dno){
                 return { ...detail, correctYn: (e.target.checked) ? "Y" : "N" };
             }
             return { ...detail}
@@ -75,34 +78,34 @@ const HandleQuestion = (props) => {
     return (
         <div className={"question-container"}>
             {props.questions.map((question) => (
-                <div className={"question-box"} key={`qno-${question.qno}`}>
-                    <span>{question.qno}번 문제</span>
+                <div className={"question-box"} key={`qno-${question.questionNo}`}>
+                    <span>{question.questionNo}번 문제</span>
                     <div className={"question-head"}>
                         <input
                             type={"number"}
                             placeholder={"점수"}
                             step={"0.1"}
-                            onChange={(e) => editQuestion(e, question.qno, 'score')}
+                            onChange={(e) => editQuestion(e, question.questionNo, 'questionScore')}
                         />
                         <textarea
                             className={"question-title"}
                             placeholder={"문제 제목"}
-                            onChange={(e) => editQuestion(e,question.qno, 'title')}
+                            onChange={(e) => editQuestion(e,question.questionNo, 'questionTitle')}
                         ></textarea>
                     </div>
                     {Array.from({ length: 4 }, (_, index) => {
                         const indexPlus1 = index + 1;
                         return (
-                            <div style={{ display: "flex" }} key={`qno-${question.qno}-${indexPlus1}`}>
+                            <div style={{ display: "flex" }} key={`qno-${question.questionNo}-${indexPlus1}`}>
                                 <span>{indexPlus1}번 예제</span>
                                 <input
                                     placeholder={"예제 입력"}
-                                    onChange={(e) => editDetailContent(e, question.qno, indexPlus1, 'content')}
+                                    onChange={(e) => editDetailContent(e, question.questionNo, indexPlus1, 'questionContent')}
                                 />
                                 <input
                                     type={"checkbox"}
                                     style={{ width: "auto" }}
-                                    onChange={(e) => editCorrect(e, question.qno, indexPlus1)}
+                                    onChange={(e) => editCorrect(e, question.questionNo, indexPlus1)}
                                 />
                                 <span>정답</span>
                             </div>

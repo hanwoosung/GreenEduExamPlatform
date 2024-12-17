@@ -7,6 +7,7 @@ import "../../assets/css/teacher/test/test.css"
 const TestExam = () => {
 
     const [test, setTest] = useState({
+        testNo: 0,
         scheduleNo: "",
         cutline: 0,
         time: 0,
@@ -27,14 +28,26 @@ const TestExam = () => {
 
     const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule");
 
-    const {post} = useApi("/api/v1/test", {
+    const {post: testPost} = useApi("/api/v1/test", {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    const{post: questionPost} = useApi("/api/v1/question",{
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    const{post: detailPost} = useApi("/api/v1/question/detail",{
         headers: {
             "Content-Type": "application/json"
         }
     });
 
     const testRegist = async () => {
-        const respose = await post({
+        const response = await testPost({
             scheduleNo: test.scheduleNo,
             createUserId: "aaa",
             cutline: test.cutline,
@@ -45,17 +58,22 @@ const TestExam = () => {
             deleteYn: "N"
         }, {}, "");
 
-
-
-
-        if (respose !== 0) {
-            // todo 그리고 해당 아이디로 생성한 시험 엔티티 pk값을 가져온다. 서비스에서 처리할것
+        if (response !== 0) {
+            setTest({...test,testNo: Number(response.body) || 0})
             setShowSuccess(true);
         }
     }
 
-    const questionRegist = async () => {
-
+    const questionRegist = async (questions, details) => {
+        if(questions != null && details != null) {
+            console.log(questions);
+            console.log(details);
+            const questionRes= await questionPost(questions,{},"");
+            const detailRes = await detailPost(details,{},"");
+            if(questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
+                alert("문제 추가 완료");
+            }
+        }
     }
 
     return (
@@ -121,19 +139,12 @@ const TestExam = () => {
                     setQuestions={setQuestions}
                     details={details}
                     setDetails={setDetails}
+                    test={test}
                 />
             )}
             {/*    todo state 의 number가 0이상이면 반환하는 코드로 작성*/}
 
-            <button onClick={}>문제 저장하기</button>
-        </div>
-    )
-}
-
-const testInput = () => {
-    return (
-        <div>
-
+            <button onClick={() => questionRegist(questions,details)}>문제 저장하기</button>
         </div>
     )
 }

@@ -25,7 +25,6 @@ public class ExamTestController {
 
     @PostMapping("")
     public int insert(@RequestBody ExamTestDto examTestDto) {
-        System.out.println(examTestDto+"...................");
         int result = examTestDao.insertTest(examTestDto);
         return examTestDto.getTestInsertedId();
     }

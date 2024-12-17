@@ -6,6 +6,7 @@
     <insert id="insert">
         INSERT INTO tbl_question_detail
         (
+        test_no,
         question_no,
         question_detail_no,
         question_content,
@@ -14,6 +15,7 @@
         VALUES
         <foreach collection="list" item="Q" separator=",">
             (
+            #{Q.testNo},
             #{Q.questionNo},
             #{Q.questionDetailNo},
             #{Q.questionContent},
