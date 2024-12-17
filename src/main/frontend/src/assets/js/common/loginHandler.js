@@ -1,10 +1,14 @@
 import {useState} from "react";
 import {useLoginEventService} from "../../../services/common/useLoginEventService";
 import {useNavigate} from "react-router-dom";
+import useSessionStorage from "../../../hooks/useSessionStorage";
 
 export const useLoginHandler = () => {
 
     const {loginEvent} = useLoginEventService();
+
+    const {sessionValues, setSession, removeSession} = useSessionStorage();
+
     const navigate = useNavigate();
 
     const [loginData, setLoginData] = useState({
@@ -51,8 +55,9 @@ export const useLoginHandler = () => {
                     userId: res.body.userId === "" ? "아이디 및 비밀번호 오류입니다." : "",
                 }));
 
-                console.log(res);
                 if (res.body.userId !== "") {
+
+                    setSession("user", res.body);
 
                     if (res.body.userRoleCode === "ROLE_STUDENT") {
                         navigate("/student");
