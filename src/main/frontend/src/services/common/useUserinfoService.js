@@ -1,16 +1,21 @@
 import useApi from "../../hooks/useApi";
 
 export const useUserinfoService = () => {
-    const {put} = useApi("/api/v1/userinfo", {
+    const {post, get} = useApi("", {
+        withCredentials: true,
         headers: {
-            "Content-Type": "application/json"
+            // "Content-Type": "application/json",
         },
     });
 
     // 회원 등록
-    const insertEvent = async (userData) => {
-        return await put(userData, {}, "");
+    const loginEvent = async (userData) => {
+        return await post(userData, {}, "");
     };
 
-    return {insertEvent};
+    const spotEvent = async () => {
+        return await get("all", {}, "/spot");
+    };
+
+    return {loginEvent, spotEvent};
 };
