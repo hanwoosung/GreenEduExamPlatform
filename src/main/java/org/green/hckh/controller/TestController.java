@@ -6,21 +6,23 @@ import org.green.hckh.dto.teacher.schedule.ScheduleDto;
 import org.green.hckh.repository.dao.TestDao;
 import org.green.hckh.service.teacher.schedule.ScheduleService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/member")
 public class TestController {
 
     private final TestDao testDao;
     private final ScheduleService scheduleService;
 
-    @GetMapping("/")
+    @GetMapping
     public TestDto test() {
-        testDao.test();
-        return new TestDto("테스트", "테스트2");
+        return new TestDto("테스트", "테스트2", "테스트2");
     }
 
     @GetMapping("/2")

@@ -38,8 +38,6 @@ const useApi = (baseUrl, initialConfig = {}) => {
         }
     };
 
-
-
     return {
         data,
         loading,

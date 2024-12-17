@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.teacher.GradingDao">
+
+    <select id="findAllGradings" resultType="org.green.hckh.dto.teacher.grading.GradingDto">
+        SELECT g.user_id,
+               a.test_no,
+               SUM(IF(c.question_code = 'S', 1, 0))                        AS shortAs,
+               SUM(IF(c.question_code = 'L', 1, 0))                        AS longAs,
+               SUM(IF(c.question_code = 'N', 1, 0))                        AS multipleAs,
+               SUM(IF(c.question_code = 'S' AND d.correct_yn = 'Y', 1, 0)) AS shortAsCount,
+               SUM(IF(c.question_code = 'L' AND d.correct_yn = 'Y', 1, 0)) AS longAsCount,
+               SUM(IF(c.question_code = 'N' AND d.correct_yn = 'Y', 1, 0)) AS multipleAsCount,
+               SUM(IF(d.correct_yn = 'Y', c.question_score, 0))            AS score,
+               a.cutline,
+               e.name,
+               e.delete_yn,
+               f.confirm_yn,
+               f.test_cnt
+        FROM tbl_user_class g
+                 LEFT JOIN tbl_class z ON z.class_no = g.class_no
+                 LEFT JOIN tbl_schedule b ON b.class_no = z.class_no AND b.schedule_no = #{scheduleNo}
+                 LEFT JOIN tbl_test a ON a.schedule_no = b.schedule_no
+                 LEFT JOIN tbl_question c ON a.test_no = c.test_no
+                 LEFT JOIN tbl_question_result d ON c.question_no = d.question_no AND d.user_id = g.user_id
+                 LEFT JOIN tbl_user e ON g.user_id = e.user_id
+                 LEFT JOIN tbl_score f ON e.user_id = f.user_id
+        WHERE a.create_user_id = #{id}
+        GROUP BY g.user_id
+        ORDER BY score desc;
+    </select>
+
+    <insert id="updateConfirmed">
+        update tbl_score
+        set confirm_yn = 'Y'
+        where user_id in
+        <foreach collection="userIdList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserQuestionResult">
+        DELETE d
+        FROM tbl_question_result d
+        LEFT JOIN tbl_question q ON d.question_no = q.question_no
+        LEFT JOIN tbl_test t ON q.test_no = t.test_no
+        LEFT JOIN tbl_user_class g ON d.user_id = g.user_id
+        WHERE d.user_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND t.test_no = #{testNo};
+    </delete>
+
+
+    <update id="updateUserScore">
+        UPDATE tbl_score
+        SET score = 0,
+        confirm_yn = 'N',
+        test_cnt = test_cnt + 1
+        WHERE user_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND test_no = #{testNo}
+    </update>
+
+</mapper>
