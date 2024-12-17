@@ -17,50 +17,62 @@ public class UserController {
 
     private final UserService registService;
 
+    //회원가입 아이디 중복체크
     @GetMapping("/regist/cnt/{userId}")
     public int regist(@PathVariable("userId") String userId) {
         return registService.findCntById(userId);
     }
 
+    //회원가입 등록
     @PostMapping("/regist")
     public int regist(@RequestBody UserDto user) {
         return registService.save(user);
     }
 
+    //로그인 결과
     @GetMapping("/loginResult")
     public Map<String, Object> loginResult() {
 
-        Map<String, Object> result = new HashMap<>();
-
-        result.put("userId", "");
-        result.put("name", "");
-        result.put("userBirth", "");
-        result.put("userRoleCode", "");
-        result.put("spotNo", "");
-        result.put("spotNm", "");
-        result.put("deleteYn", "");
+        Map<String, Object> result = processData(new UserDto());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!authentication.getPrincipal().equals("anonymousUser")) {
             UserDto user = (UserDto) authentication.getPrincipal();
-
-            result.put("userId", user.getUserId());
-            result.put("name", user.getName());
-            result.put("userBirth", user.getUserBirth());
-            result.put("userRoleCode", user.getUserRoleCode());
-            result.put("spotNo", user.getSpotNo());
-            result.put("spotNm", user.getSpotNm());
-            result.put("deleteYn", user.getDeleteYn());
+            result = processData(user);
         }
 
         return result;
     }
 
+    //로그아웃 결과
     @GetMapping("/logoutResult")
     public String logoutResult() {
         System.out.println("로그아웃 성공");
         return "SUCCESS";
+    }
+
+    //회원 정보 수정
+    @PutMapping("/user")
+    public Map<String,Object> updateUser(@RequestBody UserDto user) {
+//        System.out.println(user);
+        int result = registService.update(user);
+
+        return processData(user);
+    }
+
+    private Map<String,Object> processData(UserDto user){
+        Map<String,Object> result = new HashMap<>();
+
+        result.put("userId", user.getUserId());
+        result.put("name", user.getName());
+        result.put("userBirth", user.getUserBirth());
+        result.put("userRoleCode", user.getUserRoleCode());
+        result.put("spotNo", user.getSpotNo());
+        result.put("spotName", user.getSpotName());
+        result.put("deleteYn", user.getDeleteYn());
+
+        return result;
     }
 
 }

@@ -10,10 +10,11 @@
     </select>
 
     <select id="findById" resultType="org.green.hckh.dto.common.UserDto">
-        SELECT a.*, spot_name AS spot_nm
+        SELECT a.*, spot_name
         FROM tbl_user a
         LEFT JOIN tbl_spot b ON a.spot_no = b.spot_no AND b.delete_yn = 'N'
-        WHERE user_id = #{userId}
+        WHERE a.user_id = #{userId}
+        AND a.delete_yn = 'N'
     </select>
 
     <insert id="save">
@@ -33,5 +34,15 @@
             #{user.deleteYn}
         );
     </insert>
+
+    <update id="update">
+        UPDATE tbl_user
+        SET user_password = #{user.userPassword},
+            name = #{user.name},
+            user_birth = #{user.userBirth},
+            user_role_code = #{user.userRoleCode},
+            spot_no = #{user.spotNo}
+        WHERE user_id = #{user.userId};
+    </update>
 
 </mapper>

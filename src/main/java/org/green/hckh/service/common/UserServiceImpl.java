@@ -12,29 +12,40 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final UserDao userDto;
+    private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public int findCntById(String userId) {
-        return userDto.findCntById(userId);
+        return userDao.findCntById(userId);
     }
 
     @Override
     public int save(UserDto user) {
 
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setUserPassword(encodedPassword);
+        user.setUserPassword(passwordEncode(user.getPassword()));
         user.setDeleteYn("N");
 
-        return userDto.save(user);
+        return userDao.save(user);
+    }
+
+    @Override
+    public int update(UserDto user) {
+
+        user.setUserPassword(passwordEncode(user.getPassword()));
+
+        return userDao.update(user);
     }
 
     @Override
     public UserDto loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserDto userData = userDto.findById(username);
+        UserDto userData = userDao.findById(username);
 
         return userData == null ? new UserDto() : userData;
+    }
+
+    private String passwordEncode(String password) {
+        return bCryptPasswordEncoder.encode(password);
     }
 }
