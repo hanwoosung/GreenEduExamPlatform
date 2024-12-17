@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {
     Container,
     Box,
@@ -9,23 +9,27 @@ import {
     Grid,
     Link,
     ToggleButtonGroup,
-    ToggleButton
+    ToggleButton,
+    Autocomplete, CircularProgress
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {useRegistHandler} from "../../assets/js/common/registHandler";
+import {useUserInfoHandler} from "../../assets/js/common/userInfoHandler";
 
 const Userinfo = () => {
 
     const {
-        reigstData,
+        userData,
         errors,
-        alignment,
-        handleToggle,
+        open,
+        options,
+        loading,
+        handleOpen,
+        handleClose,
         handleChange,
-        handleDuplicate,
-        handleSubmit
-    } = useRegistHandler();
+        handleAutocomplete,
+        handleSubmit,
+    } = useUserInfoHandler();
 
     return (
         <Container component="main" maxWidth="xs">
@@ -37,18 +41,11 @@ const Userinfo = () => {
                     alignItems: "center",
                 }}
             >
-                <Avatar sx={{m: 1, bgcolor: "secondary.main"}}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    회원가입
-                </Typography>
                 <ToggleButtonGroup
                     fullWidth
                     color="primary"
-                    value={alignment}
+                    value={userData.userRoleCode}
                     exclusive
-                    onChange={handleToggle}
                     aria-label="userRoleCode"
                     sx={{mt: 3, mb: 2}}
                 >
@@ -61,24 +58,16 @@ const Userinfo = () => {
                             <TextField
                                 required
                                 fullWidth
+                                disabled={true}
                                 id="userId"
                                 label="아이디"
                                 name="userId"
                                 autoComplete="userId"
-                                value={reigstData.userId}
+                                value={userData.userId}
                                 onChange={handleChange}
                                 error={Boolean(errors.userId)}
                                 helperText={errors.userId}
                             />
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                onClick={handleDuplicate}
-                                disabled={Boolean(reigstData.idChk)}
-                                sx={{mt: 3, mb: 2}}
-                            >
-                                중복체크
-                            </Button>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -88,7 +77,7 @@ const Userinfo = () => {
                                 label="이름"
                                 id="userName"
                                 autoComplete="name"
-                                value={reigstData.name}
+                                value={userData.name}
                                 onChange={handleChange}
                                 error={Boolean(errors.name)}
                                 helperText={errors.name}
@@ -103,7 +92,7 @@ const Userinfo = () => {
                                 type="password"
                                 id="userPassword"
                                 autoComplete="userPassword"
-                                value={reigstData.userPassword}
+                                value={userData.userPassword}
                                 onChange={handleChange}
                                 error={Boolean(errors.userPassword)}
                                 helperText={errors.userPassword}
@@ -118,10 +107,43 @@ const Userinfo = () => {
                                 type="password"
                                 id="confirmPassword"
                                 autoComplete="new-password"
-                                value={reigstData.confirmPassword}
+                                value={userData.confirmPassword}
                                 onChange={handleChange}
                                 error={Boolean(errors.confirmPassword)}
                                 helperText={errors.confirmPassword}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Autocomplete
+                                open={open}
+                                onOpen={handleOpen}
+                                onClose={handleClose}
+                                onChange={(event, newValue) => {
+                                    console.log(newValue);
+                                    handleAutocomplete("spot", newValue);
+                                }}
+                                value={userData.spot}
+                                isOptionEqualToValue={(option, value) => option.spotNo === value.spotNo}
+                                getOptionLabel={(option) => option.spotName}
+                                options={options}
+                                loading={loading}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="지점"
+                                        slotProps={{
+                                            input: {
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                    <Fragment>
+                                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                        {params.InputProps.endAdornment}
+                                                    </Fragment>
+                                                ),
+                                            },
+                                        }}
+                                    />
+                                )}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -133,7 +155,7 @@ const Userinfo = () => {
                                 type="date"
                                 id="userBirth"
                                 autoComplete="userBirth"
-                                value={reigstData.userBirth}
+                                value={userData.userBirth}
                                 onChange={handleChange}
                                 error={Boolean(errors.userBirth)}
                                 helperText={errors.userBirth}
@@ -146,19 +168,12 @@ const Userinfo = () => {
                         variant="contained"
                         sx={{mt: 3, mb: 2}}
                     >
-                        회원가입
+                        정보수정
                     </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link href="login" variant="body2">
-                                이미 계정이 있으신가요? 로그인
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </Box>
             </Box>
         </Container>
     );
 };
 
-export default Regist;
+export default Userinfo;
