@@ -12,7 +12,7 @@ export const useRegistHandler = () => {
     const [reigstData, setReigstData] = useState({
         userId: "",
         idChk: false,
-        userName: "",
+        name: "",
         userPassword: "",
         userRoleCode: "ROLE_STUDENT",
         userBirth: new Date().toISOString().split("T")[0],
@@ -66,7 +66,7 @@ export const useRegistHandler = () => {
     const validate = () => {
         return {
             userId: reigstData.userId ? (reigstData.idChk ? "" : "중복체크를 진행해 주세요.") : "아이디를 입력해주세요.",
-            userName: reigstData.userName ? "" : "이름을 입력해주세요.",
+            name: reigstData.name ? "" : "이름을 입력해주세요.",
             userBirth: reigstData.userBirth ? "" : "생년월일을 입력해주세요.",
             idChk: reigstData.idChk ? "" : "중복체크를 진행해 주세요.",
             userPassword: reigstData.userPassword.length >= 8

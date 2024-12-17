@@ -28,18 +28,17 @@ public class UserController {
     }
 
     @GetMapping("/loginResult")
-    public Map<String, String> loginResult() {
+    public UserDto loginResult() {
 
-        Map<String, String> result = new HashMap<>();
-        result.put("userId", "");
-        result.put("userRoleCode", "");
+        UserDto result = new UserDto();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!authentication.getPrincipal().equals("anonymousUser")) {
-            result.put("userId", authentication.getName());
-            result.put("userRoleCode", authentication.getAuthorities().iterator().next().getAuthority());
+            result = (UserDto) authentication.getPrincipal();
+//            result.put("userName", authentication.getName());
         }
+        result.setUserPassword("");
 
         return result;
     }

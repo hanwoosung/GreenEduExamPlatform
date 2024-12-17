@@ -15,7 +15,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {useRegistHandler} from "../../assets/js/common/registHandler";
 
-const Regist = () => {
+const Userinfo = () => {
 
     const {
         reigstData,

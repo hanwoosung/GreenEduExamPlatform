@@ -19,14 +19,14 @@
         INSERT INTO tbl_user(
             user_id,
             user_password,
-            user_name,
+            name,
             user_birth,
             user_role_code,
             delete_yn
         )VALUES (
             #{user.userId},
             #{user.userPassword},
-            #{user.userName},
+            #{user.name},
             #{user.userBirth},
             #{user.userRoleCode},
             #{user.deleteYn}

@@ -3,16 +3,18 @@ import Layout from "./components/common/Layout";
 import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
-import Regist from "./pages/common/Regist";
 import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
+import StudentMain from "./pages/student/StudentMain";
 import Login from "./pages/common/Login";
+import Regist from "./pages/common/Regist";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
 
 function App() {
+
     return (
         <>
             {/*/!* 네비게이션 바 *!/*/}
@@ -76,6 +78,11 @@ function App() {
                     <Route path="/login" element={
                         <Layout>
                             <Login />
+                        </Layout>
+                    }/>
+                    <Route path="/student" element={
+                        <Layout>
+                            <StudentMain />
                         </Layout>
                     }/>
                 </Routes>
