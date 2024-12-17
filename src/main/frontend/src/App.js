@@ -7,6 +7,7 @@ import Regist from "./pages/Regist";
 // import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
+import Grading from "./pages/teacher/Grading";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
@@ -67,6 +68,12 @@ function App() {
                     <Route path="/Regist" element={
                         <Layout>
                             <Regist/>
+                        </Layout>
+                    }/>
+
+                    <Route path="/grading" element={
+                        <Layout>
+                            <Grading />
                         </Layout>
                     }/>
                 </Routes>
