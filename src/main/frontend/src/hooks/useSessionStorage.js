@@ -6,12 +6,17 @@ const useSessionStorage = () => {
     // 상태 관리: 세션 스토리지의 모든 값을 가져와 상태에 저장
     const getSessionValues = () => {
         return Object.entries(sessionStorage).reduce((acc, [key, value]) => {
-            acc[key] = JSON.parse(value);
+            try {
+                acc[key] = JSON.parse(value); // JSON 형식으로 파싱
+            } catch (e) {
+                console.error(`Error parsing sessionStorage key "${key}":`, e);
+                acc[key] = value; // JSON 파싱 실패 시 원본 값을 저장
+            }
             return acc;
         }, {});
     };
 
-    const [sessionValues, setValues] = useState(getSessionValues);
+    const [sessionValues, setValues] = useState(getSessionValues());
 
     // 세션 스토리지에 값 저장 (추가)
     const setSession = (key, value) => {
