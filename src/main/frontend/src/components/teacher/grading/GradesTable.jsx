@@ -1,31 +1,27 @@
 import GradeRow from "./GradeRow";
 
-const GradesTable = ({grades, checkedStudents, onCheckAll, onCheckStudent}) => (
-    <table className="table">
-        <thead>
-            <tr>
-                <th className="th">
-                    <input
-                        type="checkbox"
-                        onChange={onCheckAll}
-                        checked={checkedStudents.size === grades.length}
-                    />
-                </th>
-                <th className="th">학번</th>
-                <th className="th">이름</th>
-                <th className="th">성적</th>
-            </tr>
-        </thead>
-        <tbody>
+const GradesTable = ({ grades, checkedStudents, onCheckAll, onCheckStudent }) => (
+    <div className="grades-container">
+        <div className="list-header">
+            <input
+                type="checkbox"
+                onChange={onCheckAll}
+                checked={checkedStudents.size === grades.length}
+            />
+            <label>전체 선택</label>
+        </div>
+        <div className="grades-list">
             {grades.map((student) => (
                 <GradeRow
-                    key={student.id}
+                    key={student.userId}
                     student={student}
-                    isChecked={checkedStudents.has(student.id)}
-                    onCheck={onCheckStudent}
+                    isChecked={[...checkedStudents].some((s) => s.userId === student.userId)}
+                    onCheck={() => onCheckStudent(student)} // 학생 객체 전달
                 />
+
             ))}
-        </tbody>
-    </table>
+        </div>
+    </div>
 );
+
 export default GradesTable;

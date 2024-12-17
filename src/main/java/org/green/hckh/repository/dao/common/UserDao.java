@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.green.hckh.dto.common.UserDto;
 
 @Mapper
-public interface RegistDao {
+public interface UserDao {
 
     int findCntById(String userId);
 

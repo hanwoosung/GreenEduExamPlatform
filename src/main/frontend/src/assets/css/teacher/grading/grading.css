@@ -1,7 +1,7 @@
 /* 전체 컨테이너 설정 */
 .container {
     padding: 40px;
-    max-width: 720px;
+    max-width: 1080px;
     margin: auto;
     background-color: #ffffff;
     color: #1c1c1e;
@@ -55,8 +55,8 @@
 /* 옵션 버튼 스타일 */
 .options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 /* 버튼 스타일 */
@@ -69,6 +69,7 @@
     color: #ffffff;
     cursor: pointer;
     text-align: center;
+    white-space: pre-line;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -102,7 +103,7 @@
 }
 
 .th {
-    text-align: left;
+    text-align: center;
     font-weight: 700;
     background: #f0f0f0;
     padding: 16px;
@@ -113,7 +114,7 @@
 
 .td {
     padding: 16px;
-    text-align: left;
+    text-align: center;
     font-size: 14px;
     border-bottom: 1px solid #eaeaea;
     color: #333333;
@@ -191,4 +192,108 @@
     background-color: #c82333;
     transform: translateY(-2px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+
+/* 전체 컨테이너 설정 */
+.grades-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.grades-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.grade-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grade-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.grade-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.student-name {
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+}
+
+.grade-card-body {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.grade-info, .grade-status {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 30%;
+}
+
+.grade-item, .status-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color: #666666;
+}
+
+.grade-item label, .status-item label {
+    font-weight: bold;
+    color: #333333;
+    font-size: 20px;
+}
+
+.pass {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.fail {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    transform: scale(2.0);
+    margin: 5px;
 }
