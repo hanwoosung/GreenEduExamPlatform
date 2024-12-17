@@ -4,7 +4,6 @@ import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
 import Regist from "./pages/Regist";
-import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
 import Grading from "./pages/teacher/Grading";

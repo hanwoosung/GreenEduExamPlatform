@@ -2,8 +2,10 @@ package org.green.hckh.service.teacher.grading;
 
 
 import lombok.AllArgsConstructor;
+import org.green.hckh.dto.teacher.grading.GradingDto;
 import org.green.hckh.dto.teacher.grading.GradingScheduleDTO;
 import org.green.hckh.entity.teacher.grading.GradingClassEntity;
+import org.green.hckh.repository.dao.teacher.GradingDao;
 import org.green.hckh.repository.jpa.teacher.GradingRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class GradingServiceImpl implements GradingService {
 
     private final GradingRepository gradingRepository;
+    private final GradingDao gradingDao;
 
     @Override
     public List<GradingClassEntity> findAllByUserId(String userId) {
@@ -25,7 +28,7 @@ public class GradingServiceImpl implements GradingService {
     @Override
     //TODO: 추후 알아보기
     public List<GradingScheduleDTO> findAllByUserIdScheduleList(String userId, int num) {
-        List<Object[]> rawResults = gradingRepository.findAllByUserIdScheduleList(userId,num);
+        List<Object[]> rawResults = gradingRepository.findAllByUserIdScheduleList(userId, num);
 
         return rawResults.stream().map(result ->
                 GradingScheduleDTO.builder()
@@ -39,4 +42,19 @@ public class GradingServiceImpl implements GradingService {
         ).collect(Collectors.toList());
     }
 
+    @Override
+    public List<GradingDto> findAllGradings(String id, int scheduleNo) {
+        return gradingDao.findAllGradings(id, scheduleNo);
+    }
+
+    @Override
+    public void updateConfirmed(List<String> userId) {
+        gradingDao.updateConfirmed(userId);
+    }
+
+    @Override
+    public void reTestGo(List<String> userId, int testNo) {
+        gradingDao.deleteUserQuestionResult(userId, testNo);
+        gradingDao.updateUserScore(userId, testNo);
+    }
 }
