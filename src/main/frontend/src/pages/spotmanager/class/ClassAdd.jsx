@@ -1,158 +1,56 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import koLocale from "@fullcalendar/core/locales/ko";
-import useFetch from "../../hooks/useFetch";
-import "../../assets/css/spotmanager/classAdd.css";
-import useApi2 from "../../hooks/useApi2";
-import {handleDelete} from "../../modal/common/swals";
+import "../../../assets/css/spotmanager/classAdd.css";
 import Swal from 'sweetalert2';
+import useFormHandler from "../../../hooks/spotmanager/classadd/useFormHandler";
+import useSchedules from "../../../hooks/spotmanager/classadd/useSchedules";
+import useClassData from "../../../hooks/spotmanager/classadd/useClassData";
+import useSessionStorage from "../../../hooks/useSessionStorage";
 
 const ClassAdd = () => {
-    const {get} = useApi2();
-    const [classData, setClassData] = useState(null);
+    const {getSession} = useSessionStorage();
+    // const {loginUser} = getSession("user");
+    // console.log(loginUser);
+    const {classData, teachers, rooms} = useClassData(1);
+    const {formData, setFormData, errors, validate, handleChange} =
+        useFormHandler();
+    const {schedules, handleScheduleAdd, handleScheduleDelete, handleScheduleChange} =
+        useSchedules();
     const [selectedClass, setSelectedClass] = useState(null);
-    const [teachers, setTeachers] = useState([]); // 강사 목록
-    const [selectedInstructor, setSelectedInstructor] = useState("");
-    const [calendarEvents, setCalendarEvents] = useState([]);
-    const [schedules, setSchedules] = useState([]); // 스케줄 목록
-    const [rooms, setRooms] = useState([]); // 강의실 목록
+
+
+    const [selectedTeachers, setSelectedTeachers] = useState("");
     const [selectedRoom, setSelectedRoom] = useState("");
-
-    // 강사 목록 가져오기 (예시)
-    useEffect(() => {
-        const getClass = async () => {
-            const result = await get("api/v1/spot-manager/class/1");
-            console.log(result);
-            setClassData(result);
-        }
-
-        const getTeachers = async () => {
-            const result = await get("api/v1/spot-manager/teacher/1");
-            console.log(result);
-            setTeachers(result);
-        }
-
-        const getClassRoom = async () => {
-            const result = await get("api/v1/spot-manager/class-room/1");
-            console.log(result);
-            setRooms(result);
-        }
-        getClass();
-        getTeachers();
-        getClassRoom();
-    }, []);
-
-    const [formData, setFormData] = useState({
-        title: "",
-        startDate: "",
-        endDate: "",
-        maxPeople: "",
-    });
-
-
-    const [errors, setErrors] = useState({});
-
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleScheduleAdd = () => {
-        setSchedules((prevSchedules) => [
-            ...prevSchedules,
-            {name: "", startDate: "", endDate: ""},
-        ]);
-    };
-
-    const handleScheduleDelete = (index) => {
-        handleDelete(() => setSchedules((prevSchedules) => prevSchedules.filter((_, i) => i !== index)));
-    };
-
-    const handleScheduleChange = (index, e) => {
-        const {name, value} = e.target;
-        const updatedSchedules = schedules.map((schedule, i) =>
-            i === index ? {...schedule, [name]: value} : schedule
-        );
-        setSchedules(updatedSchedules);
-    };
-
-    const validate = () => {
-        const newErrors = {};
-
-        if (!formData.title) {
-            newErrors.title = "강의 제목을 입력해주세요.";
-        }
-
-        if (!formData.startDate) {
-            newErrors.startDate = "강의 시작일을 선택해주세요.";
-        }
-
-        if (!formData.endDate) {
-            newErrors.endDate = "강의 수료일을 선택해주세요.";
-        } else if (formData.startDate && formData.endDate < formData.startDate) {
-            newErrors.endDate = "수료일은 시작일 이후여야 합니다.";
-        }
-
-        if (!selectedInstructor) {
-            newErrors.instructor = "강사를 선택해주세요.";
-        }
-
-        if (!selectedRoom) {
-            newErrors.room = "강의실을 선택해주세요.";
-        }
-
-        if (!formData.capacity || formData.capacity <= 0) {
-            newErrors.capacity = "수강 정원은 1명 이상이어야 합니다.";
-        }
-
-        setErrors(newErrors);
-
-        return Object.keys(newErrors).length === 0;
-    };
-
-
-
+    const [calendarEvents, setCalendarEvents] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (validate()) {
-            console.log("Form Data: ", formData, "Instructor: ", selectedInstructor, "Room: ", selectedRoom);
-            console.log("Schedules: ", schedules);
+        if (validate(selectedTeachers, selectedRoom)) {
             Swal.fire({
-                icon: 'success',
-                title: '강의가 성공적으로 등록되었습니다!',
+                icon: "success",
+                title: "강의가 성공적으로 등록되었습니다!",
+                timer: 1500,
                 showConfirmButton: false,
-                timer: 1500
             });
-            setCalendarEvents((prevEvents) => [
-                ...prevEvents,
+
+            setCalendarEvents([
+                ...calendarEvents,
                 ...schedules.map((sch) => ({
                     title: sch.name,
                     start: sch.startDate,
                     end: sch.endDate,
                 })),
             ]);
-            setFormData({
-                title: "",
-                startDate: "",
-                endDate: "",
-                maxPeople: "",
-            });
-            setSelectedInstructor("");
-            setSelectedRoom("");
-            setSchedules([]);
         }
     };
 
-
     const handleClassSelect = (classNo) => {
-        setSelectedClass(!!classNo && classNo === selectedClass ? null : classNo);
+        setSelectedClass(classNo === selectedClass ? null : classNo);
     };
+
 
     return (
         <div className="flex">
@@ -223,12 +121,12 @@ const ClassAdd = () => {
                     </div>
 
                     <div className="instructor-select">
-                        <label htmlFor="instructor">강사 선택</label>
+                        <label htmlFor="teachers">강사 선택</label>
                         <select
-                            id="instructor"
-                            value={selectedInstructor}
-                            onChange={(e) => setSelectedInstructor(e.target.value)}
-                            className={errors.instructor ? "error-input" : ""}
+                            id="teachers"
+                            value={selectedTeachers}
+                            onChange={(e) => setSelectedTeachers(e.target.value)}
+                            className={errors.teachers ? "error-input" : ""}
                         >
                             <option value="">강사를 선택하세요</option>
                             {teachers && teachers.map((teacher) => (
@@ -237,8 +135,8 @@ const ClassAdd = () => {
                                 </option>
                             ))}
                         </select>
-                        {errors.instructor && (
-                            <p className="error-message">{errors.instructor}</p>
+                        {errors.teachers && (
+                            <p className="error-message">{errors.teachers}</p>
                         )}
                     </div>
 
@@ -326,7 +224,6 @@ const ClassAdd = () => {
                     )}
                 </div>
             </div>
-
             <div className="calendar-container">
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
