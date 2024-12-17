@@ -1,5 +1,6 @@
 /* TestExam.css */
 .container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,14 +11,16 @@
 
 .grid-box{
     display: grid;
-    grid-template-columns: 1fr 3fr; /* span과 input의 너비 설정 */
-    gap: 10px; /* span과 input 사이 간격 */
-    align-items: center; /* 세로축 가운데 정렬 */
-    margin-bottom: 15px; /* 각 입력 그룹 간의 간격 */
+    grid-template-columns: 100px 300px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
 }
+
 
 select,
 input {
+    width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -27,13 +30,6 @@ input {
     font-size: 16px;
 }
 
-select{
-    width: 322px;
-}
-
-input{
-    width: 300px;
-}
 
 input:focus,
 select:focus {

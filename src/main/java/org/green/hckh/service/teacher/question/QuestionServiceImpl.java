@@ -14,16 +14,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     private final QuestionDao questionDao;
-    private final QuestionDetailDao questionDetailDao;
 
     @Override
     public int insertTotalQuestion(List<QuestionDto> questionList) {
-        int resultQues = 0;
-        int resultDetail = 0;
-        for (QuestionDto questionDto : questionList) {
-            resultQues += questionDao.insert(questionDto);
-            resultDetail += questionDetailDao.insert(questionDto.getQuestionDetailDtoList());
-        }
-        return resultQues + resultDetail;
+        return questionDao.insert(questionList);
     }
 }

@@ -11,5 +11,4 @@ public class QuestionDto {
     private String questionTitle;
     private char questionCode;
     private float questionScore;
-    private List<QuestionDetailDto> questionDetailDtoList;
 }

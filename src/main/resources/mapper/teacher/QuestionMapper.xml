@@ -13,12 +13,14 @@
         question_score
         )
         VALUES
-        (
-        #{Q.testNo},
-        #{Q.questionNo},
-        #{Q.questionTitle},
-        #{Q.questionCode},
-        #{Q.questionScore}
-        )
+        <foreach collection="list" item="Q" separator=",">
+            (
+            #{Q.testNo},
+            #{Q.questionNo},
+            #{Q.questionTitle},
+            #{Q.questionCode},
+            #{Q.questionScore}
+            )
+        </foreach>
     </insert>
 </mapper>
