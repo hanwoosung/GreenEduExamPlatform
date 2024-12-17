@@ -18,4 +18,5 @@ public interface ScheduleService {
     void editCalendarEvent(CalendarDto calendarDto);
 
     void removeCalendarEvent(int calendarNo);
+    
 }
