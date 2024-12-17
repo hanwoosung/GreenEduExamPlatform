@@ -7,17 +7,15 @@ import useFetch from "../../hooks/useFetch";
 import "../../assets/css/spotmanager/classAdd.css";
 
 const ClassAdd = () => {
-
     const { data, isLoading, error } = useFetch('/api/v1/spot-manager/class/1');
     const [classData, setClassData] = useState(null);
 
-    // useEffect로 상태 업데이트 제어
     useEffect(() => {
         if (data) {
             setClassData(data);
             console.log(data);
         }
-    }, [data]); // data가 변경될 때만 실행
+    }, [data]);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -62,7 +60,6 @@ const ClassAdd = () => {
         if (validate()) {
             console.log("Form Data: ", formData);
             alert("강의가 성공적으로 등록되었습니다!");
-            // 폼 제출 후 초기화
             setFormData({
                 title: "",
                 startDate: "",
@@ -73,96 +70,77 @@ const ClassAdd = () => {
 
     return (
         <div className="flex">
-            <div className="flex-col">
-                <form
-                    onSubmit={handleSubmit}
-                    className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full">
-                    <div className="mb-4">
-                        <label htmlFor="title" className="block text-sm font-medium mb-1">
-                            강의 제목
-                        </label>
+            <div className="form-container">
+                <form onSubmit={handleSubmit}>
+                    <h1>강의 등록</h1>
+
+                    <div>
+                        <label htmlFor="title">강의 제목</label>
                         <input
                             id="title"
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className={`w-full p-2 border ${
-                                errors.title ? "border-red-500" : "border-gray-300"
-                            } rounded-md`}
+                            className={errors.title ? "error-input" : ""}
                             maxLength={50}
+                            placeholder="강의 제목을 입력하세요"
                         />
                         {errors.title && (
-                            <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+                            <p className="error-message">{errors.title}</p>
                         )}
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="startDate" className="block text-sm font-medium mb-1">
-                            시작 날짜
-                        </label>
+                    <div>
+                        <label htmlFor="startDate">시작 날짜</label>
                         <input
                             type="date"
                             id="startDate"
                             name="startDate"
                             value={formData.startDate}
                             onChange={handleChange}
-                            className={`w-full p-2 border ${
-                                errors.startDate ? "border-red-500" : "border-gray-300"
-                            } rounded-md`}
+                            className={errors.startDate ? "error-input" : ""}
                         />
                         {errors.startDate && (
-                            <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
+                            <p className="error-message">{errors.startDate}</p>
                         )}
                     </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="endDate" className="block text-sm font-medium mb-1">
-                            종료 날짜
-                        </label>
+                    <div>
+                        <label htmlFor="endDate">종료 날짜</label>
                         <input
                             type="date"
                             id="endDate"
                             name="endDate"
                             value={formData.endDate}
                             onChange={handleChange}
-                            className={`w-full p-2 border ${
-                                errors.endDate ? "border-red-500" : "border-gray-300"
-                            } rounded-md`}
+                            className={errors.endDate ? "error-input" : ""}
                         />
                         {errors.endDate && (
-                            <p className="text-red-500 text-sm mt-1">{errors.endDate}</p>
+                            <p className="error-message">{errors.endDate}</p>
                         )}
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 dark:bg-blue-700 text-white p-2 rounded-md hover:bg-blue-700 dark:hover:bg-blue-600">
-                        강의 등록
-                    </button>
+                    <button type="submit">강의 등록</button>
                 </form>
-                <div className="mt-6">
-                    <h2 style={{color: "#000000", fontWeight: "bold", fontSize: "18px"}}>
-                        등록된 강의 목록
-                    </h2>
+
+                <div className="course-list">
+                    <h2>등록된 강의 목록</h2>
                     {classData && classData.length > 0 ? (
-                        <div className="button-grid">
-                            {classData.map((clazz) => (
-                                <button key={clazz.id} className="button-item">
-                                    {clazz.className}
-                                </button>
-                            ))}
-                        </div>
+                        classData.map((clazz) => (
+                            <button key={clazz.id}>{clazz.className}</button>
+                        ))
                     ) : (
-                        <p style={{color: "#808080"}}>등록된 강의가 없습니다.</p>
+                        <p className="no-courses">등록된 강의가 없습니다.</p>
                     )}
                 </div>
             </div>
-            <div className="ml-6 w-full">
+
+            <div className="calendar-container">
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
-                    locale={koLocale} // 한국어 설정
-                    events={[]} // 이벤트 데이터
+                    locale={koLocale}
+                    events={[]}
                     headerToolbar={{
                         left: "",
                         center: "title",

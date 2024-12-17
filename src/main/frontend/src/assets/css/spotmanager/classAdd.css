@@ -1,28 +1,115 @@
-.button-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px;
+/* classAdd.css */
+body {
+    background-color: #f9fafb;
+    font-family: Arial, sans-serif;
 }
 
-.button-item {
-    background-color: #000000; /* Black */
-    color: #ffffff; /* White */
-    padding: 12px 16px;
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    background-color: #f3f4f6;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
     border-radius: 8px;
-    text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    cursor: pointer;
-    border: none;
+    padding: 20px;
+}
+
+.form-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.form-container label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4b5563;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.form-container input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.form-container .error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 12px;
     font-size: 16px;
+    color: #fff;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.button-item:hover {
-    background-color: #333333; /* Slightly lighter black */
-    transform: scale(1.05); /* Slightly enlarge */
+.form-container button:hover {
+    background-color: #1d4ed8;
 }
 
-.button-item:focus {
-    outline: 2px solid #ffffff; /* White outline for focus */
-    outline-offset: 4px;
+.course-list {
+    margin-top: 20px;
+}
+
+.course-list h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+.course-list button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #374151;
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.course-list button:hover {
+    background-color: #e5e7eb;
+}
+
+.no-courses {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.calendar-container {
+    width: 100%;
+    max-width: 700px;
 }
