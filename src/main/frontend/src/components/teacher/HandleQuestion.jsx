@@ -4,7 +4,7 @@ const HandleQuestion = () =>{
             <div className="question-box">
 
             </div>
-            <
+
         </div>
     )
 }

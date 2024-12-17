@@ -9,15 +9,15 @@
         question_no,
         question_detail_no,
         question_content,
-        correct_yn,
+        correct_yn
         )
         VALUES
         <foreach collection="list" item="Q" separator=",">
             (
-            #{Q.question_no},
-            #{Q.question_detail_no},
-            #{Q.question_content},
-            #{Q.correct_yn},
+            #{Q.questionNo},
+            #{Q.questionDetailNo},
+            #{Q.questionContent},
+            #{Q.correctYn}
             )
         </foreach>
     </insert>
