@@ -10,8 +10,9 @@
     </select>
 
     <select id="findById" resultType="org.green.hckh.dto.common.UserDto">
-        SELECT *
-        FROM tbl_user
+        SELECT a.*, spot_name AS spot_nm
+        FROM tbl_user a
+        LEFT JOIN tbl_spot b ON a.spot_no = b.spot_no AND b.delete_yn = 'N'
         WHERE user_id = #{userId}
     </select>
 

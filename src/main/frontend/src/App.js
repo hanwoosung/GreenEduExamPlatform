@@ -9,6 +9,7 @@ import React from "react";
 import StudentMain from "./pages/student/StudentMain";
 import Login from "./pages/common/Login";
 import Regist from "./pages/common/Regist";
+import Userinfo from "./pages/common/Userinfo";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
@@ -83,6 +84,11 @@ function App() {
                     <Route path="/student" element={
                         <Layout>
                             <StudentMain />
+                        </Layout>
+                    }/>
+                    <Route path="/userInfo" element={
+                        <Layout>
+                            <Userinfo />
                         </Layout>
                     }/>
                 </Routes>
