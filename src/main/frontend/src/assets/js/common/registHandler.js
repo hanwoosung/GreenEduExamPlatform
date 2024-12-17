@@ -1,7 +1,7 @@
 import {useState} from "react";
-import useFetch from "../../hooks/useFetch";
-import useApi from "../../hooks/useApi";
-import {useRegistEventService} from "../../services/common/useRegistEventService";
+import useFetch from "../../../hooks/useFetch";
+import useApi from "../../../hooks/useApi";
+import {useRegistEventService} from "../../../services/common/useRegistEventService";
 import { useNavigate } from 'react-router-dom';
 
 export const useRegistHandler = () => {

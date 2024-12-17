@@ -3,10 +3,11 @@ import Layout from "./components/common/Layout";
 import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
-import Regist from "./pages/Regist";
+import Regist from "./pages/common/Regist";
 import './index.css';
 import ClassAdd from "./pages/class/ClassAdd";
 import React from "react";
+import Login from "./pages/common/Login";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
@@ -67,9 +68,14 @@ function App() {
                             <ClassAdd/>
                         </Layout>
                     }/>
-                    <Route path="/Regist" element={
+                    <Route path="/regist" element={
                         <Layout>
                             <Regist />
+                        </Layout>
+                    }/>
+                    <Route path="/login" element={
+                        <Layout>
+                            <Login />
                         </Layout>
                     }/>
                 </Routes>

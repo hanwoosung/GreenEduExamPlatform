@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {useRegistHandler} from "../assets/js/registHandler";
+import {useRegistHandler} from "../../assets/js/common/registHandler";
 
 const Regist = () => {
 
@@ -150,7 +150,7 @@ const Regist = () => {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="login" variant="body2">
                                 이미 계정이 있으신가요? 로그인
                             </Link>
                         </Grid>
