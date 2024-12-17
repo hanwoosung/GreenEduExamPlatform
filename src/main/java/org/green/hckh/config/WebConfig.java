@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.green.hckh.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -17,3 +18,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 }
+=======
+>>>>>>> develop
