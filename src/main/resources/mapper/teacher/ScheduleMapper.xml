@@ -44,5 +44,12 @@
         SELECT Max(calendar_no)
         FROM tbl_calendar;
     </select>
+    
+    <select id="findByClassNo">
+        SELECT *
+        FROM tbl_schedule
+        WHERE class_no = #{classNo}
+        AND delete_yn = 'N'
+    </select>
 
 </mapper>

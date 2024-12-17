@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -13,43 +13,69 @@ import useSessionStorage from "../../../hooks/useSessionStorage";
 const ClassAdd = () => {
     const {sessionValues} = useSessionStorage();
     const {user} = sessionValues;
-    console.log(sessionValues);
-    console.log(user);
-    const {classData, teachers, rooms} = useClassData(1);
-    const {formData, setFormData, errors, validate, handleChange} =
+    const {classData, teachers, rooms} = useClassData(user?.spotNo);
+    const {formData, setFormData, errors, validate, handleChange, initialFormData} =
         useFormHandler();
-    const {schedules, handleScheduleAdd, handleScheduleDelete, handleScheduleChange} =
+    const {
+        schedules,
+        setSchedules,
+        handleScheduleAdd,
+        handleScheduleDelete,
+        handleScheduleChange,
+        classNo,
+        setClassNo,
+        calendarEvents,
+        setCalendarEvents
+    } =
         useSchedules();
-    const [selectedClass, setSelectedClass] = useState(null);
+    const [isReg, setIsReg] = useState(true);
+    // const [selectedClass, setSelectedClass] = useState(null);
+    const isRegStr = () => {return isReg ? '강의 등록' : '강의 수정'};
 
 
     const [selectedTeachers, setSelectedTeachers] = useState("");
     const [selectedRoom, setSelectedRoom] = useState("");
-    const [calendarEvents, setCalendarEvents] = useState([]);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate(selectedTeachers, selectedRoom)) {
             Swal.fire({
                 icon: "success",
-                title: "강의가 성공적으로 등록되었습니다!",
+                className: "강의가 성공적으로 등록되었습니다!",
                 timer: 1500,
                 showConfirmButton: false,
             });
 
-            setCalendarEvents([
-                ...calendarEvents,
-                ...schedules.map((sch) => ({
-                    title: sch.name,
-                    start: sch.startDate,
-                    end: sch.endDate,
-                })),
-            ]);
+            // setCalendarEvents([
+            //     ...calendarEvents,
+            //     ...schedules.map((sch) => ({
+            //         className: sch.name,
+            //         start: sch.startDate,
+            //         end: sch.endDate,
+            //     })),
+            // ]);
+
+
+            setFormData(initialFormData);
+            setSelectedTeachers("");
+            setSelectedRoom("");
+            setSchedules([]);
+            setCalendarEvents([]);
         }
     };
 
-    const handleClassSelect = (classNo) => {
-        setSelectedClass(classNo === selectedClass ? null : classNo);
+    const handleClassSelect = (e) => {
+        const jsonValue = JSON.parse(e.target.value);
+        setClassNo(jsonValue.classNo === classNo ? null : jsonValue.classNo);
+
+        if (jsonValue.classNo === classNo) {
+            setFormData(initialFormData);
+            setIsReg(true);
+        } else {
+            setFormData(jsonValue);
+            setIsReg(false);
+        }
     };
 
 
@@ -57,21 +83,21 @@ const ClassAdd = () => {
         <div className="flex">
             <div className="form-container">
                 <form onSubmit={handleSubmit}>
-                    <h1>강의 등록</h1>
+                    <h1>{isRegStr()}</h1>
 
                     <div>
-                        <label htmlFor="title">강의 제목</label>
+                        <label htmlFor="className">강의 제목</label>
                         <input
-                            id="title"
-                            name="title"
-                            value={formData.title}
+                            id="className"
+                            name="className"
+                            value={formData.className}
                             onChange={handleChange}
-                            className={errors.title ? "error-input" : ""}
+                            className={errors.className ? "error-input" : ""}
                             maxLength={50}
                             placeholder="강의 제목을 입력하세요"
                         />
-                        {errors.title && (
-                            <p className="error-message">{errors.title}</p>
+                        {errors.className && (
+                            <p className="error-message">{errors.className}</p>
                         )}
                     </div>
 
@@ -105,19 +131,19 @@ const ClassAdd = () => {
                         )}
                     </div>
                     <div>
-                        <label htmlFor="capacity">수강 정원</label>
+                        <label htmlFor="maxPeople">수강 정원</label>
                         <input
                             type="number"
-                            id="capacity"
-                            name="capacity"
-                            value={formData.capacity}
+                            id="maxPeople"
+                            name="maxPeople"
+                            value={formData.maxPeople}
                             onChange={handleChange}
-                            className={errors.capacity ? "error-input" : ""}
+                            className={errors.maxPeople ? "error-input" : ""}
                             min="1" // 최소값 설정
                             placeholder="수강 정원을 입력하세요"
                         />
-                        {errors.capacity && (
-                            <p className="error-message">{errors.capacity}</p>
+                        {errors.maxPeople && (
+                            <p className="error-message">{errors.maxPeople}</p>
                         )}
                     </div>
 
@@ -172,7 +198,7 @@ const ClassAdd = () => {
                                     type="text"
                                     name="name"
                                     placeholder="스케줄명"
-                                    value={sch.name}
+                                    value={sch.scheduleName}
                                     onChange={(e) => handleScheduleChange(index, e)}
                                 />
                                 <div className="schedule-bottom">
@@ -202,7 +228,7 @@ const ClassAdd = () => {
                     </div>
 
                     <div style={{marginTop: "20px"}}>
-                        <button type="submit">강의 등록</button>
+                        <button type="submit">{isRegStr()}</button>
                     </div>
                 </form>
 
@@ -212,9 +238,9 @@ const ClassAdd = () => {
                         classData.map((clazz) => (
                             <button
                                 key={clazz.classNo}
-                                value={clazz.classNo}
-                                onClick={() => handleClassSelect(clazz.classNo)}
-                                className={clazz.classNo === selectedClass ? "selected" : ""}
+                                value={JSON.stringify(clazz)}
+                                onClick={(e) => handleClassSelect(e)}
+                                className={clazz.classNo === classNo ? "selected" : ""}
                             >
                                 {clazz.className} <br/>
                                 {clazz.startDate} ~ {clazz.endDate}

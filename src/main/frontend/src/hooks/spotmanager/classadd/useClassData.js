@@ -3,6 +3,7 @@ import useApi2 from "../../../hooks/useApi2";
 
 const useClassData = (spotNo) => {
   const { get } = useApi2();
+  // const [spotNo, setSpotNo] = useState();
   const [classData, setClassData] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -21,7 +22,7 @@ const useClassData = (spotNo) => {
     fetchData();
   }, []);
 
-  return { classData, teachers, rooms };
+  return {classData, teachers, rooms};
 };
 
 export default useClassData;

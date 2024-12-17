@@ -2,6 +2,7 @@ package org.green.hckh.service.teacher.schedule;
 
 import org.green.hckh.dto.teacher.schedule.CalendarDto;
 import org.green.hckh.dto.teacher.schedule.ScheduleDto;
+import org.green.hckh.entity.teacher.schedule.ScheduleEntity;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface ScheduleService {
     void editCalendarEvent(CalendarDto calendarDto);
 
     void removeCalendarEvent(int calendarNo);
-    
+
+    List<ScheduleEntity> findByClassNo(int classNo);
 }
