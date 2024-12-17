@@ -18,7 +18,7 @@ public class ClassEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_no", nullable = false)
-    private Integer id;
+    private Integer classNo;
 
     @Column(name = "spot_no", nullable = false)
     private Integer spotNo;
