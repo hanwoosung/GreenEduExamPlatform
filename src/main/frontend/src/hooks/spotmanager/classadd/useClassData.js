@@ -19,7 +19,7 @@ const useClassData = (spotNo) => {
     };
 
     fetchData();
-  }, [get]);
+  }, []);
 
   return { classData, teachers, rooms };
 };

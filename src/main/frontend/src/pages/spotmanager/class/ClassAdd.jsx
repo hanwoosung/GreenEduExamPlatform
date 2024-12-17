@@ -11,9 +11,10 @@ import useClassData from "../../../hooks/spotmanager/classadd/useClassData";
 import useSessionStorage from "../../../hooks/useSessionStorage";
 
 const ClassAdd = () => {
-    const {getSession} = useSessionStorage();
-    // const {loginUser} = getSession("user");
-    // console.log(loginUser);
+    const {sessionValues} = useSessionStorage();
+    const {user} = sessionValues;
+    console.log(sessionValues);
+    console.log(user);
     const {classData, teachers, rooms} = useClassData(1);
     const {formData, setFormData, errors, validate, handleChange} =
         useFormHandler();
