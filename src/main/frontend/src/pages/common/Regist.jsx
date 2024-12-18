@@ -8,22 +8,24 @@ import {
     Avatar,
     Grid,
     Link,
+    ToggleButtonGroup,
+    ToggleButton
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {useRegistHandler} from "../assets/js/registHandler";
+import {useRegistHandler} from "../../assets/js/common/registHandler";
 
 const Regist = () => {
 
     const {
         reigstData,
         errors,
-        duplicateCheckLoading,
+        alignment,
+        handleToggle,
         handleChange,
         handleDuplicate,
-        handleSubmit,
+        handleSubmit
     } = useRegistHandler();
-
 
     return (
         <Container component="main" maxWidth="xs">
@@ -41,6 +43,18 @@ const Regist = () => {
                 <Typography component="h1" variant="h5">
                     회원가입
                 </Typography>
+                <ToggleButtonGroup
+                    fullWidth
+                    color="primary"
+                    value={alignment}
+                    exclusive
+                    onChange={handleToggle}
+                    aria-label="userRoleCode"
+                    sx={{mt: 3, mb: 2}}
+                >
+                    <ToggleButton value="ROLE_STUDENT">학생</ToggleButton>
+                    <ToggleButton value="ROLE_TEACHER">선생님</ToggleButton>
+                </ToggleButtonGroup>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -60,7 +74,7 @@ const Regist = () => {
                                 fullWidth
                                 variant="contained"
                                 onClick={handleDuplicate}
-                                disabled={duplicateCheckLoading || Boolean(reigstData.idChk)}
+                                disabled={Boolean(reigstData.idChk)}
                                 sx={{mt: 3, mb: 2}}
                             >
                                 중복체크
@@ -70,14 +84,14 @@ const Regist = () => {
                             <TextField
                                 required
                                 fullWidth
-                                name="userName"
+                                name="name"
                                 label="이름"
                                 id="userName"
-                                autoComplete="userName"
-                                value={reigstData.userName}
+                                autoComplete="name"
+                                value={reigstData.name}
                                 onChange={handleChange}
-                                error={Boolean(errors.userName)}
-                                helperText={errors.userName}
+                                error={Boolean(errors.name)}
+                                helperText={errors.name}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -136,7 +150,7 @@ const Regist = () => {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="login" variant="body2">
                                 이미 계정이 있으신가요? 로그인
                             </Link>
                         </Grid>

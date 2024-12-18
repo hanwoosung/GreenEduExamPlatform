@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.common.UserDao">
+
+    <select id="findCntById">
+        SELECT COUNT(*)
+        FROM tbl_user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="findById" resultType="org.green.hckh.dto.common.UserDto">
+        SELECT a.*, spot_name
+        FROM tbl_user a
+        LEFT JOIN tbl_spot b ON a.spot_no = b.spot_no AND b.delete_yn = 'N'
+        WHERE a.user_id = #{userId}
+        AND a.delete_yn = 'N'
+    </select>
+
+    <insert id="save">
+        INSERT INTO tbl_user(
+            user_id,
+            user_password,
+            name,
+            user_birth,
+            user_role_code,
+            delete_yn
+        )VALUES (
+            #{user.userId},
+            #{user.userPassword},
+            #{user.name},
+            #{user.userBirth},
+            #{user.userRoleCode},
+            #{user.deleteYn}
+        );
+    </insert>
+
+    <update id="update">
+        UPDATE tbl_user
+        SET user_password = #{user.userPassword},
+            name = #{user.name},
+            user_birth = #{user.userBirth},
+            user_role_code = #{user.userRoleCode},
+            spot_no = #{user.spotNo}
+        WHERE user_id = #{user.userId};
+    </update>
+
+</mapper>
