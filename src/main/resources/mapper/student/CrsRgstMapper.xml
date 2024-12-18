@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.student.CrsRgstDao">
+
+    <select id="getClasses" resultType="org.green.hckh.dto.student.CrsRgst.ClassDto">
+
+        SELECT a.class_no,
+               a.spot_no,
+               a.class_name,
+               a.user_id,
+               a.room_no,
+               a.start_date,
+               a.end_date,
+               a.delete_yn,
+               a.max_people,
+               IFNULL(b.graduate_code, '') AS `graduate_code`,
+               c.name,
+               d.room_name
+        FROM tbl_class a
+        LEFT JOIN tbl_user_class b ON a.class_no = b.class_no AND b.user_id = #{userId}
+        LEFT JOIN tbl_user c ON a.user_id = c.user_id
+        LEFT JOIN tbl_class_room d ON a.room_no = d.room_no
+        WHERE a.delete_yn = 'N'
+        ORDER BY CASE
+                    WHEN NOW() >= a.end_date THEN 99
+                    ELSE start_date END;
+
+    </select>
+
+    <select id="getClassCnt">
+
+        SELECT COUNT(*)
+        FROM tbl_user_class
+        WHERE class_no = #{classNo}
+        AND user_id = #{userId}
+
+    </select>
+
+    <insert id="insertClass">
+
+        INSERT INTO tbl_user_class(
+           class_no,
+           user_id
+        )VALUES (
+            #{classNo},
+            #{userId}
+        );
+
+    </insert>
+
+
+
+</mapper>

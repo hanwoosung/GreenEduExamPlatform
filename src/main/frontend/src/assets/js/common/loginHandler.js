@@ -52,13 +52,11 @@ export const useLoginHandler = () => {
 
                 setErrors((prevData) => ({
                     ...prevData,
-                    userId: res.body.userId === "" ? "아이디 및 비밀번호 오류입니다." : "",
+                    userId: res.body.userId === null ? "아이디 및 비밀번호 오류입니다." : "",
                 }));
 
-                if (res.body.userId !== "") {
-
+                if (res.body.userId != null) {
                     setSession("user", res.body);
-
                     window.location.href = getUrl(res.body.userRoleCode);
                 }
 
