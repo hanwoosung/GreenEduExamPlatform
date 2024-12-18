@@ -3,8 +3,23 @@ import useApi from "../../hooks/useApi";
 import useFetch from "../../hooks/useFetch";
 import HandleQuestion from "../../components/teacher/HandleQuestion"
 import "../../assets/css/teacher/test/test.css"
+import useSessionStorage from "../../hooks/useSessionStorage";
 
 const TestExam = () => {
+
+    const {sessionValues} = useSessionStorage();
+
+    const [userData, setUserData] = useState({
+        userId: sessionValues?.user.userId,
+        name: sessionValues?.user.name,
+        userPassword: "",
+        confirmPassword: "",
+        userRoleCode: sessionValues?.user.userRoleCode,
+        userBirth: sessionValues?.user.userBirth,
+        deleteYn: sessionValues?.user.deleteYn,
+        spotNo: sessionValues?.user.spotNo,
+        spotName: sessionValues?.user.spotName,
+    });
 
     const [test, setTest] = useState({
         testNo: 0,
@@ -47,9 +62,11 @@ const TestExam = () => {
     });
 
     const testRegist = async () => {
+        //todo 빈값으로 이동하는 코드
+
         const response = await testPost({
             scheduleNo: test.scheduleNo,
-            createUserId: "aaa",
+            createUserId: userData.userId,
             cutline: test.cutline,
             createDt: "",
             updateDt: "",
@@ -65,9 +82,9 @@ const TestExam = () => {
     }
 
     const questionRegist = async (questions, details) => {
+        // todo 유효성 검사 코드
+
         if (questions != null && details != null) {
-            console.log(questions);
-            console.log(details);
             const questionRes = await questionPost(questions, {}, "");
             const detailRes = await detailPost(details, {}, "");
             if (questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
@@ -120,6 +137,7 @@ const TestExam = () => {
                     onChange={(e) => setTest({...test, testDt: e.target.value})}
                 />
             </div>
+
             <div className={"grid-box"}>
                 <span>객관식 갯수</span>
                 <input
@@ -131,7 +149,7 @@ const TestExam = () => {
                 />
             </div>
             <div className={"grid-box"}>
-                <span>객관식 갯수</span>
+                <span>단답형 갯수</span>
                 <input
                     type={"number"}
                     min={0}
@@ -141,7 +159,7 @@ const TestExam = () => {
                 />
             </div>
             <div className={"grid-box"}>
-                <span>객관식 갯수</span>
+                <span>서술형 갯수</span>
                 <input
                     type={"number"}
                     min={0}
@@ -150,11 +168,11 @@ const TestExam = () => {
                     onChange={(e) => setQuestionsGubn({...questionGubn, long: parseInt(e.target.value) || 0})}
                 />
             </div>
-            {/*todo 유효성 추가필요
-                만들기 전 임시 저장*/}
             <button onClick={testRegist}>{examBtnTitle}</button>
             {(showSuccess && questionGubn.number > 0) && (
                 <HandleQuestion
+                    gubn={"N"}
+                    startNum={1}
                     number={questionGubn.number}
                     questions={questions}
                     setQuestions={setQuestions}
@@ -163,11 +181,11 @@ const TestExam = () => {
                     test={test}
                 />
             )}
-            <hr/>
-            임시구분용
-            <hr/>
+
             {(showSuccess && questionGubn.short > 0) && (
                 <HandleQuestion
+                    gubn={"S"}
+                    startNum={1 + questionGubn.number}
                     number={questionGubn.short}
                     questions={questions}
                     setQuestions={setQuestions}
@@ -177,12 +195,10 @@ const TestExam = () => {
                 />
             )}
 
-            <hr/>
-            임시구분용
-            <hr/>
-
             {(showSuccess && questionGubn.long > 0) && (
                 <HandleQuestion
+                    gubn={"H"}
+                    startNum={1 + questionGubn.number + questionGubn.short}
                     number={questionGubn.long}
                     questions={questions}
                     setQuestions={setQuestions}

@@ -5,14 +5,17 @@ import {useEffect} from "react";
 const HandleQuestion = (props) => {
 
     useEffect(() => {
-        for (let qno = 1; qno <= props.number; qno++) {
+        // 이전 값들의 합 = 초기값 0
+        // let qno = 이전 값들의 합 + 1; qno <= qno + props.number
+        for (let qno = props.startNum; qno < props.startNum + props.number; qno++) {
             addTotalQuestion(qno)
         }
     }, [props.number]);
 
     const addTotalQuestion = (qno) => {
+        let detailAmount = (props.gubn === "N") ? 4 : 1;
         addElement(qno);
-        for (let dno = 1; dno <= 4; dno++) {
+        for (let dno = 1; dno <= detailAmount; dno++) {
             addDetail(qno, dno);
         }
     }
@@ -22,7 +25,7 @@ const HandleQuestion = (props) => {
             testNo: props.test.testNo,
             questionNo: qno,
             questionTitle: "",
-            questionCode: "N",
+            questionCode: props.gubn,
             questionScore: 0
         }]);
     };
@@ -33,7 +36,7 @@ const HandleQuestion = (props) => {
             questionNo: qno,
             questionDetailNo: dno,
             questionContent: "",
-            correctYn: "N"
+            correctYn: (props.gubn === "N") ? "N" : "Y"
         }]);
     };
 
@@ -115,79 +118,85 @@ const HandleQuestion = (props) => {
 
     return (
         <div className="question-container">
-            {props.questions.map((question) => (
-                <div className="question-box" key={`q-${question.questionNo}`}>
-                    <div className="question-header">
-                        <span>{question.questionNo}번 문제</span>
+            {props.questions
+                .filter((question) => question.questionCode === props.gubn)
+                .map((question) => (
+                    <div className="question-box" key={`q-${question.questionNo}`}>
+                        <div className="question-header">
+                            <span>{question.questionNo}번 문제</span>
+                            <img
+                                src={blackCloseBtn}
+                                alt="삭제"
+                                className="icon"
+                                onClick={() => deleteQuestion(question.questionNo)}
+                            />
+                        </div>
+                        <div style={{display:"flex", flexDirection:"column"}}>
+                            <input
+                                key={`score-${question.questionNo}`}
+                                type="number"
+                                placeholder="점수"
+                                className="input-score"
+                                step="0.1"
+                                value={question.questionScore}
+                                onChange={(e) => editQuestion(e, question.questionNo, "questionScore")}
+                            />
+                            <textarea
+                                className="input-title"
+                                placeholder="문제 제목을 입력하세요"
+                                value={question.questionTitle}
+                                onChange={(e) => editQuestion(e, question.questionNo, "questionTitle")}
+                            />
+                        </div>
+
+                        {props.details
+                            .filter((detail) => detail.questionNo === question.questionNo)
+                            .map((detail) => (
+                                <div className="detail-box" key={`d-${question.questionNo}-${detail.questionDetailNo}`}>
+                                    <input
+                                        className="input-detail"
+                                        placeholder="예제 입력"
+                                        value={detail.questionContent}
+                                        onChange={(e) =>
+                                            editDetailContent(
+                                                e,
+                                                question.questionNo,
+                                                detail.questionDetailNo,
+                                                "questionContent"
+                                            )
+                                        }
+                                    />
+                                    <span style={{textWrap: "nowrap"}}>정답</span>
+                                    <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                        checked={detail.correctYn === "Y"}
+                                        onChange={(e) =>
+                                            editCorrect(e, question.questionNo, detail.questionDetailNo)
+                                        }
+                                        style={{width: "auto"}}
+                                    />
+                                    <img
+                                        src={blackCloseBtn}
+                                        alt="삭제"
+                                        className="icon"
+                                        onClick={() => deleteDetail(question.questionNo, detail.questionDetailNo)}
+                                    />
+                                </div>
+                            ))}
                         <img
-                            src={blackCloseBtn}
-                            alt="삭제"
+                            src={blackPlusBtn}
+                            alt="추가"
                             className="icon"
-                            onClick={() => deleteQuestion(question.questionNo)}
+                            onClick={() => {
+                                const detailsCount = props.details.filter(
+                                    (detail) => detail.questionNo === question.questionNo
+                                ).length;
+                                addDetail(question.questionNo, detailsCount + 1);
+                            }}
                         />
                     </div>
-                    <input
-                        type="number"
-                        placeholder="점수"
-                        className="input-score"
-                        step="0.1"
-                        value={question.questionScore}
-                        onChange={(e) => editQuestion(e, question.questionNo, "questionScore")}
-                    />
-                    <textarea
-                        className="input-title"
-                        placeholder="문제 제목을 입력하세요"
-                        value={question.questionTitle}
-                        onChange={(e) => editQuestion(e, question.questionNo, "questionTitle")}
-                    />
-                    {props.details
-                        .filter((detail) => detail.questionNo === question.questionNo)
-                        .map((detail) => (
-                            <div className="detail-box" key={`d-${detail.questionDetailNo}`}>
-                                <input
-                                    className="input-detail"
-                                    placeholder="예제 입력"
-                                    value={detail.questionContent}
-                                    onChange={(e) =>
-                                        editDetailContent(
-                                            e,
-                                            question.questionNo,
-                                            detail.questionDetailNo,
-                                            "questionContent"
-                                        )
-                                    }
-                                />
-                                <span style={{textWrap: "nowrap"}}>정답</span>
-                                <input
-                                    type="checkbox"
-                                    className="checkbox"
-                                    checked={detail.correctYn === "Y"}
-                                    onChange={(e) =>
-                                        editCorrect(e, question.questionNo, detail.questionDetailNo)
-                                    }
-                                    style={{width: "auto"}}
-                                />
-                                <img
-                                    src={blackCloseBtn}
-                                    alt="삭제"
-                                    className="icon"
-                                    onClick={() => deleteDetail(question.questionNo, detail.questionDetailNo)}
-                                />
-                            </div>
-                        ))}
-                    <img
-                        src={blackPlusBtn}
-                        alt="추가"
-                        className="icon"
-                        onClick={() => {
-                            const detailsCount = props.details.filter(
-                                (detail) => detail.questionNo === question.questionNo
-                            ).length;
-                            addDetail(question.questionNo, detailsCount + 1);
-                        }}
-                    />
-                </div>
-            ))}
+                ))}
             <button onClick={viewConsole}>
                 로그보기
             </button>

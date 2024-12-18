@@ -26,7 +26,6 @@
 
 select,
 input {
-    width: 100%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ddd;
@@ -63,7 +62,6 @@ button:disabled {
 }
 
 textarea {
-    width: 100%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ddd;
@@ -109,7 +107,6 @@ textarea:focus {
 .input-score,
 .input-title,
 .input-detail {
-    width: 100%;
     padding: 10px;
     margin-top: 10px;
     font-size: 14px;
@@ -117,6 +114,11 @@ textarea:focus {
     border-radius: 4px;
     background-color: #fff;
 }
+
+.input-detail{
+    width: 100%;
+}
+
 
 .detail-box {
     display: flex;
