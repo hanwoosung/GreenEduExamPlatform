@@ -47,21 +47,23 @@ const TestExam = () => {
     });
 
     const testRegist = async () => {
-        const response = await testPost({
-            scheduleNo: test.scheduleNo,
-            createUserId: "aaa",
-            cutline: test.cutline,
-            createDt: "",
-            updateDt: "",
-            time: test.time,
-            testDt: test.testDt,
-            deleteYn: "N"
-        }, {}, "");
+        // const response = await testPost({
+        //     scheduleNo: test.scheduleNo,
+        //     createUserId: "aaa",
+        //     cutline: test.cutline,
+        //     createDt: "",
+        //     updateDt: "",
+        //     time: test.time,
+        //     testDt: test.testDt,
+        //     deleteYn: "N"
+        // }, {}, "");
 
-        if (response !== 0) {
-            setTest({...test,testNo: Number(response.body) || 0})
-            setShowSuccess(true);
-        }
+        setTest({...test,testNo: /*Number(response.body) ||*/ 0})
+        setShowSuccess(true);
+
+        // if (response !== 0) {
+        //
+        // }
     }
 
     const questionRegist = async (questions, details) => {
