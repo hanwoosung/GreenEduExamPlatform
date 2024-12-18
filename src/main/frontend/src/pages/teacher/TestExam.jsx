@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import useApi from "../../hooks/useApi";
 import useFetch from "../../hooks/useFetch";
 import HandleQuestion from "../../components/teacher/HandleQuestion"
 import "../../assets/css/teacher/test/test.css"
 import useSessionStorage from "../../hooks/useSessionStorage";
+import TestSideBar from "../../components/teacher/TestSideBar";
 
 const TestExam = () => {
 
@@ -40,45 +41,46 @@ const TestExam = () => {
 
     const [examBtnTitle, setExamBtnTitle] = useState("시험 생성");
     const [showSuccess, setShowSuccess] = useState(false);
+    const questionRefs = useRef({});
+
+    const scrollToQuestionBox = (questionNo) => {
+        if (questionRefs.current[questionNo]) {
+            questionRefs.current[questionNo].scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    };
 
     const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule");
-
     const {post: testPost} = useApi("/api/v1/test", {
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: {"Content-Type": "application/json"}
     });
-
     const {post: questionPost} = useApi("/api/v1/question", {
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: {"Content-Type": "application/json"}
     });
-
     const {post: detailPost} = useApi("/api/v1/question/detail", {
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: {"Content-Type": "application/json"}
     });
 
     const testRegist = async () => {
         //todo 빈값으로 이동하는 코드
 
-        const response = await testPost({
-            scheduleNo: test.scheduleNo,
-            createUserId: userData.userId,
-            cutline: test.cutline,
-            createDt: "",
-            updateDt: "",
-            time: test.time,
-            testDt: test.testDt,
-            deleteYn: "N"
-        }, {}, "");
-
-        if (response !== 0) {
-            setTest({...test, testNo: Number(response.body) || 0});
-            setShowSuccess(true);
-        }
+        // const response = await testPost({
+        //     scheduleNo: test.scheduleNo,
+        //     createUserId: userData.userId,
+        //     cutline: test.cutline,
+        //     createDt: "",
+        //     updateDt: "",
+        //     time: test.time,
+        //     testDt: test.testDt,
+        //     deleteYn: "N"
+        // }, {}, "");
+        //
+        // if (response !== 0) {
+        setTest({...test, testNo: /*Number(response.body) || */ 0});
+        setShowSuccess(true);
+        // }
     }
 
     const questionRegist = async (questions, details) => {
@@ -94,7 +96,7 @@ const TestExam = () => {
     }
 
     return (
-        <div className={"container"}>
+        <div className={"container" + (showSuccess ? " add-sidebar" : "")}>
             <div className={"grid-box"}>
                 <span>과목</span>
                 <select
@@ -179,6 +181,7 @@ const TestExam = () => {
                     details={details}
                     setDetails={setDetails}
                     test={test}
+                    questionRefs={questionRefs}
                 />
             )}
 
@@ -192,6 +195,7 @@ const TestExam = () => {
                     details={details}
                     setDetails={setDetails}
                     test={test}
+                    questionRefs={questionRefs}
                 />
             )}
 
@@ -205,10 +209,20 @@ const TestExam = () => {
                     details={details}
                     setDetails={setDetails}
                     test={test}
+                    questionRefs={questionRefs}
                 />
             )}
 
-            <button onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
+            {showSuccess && (
+                <>
+                    <TestSideBar
+                        questions={questions}
+                        scrollToQuestionBox = {scrollToQuestionBox}
+                    />
+                    <button onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
+                </>
+            )}
+
         </div>
     )
 }

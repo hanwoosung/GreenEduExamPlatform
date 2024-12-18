@@ -121,7 +121,7 @@ const HandleQuestion = (props) => {
             {props.questions
                 .filter((question) => question.questionCode === props.gubn)
                 .map((question) => (
-                    <div className="question-box" key={`q-${question.questionNo}`}>
+                    <div className="question-box" key={`q-${question.questionNo}`} ref={(el) => (props.questionRefs.current[question.questionNo] = el)}>
                         <div className="question-header">
                             <span>{question.questionNo}번 문제</span>
                             <img
