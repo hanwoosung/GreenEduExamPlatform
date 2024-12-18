@@ -3,7 +3,7 @@ import Layout from "./components/common/Layout";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
 // import './index.css';
-import ClassAdd from "./pages/class/ClassAdd";
+import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import React from "react";
 import StudentMain from "./pages/student/StudentMain";
 import Login from "./pages/common/Login";
