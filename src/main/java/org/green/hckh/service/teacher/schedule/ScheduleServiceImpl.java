@@ -84,4 +84,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<ScheduleEntity> findByClassNo(int classNo) {
         return scheduleDao.findByClassNo(classNo);
     }
+
+    @Override
+    public int updateDeleteYSchedule(int scheduleNo) {
+        return scheduleDao.updateDeleteYSchedule(scheduleNo);
+    }
 }

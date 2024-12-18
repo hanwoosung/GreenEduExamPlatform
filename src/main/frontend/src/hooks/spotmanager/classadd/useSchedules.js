@@ -1,90 +1,123 @@
 import {useEffect, useState} from "react";
 import {handleDelete} from "../../../modal/common/swals";
 import useApi2 from "../../useApi2";
+import {addDay} from "../../../assets/js/common/convert";
 
 const colors = ["green", "purple", "orange", "blue", "yellow", "pink", "brown"];
+
 const useSchedules = () => {
-    const {get} = useApi2();
+    const {get, put} = useApi2();
     const [classNo, setClassNo] = useState(null);
     const [schedules, setSchedules] = useState([]);
     const [calendarEvents, setCalendarEvents] = useState([]);
 
     const handleScheduleAdd = () => {
-        setSchedules((prev) => [...prev, {name: "", startDate: "", endDate: ""}]);
+        const newSchedule = {scheduleName: "", startDate: "", endDate: ""};
+        const newEvent = {
+            id: calendarEvents.length,
+            title: "",
+            start: "",
+            end: "",
+            backgroundColor: colors[calendarEvents.length % colors.length],
+        };
 
-        /* TODO : 해야됨 */
-        setCalendarEvents([
-            ...calendarEvents, // 기존 이벤트 유지
-            {
-                id: calendarEvents.length,
-                title: "몰라",
-                start: "2024-12-18",
-                end: "2024-12-22",
-                readonly: true,
-                backgroundColor: colors[calendarEvents.length % colors.length],
-            },
-        ]);
-
+        setSchedules((prev) => [...prev, newSchedule]);
+        setCalendarEvents((prev) => [...prev, newEvent]);
     };
 
-    const handleScheduleDelete = (index) => {
+    const handleScheduleDelete = (index, scheduleNo) => {
         handleDelete(() => {
-                setSchedules((prev) => prev.filter((_, i) => i !== index));
-                setCalendarEvents((prev) => prev.filter((_, i) => i !== index));
+            if(scheduleNo) {
+                console.log(scheduleNo);
+                put("api/v1/spot-manager/schedule/" + scheduleNo);
             }
-        );
+
+            setSchedules((prev) => prev.filter((_, i) => i !== index));
+            setCalendarEvents((prev) => prev.filter((_, i) => i !== index));
+        });
     };
 
     const handleScheduleChange = (index, e) => {
         const {name, value} = e.target;
+
+        // 스케줄 업데이트
         setSchedules((prev) =>
             prev.map((sch, i) => (i === index ? {...sch, [name]: value} : sch))
         );
 
-        /* TODO : 해야됨 */
+        // 이벤트 업데이트 (동기화)
         setCalendarEvents((prevEvents) =>
-            prevEvents.map((prev, i) => {
-                if (index === i) return prev;
-                return prev;
+            prevEvents.map((event, i) => {
+                if (i === index) {
+                    const updatedEvent = {
+                        ...event,
+                        title: name === "scheduleName" ? value : event.title,
+                        start: name === "startDate" ? value : event.start,
+                        end: name === "endDate" ? addDay(value) : event.end,
+                    };
+                    return updatedEvent;
+                }
+                return event;
             })
         );
     };
+    const handleScheduleChangeDate = (value) => {
+        const addEndDate = Number(value) + 1;
+
+        console.log(addEndDate);
+        const updatedSchedules = schedules.map((sch) => ({
+            ...sch,
+            startDate: addDay(sch.startDate, value),
+            endDate: addDay(sch.endDate, addEndDate),
+        }));
+
+        const updatedCalendarEvents = calendarEvents.map((even) => ({
+            ...even,
+            start: addDay(even.start, value),
+            end: addDay(even.end, addEndDate),
+        }));
+
+        console.log(updatedSchedules);
+        setSchedules(updatedSchedules);
+        setCalendarEvents(updatedCalendarEvents);
+    }
 
     useEffect(() => {
         if (!classNo) {
             setSchedules([]);
+            setCalendarEvents([]);
             return;
         }
 
-
         const updateData = async () => {
-            const scheduleResult = await get("api/v1/spot-manager/schedule/" + classNo);
+            const scheduleResult = await get(`api/v1/spot-manager/schedule/${classNo}`);
 
-            const events = scheduleResult?.map((schedule, index) => ({
-                id: `readonly-${schedule.scheduleNo || index}`,
+            const events = (scheduleResult || []).map((schedule, index) => ({
+                id: index,
                 title: schedule.scheduleName,
                 start: schedule.startDate,
-                end: schedule.endDate,
-                readonly: true,
+                end: addDay(schedule.endDate),
                 backgroundColor: colors[index % colors.length],
-            })) || [];
+            }));
 
-            setCalendarEvents([...events]);
+            console.log(scheduleResult);
             setSchedules(scheduleResult || []);
-        }
+            setCalendarEvents(events);
+        };
+
         updateData();
-
-
     }, [classNo]);
-    
+
     return {
         schedules,
         setSchedules,
         handleScheduleAdd,
         handleScheduleDelete,
         handleScheduleChange,
+        handleScheduleChangeDate,
         classNo,
-        setClassNo
+        setClassNo,
+        calendarEvents,
     };
 };
 

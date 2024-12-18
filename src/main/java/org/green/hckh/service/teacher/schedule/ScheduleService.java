@@ -21,4 +21,6 @@ public interface ScheduleService {
     void removeCalendarEvent(int calendarNo);
 
     List<ScheduleEntity> findByClassNo(int classNo);
+
+    int updateDeleteYSchedule(int scheduleNo);
 }

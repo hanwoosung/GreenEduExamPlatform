@@ -9,28 +9,35 @@ import useFormHandler from "../../../hooks/spotmanager/classadd/useFormHandler";
 import useSchedules from "../../../hooks/spotmanager/classadd/useSchedules";
 import useClassData from "../../../hooks/spotmanager/classadd/useClassData";
 import useSessionStorage from "../../../hooks/useSessionStorage";
+import ClassAddCalendar from "./ClassAddCalendar";
+import useApi2 from "../../../hooks/useApi2";
 
 const ClassAdd = () => {
+    const {post} = useApi2;
     const {sessionValues} = useSessionStorage();
     const {user} = sessionValues;
     const {classData, teachers, rooms} = useClassData(user?.spotNo);
     const {formData, setFormData, errors, validate, handleChange, initialFormData} =
         useFormHandler();
+    const [dateModifyNum, setDateModifyNum] = useState(null);
+
     const {
         schedules,
         setSchedules,
         handleScheduleAdd,
         handleScheduleDelete,
         handleScheduleChange,
+        handleScheduleChangeDate,
         classNo,
         setClassNo,
         calendarEvents,
-        setCalendarEvents
+        setCalendarEvents,
     } =
         useSchedules();
     const [isReg, setIsReg] = useState(true);
-    // const [selectedClass, setSelectedClass] = useState(null);
-    const isRegStr = () => {return isReg ? '강의 등록' : '강의 수정'};
+    const isRegStr = () => {
+        return isReg ? '강의 등록' : '강의 수정'
+    };
 
 
     const [selectedTeachers, setSelectedTeachers] = useState("");
@@ -39,23 +46,20 @@ const ClassAdd = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (validate(selectedTeachers, selectedRoom)) {
+        const isValid = validate(selectedTeachers, selectedRoom, schedules);
+
+        if (isValid) {
+            if (isReg) {
+                post("/api/v1/spotmanager")
+            } else {
+
+            }
             Swal.fire({
                 icon: "success",
-                className: "강의가 성공적으로 등록되었습니다!",
+                className: "강의가 성공적으로" + (isReg ? "등록" : "수정") + "되었습니다!",
                 timer: 1500,
                 showConfirmButton: false,
             });
-
-            // setCalendarEvents([
-            //     ...calendarEvents,
-            //     ...schedules.map((sch) => ({
-            //         className: sch.name,
-            //         start: sch.startDate,
-            //         end: sch.endDate,
-            //     })),
-            // ]);
-
 
             setFormData(initialFormData);
             setSelectedTeachers("");
@@ -72,9 +76,13 @@ const ClassAdd = () => {
         if (jsonValue.classNo === classNo) {
             setFormData(initialFormData);
             setIsReg(true);
+            setSelectedTeachers('');
+            setSelectedRoom('');
         } else {
             setFormData(jsonValue);
             setIsReg(false);
+            setSelectedTeachers(jsonValue.userId);
+            setSelectedRoom(jsonValue.roomNo);
         }
     };
 
@@ -189,43 +197,84 @@ const ClassAdd = () => {
 
                     <div className="schedules">
                         <h3>스케줄</h3>
-                        <button type="button" className="add-schedule-button" onClick={handleScheduleAdd}>
+                        <button
+                            type="button"
+                            className="add-schedule-button"
+                            onClick={handleScheduleAdd}
+                            aria-label="스케줄 추가"
+                        >
                             스케줄 추가
                         </button>
+                        <div className="date-modify-form">
+                            <input
+                                style={{width: "60%"}}
+                                type="number"
+                                placeholder="수정할 날짜 입력"
+                                id="dateModify"
+                                value={dateModifyNum}
+                                onChange={(e) => setDateModifyNum(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => handleScheduleChangeDate(!dateModifyNum ? 0 : dateModifyNum)}
+                            >
+                                전체 날짜 수정
+                            </button>
+                        </div>
+                        <hr style={{"marginBottom": "10px"}}/>
                         {schedules.map((sch, index) => (
                             <div key={index} className="schedule-input">
                                 <input
                                     type="text"
-                                    name="name"
+                                    name="scheduleName"
                                     placeholder="스케줄명"
                                     value={sch.scheduleName}
                                     onChange={(e) => handleScheduleChange(index, e)}
+                                    className="schedule-name-input"
                                 />
+                                {errors[`scheduleName-${index}`] && (
+                                    <p className="error-message">{errors[`scheduleName-${index}`]}</p>
+                                )}
+
                                 <div className="schedule-bottom">
-                                    <input
-                                        type="date"
-                                        name="startDate"
-                                        value={sch.startDate}
-                                        onChange={(e) => handleScheduleChange(index, e)}
-                                    />
-                                    <input
-                                        type="date"
-                                        name="endDate"
-                                        value={sch.endDate}
-                                        onChange={(e) => handleScheduleChange(index, e)}
-                                    />
+                                    <div className="date-form">
+                                        <input
+                                            type="date"
+                                            name="startDate"
+                                            value={sch.startDate}
+                                            onChange={(e) => handleScheduleChange(index, e)}
+                                            className="schedule-date-input"
+                                        />
+                                        {errors[`startDate-${index}`] && (
+                                            <p className="error-message">{errors[`startDate-${index}`]}</p>
+                                        )}
+                                    </div>
+                                    <div className="date-form">
+                                        <input
+                                            type="date"
+                                            name="endDate"
+                                            value={sch.endDate}
+                                            onChange={(e) => handleScheduleChange(index, e)}
+                                            className="schedule-date-input"
+                                        />
+                                        {errors[`endDate-${index}`] && (
+                                            <p className="error-message">{errors[`endDate-${index}`]}</p>
+                                        )}
+                                    </div>
                                     <button
                                         type="button"
                                         className="delete-button"
-                                        onClick={() => handleScheduleDelete(index)}
+                                        onClick={() => handleScheduleDelete(index, sch.scheduleNo)}
+                                        aria-label={`스케줄 삭제 ${sch.name || `#${index + 1}`}`}
                                     >
-                                        X
+                                        ✖
                                     </button>
                                 </div>
-                                <hr/>
+                                <hr className="schedule-divider"/>
                             </div>
                         ))}
                     </div>
+
 
                     <div style={{marginTop: "20px"}}>
                         <button type="submit">{isRegStr()}</button>
@@ -251,23 +300,7 @@ const ClassAdd = () => {
                     )}
                 </div>
             </div>
-            <div className="calendar-container">
-                <FullCalendar
-                    plugins={[dayGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth"
-                    locale={koLocale}
-                    events={calendarEvents}
-                    headerToolbar={{
-                        left: "",
-                        center: "title",
-                        right: "prev,next today",
-                    }}
-                    height="auto"
-                    dateClick={(info) => {
-                        console.log("날짜 클릭: ", info.dateStr);
-                    }}
-                />
-            </div>
+            <ClassAddCalendar calendarEvents={calendarEvents}/>
         </div>
     );
 };

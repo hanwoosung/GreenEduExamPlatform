@@ -23,4 +23,6 @@ public interface ScheduleDao {
     void deleteCalendarEvent(int calendarNo);
 
     List<ScheduleEntity> findByClassNo(int classNo);
+
+    int updateDeleteYSchedule(int scheduleNo);
 }
