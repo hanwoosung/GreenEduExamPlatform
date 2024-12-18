@@ -27,25 +27,29 @@ const useSchedules = () => {
 
     const handleScheduleDelete = (index, scheduleNo) => {
         handleDelete(() => {
-            if(scheduleNo) {
+            if (scheduleNo) {
                 console.log(scheduleNo);
                 put("api/v1/spot-manager/schedule/" + scheduleNo);
             }
 
             setSchedules((prev) => prev.filter((_, i) => i !== index));
-            setCalendarEvents((prev) => prev.filter((_, i) => i !== index));
+            setCalendarEvents((prev) => prev.filter((_, i) => i !== index)
+                .map((prev, i) => (
+                    {
+                        ...prev,
+                        backgroundColor: colors[i % colors.length]
+                    }
+                )));
         });
     };
 
     const handleScheduleChange = (index, e) => {
         const {name, value} = e.target;
 
-        // 스케줄 업데이트
         setSchedules((prev) =>
             prev.map((sch, i) => (i === index ? {...sch, [name]: value} : sch))
         );
 
-        // 이벤트 업데이트 (동기화)
         setCalendarEvents((prevEvents) =>
             prevEvents.map((event, i) => {
                 if (i === index) {
@@ -62,24 +66,26 @@ const useSchedules = () => {
         );
     };
     const handleScheduleChangeDate = (value) => {
-        const addEndDate = Number(value) + 1;
+        if (!!value && value !== 0) {
+            const addEndDate = Number(value) + 1;
 
-        console.log(addEndDate);
-        const updatedSchedules = schedules.map((sch) => ({
-            ...sch,
-            startDate: addDay(sch.startDate, value),
-            endDate: addDay(sch.endDate, addEndDate),
-        }));
+            console.log(addEndDate);
+            const updatedSchedules = schedules.map((sch) => ({
+                ...sch,
+                startDate: addDay(sch.startDate, value),
+                endDate: addDay(sch.endDate, addEndDate),
+            }));
 
-        const updatedCalendarEvents = calendarEvents.map((even) => ({
-            ...even,
-            start: addDay(even.start, value),
-            end: addDay(even.end, addEndDate),
-        }));
+            const updatedCalendarEvents = calendarEvents.map((even) => ({
+                ...even,
+                start: addDay(even.start, value),
+                end: addDay(even.end, addEndDate),
+            }));
 
-        console.log(updatedSchedules);
-        setSchedules(updatedSchedules);
-        setCalendarEvents(updatedCalendarEvents);
+            // console.log(updatedSchedules);
+            setSchedules(updatedSchedules);
+            setCalendarEvents(updatedCalendarEvents);
+        }
     }
 
     useEffect(() => {
@@ -100,7 +106,7 @@ const useSchedules = () => {
                 backgroundColor: colors[index % colors.length],
             }));
 
-            console.log(scheduleResult);
+            // console.log(scheduleResult);
             setSchedules(scheduleResult || []);
             setCalendarEvents(events);
         };
@@ -118,6 +124,7 @@ const useSchedules = () => {
         classNo,
         setClassNo,
         calendarEvents,
+        setCalendarEvents
     };
 };
 

@@ -1,5 +1,6 @@
 package org.green.hckh.service.spotmanager.clazz;
 
+import org.green.hckh.dto.spotmanager.ClassAndSchedulesDTO;
 import org.green.hckh.entity.ClassEntity;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface ClassService {
     List<ClassEntity> findBySpotNo(int spotNo);
+    void classSchedulesInsertDelete(ClassAndSchedulesDTO classAndSchedulesDTO);
 }

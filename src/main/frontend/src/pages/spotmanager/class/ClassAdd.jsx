@@ -13,13 +13,17 @@ import ClassAddCalendar from "./ClassAddCalendar";
 import useApi2 from "../../../hooks/useApi2";
 
 const ClassAdd = () => {
-    const {post} = useApi2;
+    const {post} = useApi2();
     const {sessionValues} = useSessionStorage();
     const {user} = sessionValues;
-    const {classData, teachers, rooms} = useClassData(user?.spotNo);
+    const {setSpotNo, classData, teachers, rooms, refreshData} = useClassData();
     const {formData, setFormData, errors, validate, handleChange, initialFormData} =
         useFormHandler();
     const [dateModifyNum, setDateModifyNum] = useState(null);
+
+    useEffect(() => {
+        setSpotNo(user?.spotNo);
+    }, []);
 
     const {
         schedules,
@@ -49,25 +53,44 @@ const ClassAdd = () => {
         const isValid = validate(selectedTeachers, selectedRoom, schedules);
 
         if (isValid) {
-            if (isReg) {
-                post("/api/v1/spotmanager")
-            } else {
+            console.log(formData);
+            console.log(selectedTeachers);
+            console.log(selectedRoom);
+            console.log(schedules)
 
+            const submitData = async () => {
+                await post("api/v1/spot-manager/class", {
+                    body: {
+                        classEntity: {
+                            ...formData,
+                            userId: selectedTeachers,
+                            roomNo: selectedRoom,
+                            spotNo: user.spotNo
+                        },
+                        scheduleList: [...schedules]
+                    }
+                }).then(() => {
+                    Swal.fire({
+                        icon: "success",
+                        title: "강의가 " + (isReg ? "등록" : "수정") + "되었습니다",
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                    setClassNo(null);
+
+                    setFormData(initialFormData);
+                    setIsReg(true);
+                    setSelectedTeachers('');
+                    setSelectedRoom('');
+                    setSchedules([]);
+                    setCalendarEvents([]);
+
+                    refreshData();
+                })
             }
-            Swal.fire({
-                icon: "success",
-                className: "강의가 성공적으로" + (isReg ? "등록" : "수정") + "되었습니다!",
-                timer: 1500,
-                showConfirmButton: false,
-            });
-
-            setFormData(initialFormData);
-            setSelectedTeachers("");
-            setSelectedRoom("");
-            setSchedules([]);
-            setCalendarEvents([]);
+            submitData();
         }
-    };
+    }
 
     const handleClassSelect = (e) => {
         const jsonValue = JSON.parse(e.target.value);
@@ -209,16 +232,16 @@ const ClassAdd = () => {
                             <input
                                 style={{width: "60%"}}
                                 type="number"
-                                placeholder="수정할 날짜 입력"
+                                placeholder="조정할 날짜 입력"
                                 id="dateModify"
                                 value={dateModifyNum}
                                 onChange={(e) => setDateModifyNum(e.target.value)}
                             />
                             <button
                                 type="button"
-                                onClick={() => handleScheduleChangeDate(!dateModifyNum ? 0 : dateModifyNum)}
+                                onClick={() => handleScheduleChangeDate(dateModifyNum)}
                             >
-                                전체 날짜 수정
+                                스케줄 일괄 조정
                             </button>
                         </div>
                         <hr style={{"marginBottom": "10px"}}/>
