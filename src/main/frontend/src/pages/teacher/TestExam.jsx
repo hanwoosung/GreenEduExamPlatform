@@ -34,45 +34,43 @@ const TestExam = () => {
         }
     });
 
-    const{post: questionPost} = useApi("/api/v1/question",{
+    const {post: questionPost} = useApi("/api/v1/question", {
         headers: {
             "Content-Type": "application/json"
         }
     });
 
-    const{post: detailPost} = useApi("/api/v1/question/detail",{
+    const {post: detailPost} = useApi("/api/v1/question/detail", {
         headers: {
             "Content-Type": "application/json"
         }
     });
 
     const testRegist = async () => {
-        // const response = await testPost({
-        //     scheduleNo: test.scheduleNo,
-        //     createUserId: "aaa",
-        //     cutline: test.cutline,
-        //     createDt: "",
-        //     updateDt: "",
-        //     time: test.time,
-        //     testDt: test.testDt,
-        //     deleteYn: "N"
-        // }, {}, "");
+        const response = await testPost({
+            scheduleNo: test.scheduleNo,
+            createUserId: "aaa",
+            cutline: test.cutline,
+            createDt: "",
+            updateDt: "",
+            time: test.time,
+            testDt: test.testDt,
+            deleteYn: "N"
+        }, {}, "");
 
-        setTest({...test,testNo: /*Number(response.body) ||*/ 0})
-        setShowSuccess(true);
-
-        // if (response !== 0) {
-        //
-        // }
+        if (response !== 0) {
+            setTest({...test, testNo: Number(response.body) || 0});
+            setShowSuccess(true);
+        }
     }
 
     const questionRegist = async (questions, details) => {
-        if(questions != null && details != null) {
+        if (questions != null && details != null) {
             console.log(questions);
             console.log(details);
-            const questionRes= await questionPost(questions,{},"");
-            const detailRes = await detailPost(details,{},"");
-            if(questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
+            const questionRes = await questionPost(questions, {}, "");
+            const detailRes = await detailPost(details, {}, "");
+            if (questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
                 alert("문제 추가 완료");
             }
         }
@@ -132,9 +130,30 @@ const TestExam = () => {
                     onChange={(e) => setQuestionsGubn({...questionGubn, number: parseInt(e.target.value) || 0})}
                 />
             </div>
-            {/*todo 유효성 추가필요*/}
+            <div className={"grid-box"}>
+                <span>객관식 갯수</span>
+                <input
+                    type={"number"}
+                    min={0}
+                    value={questionGubn.short}
+                    placeholder={"단답형 갯수"}
+                    onChange={(e) => setQuestionsGubn({...questionGubn, short: parseInt(e.target.value) || 0})}
+                />
+            </div>
+            <div className={"grid-box"}>
+                <span>객관식 갯수</span>
+                <input
+                    type={"number"}
+                    min={0}
+                    value={questionGubn.long}
+                    placeholder={"서술형 갯수"}
+                    onChange={(e) => setQuestionsGubn({...questionGubn, long: parseInt(e.target.value) || 0})}
+                />
+            </div>
+            {/*todo 유효성 추가필요
+                만들기 전 임시 저장*/}
             <button onClick={testRegist}>{examBtnTitle}</button>
-            {showSuccess && (
+            {(showSuccess && questionGubn.number > 0) && (
                 <HandleQuestion
                     number={questionGubn.number}
                     questions={questions}
@@ -144,9 +163,30 @@ const TestExam = () => {
                     test={test}
                 />
             )}
-            {/*    todo state 의 number가 0이상이면 반환하는 코드로 작성*/}
 
-            <button onClick={() => questionRegist(questions,details)}>문제 저장하기</button>
+            {(showSuccess && questionGubn.number > 0) && (
+                <HandleQuestion
+                    number={questionGubn.number}
+                    questions={questions}
+                    setQuestions={setQuestions}
+                    details={details}
+                    setDetails={setDetails}
+                    test={test}
+                />
+            )}
+
+            {(showSuccess && questionGubn.number > 0) && (
+                <HandleQuestion
+                    number={questionGubn.number}
+                    questions={questions}
+                    setQuestions={setQuestions}
+                    details={details}
+                    setDetails={setDetails}
+                    test={test}
+                />
+            )}
+
+            <button onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
         </div>
     )
 }
