@@ -2,15 +2,18 @@ import blackPlusBtn from '../../assets/image/black_plus_btn.svg';
 import blackCloseBtn from '../../assets/image/black_close_btn.svg';
 import {useEffect} from "react";
 
+
+// todo 지적사항 종합: 객관식 주관식 칸 구분, 렌더링할수록 문제와 지문 추가됨(set으로 처리). 100/n, total 100 검사
+// todo 사이드바 컨테이너 침범하는거 막기
 const HandleQuestion = (props) => {
 
     useEffect(() => {
-        // 이전 값들의 합 = 초기값 0
-        // let qno = 이전 값들의 합 + 1; qno <= qno + props.number
+        console.log(props.score.toFixed(1));
+        console.log("유즈이펙트 작동")
         for (let qno = props.startNum; qno < props.startNum + props.number; qno++) {
-            addTotalQuestion(qno)
+            addTotalQuestion(qno);
         }
-    }, [props.number]);
+    }, []);
 
     const addTotalQuestion = (qno) => {
         let detailAmount = (props.gubn === "N") ? 4 : 1;
@@ -170,7 +173,6 @@ const HandleQuestion = (props) => {
                                     <input
                                         type="checkbox"
                                         className="checkbox"
-                                        checked={detail.correctYn === "Y"}
                                         onChange={(e) =>
                                             editCorrect(e, question.questionNo, detail.questionDetailNo)
                                         }
