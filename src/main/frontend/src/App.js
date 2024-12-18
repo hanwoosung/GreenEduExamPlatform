@@ -1,6 +1,5 @@
 import {Link, Route, Routes} from 'react-router-dom';
 import Layout from "./components/common/Layout";
-import TestPage from "./pages/TestPage";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
 // import './index.css';
@@ -11,11 +10,15 @@ import Login from "./pages/common/Login";
 import Regist from "./pages/common/Regist";
 import Grading from "./pages/teacher/Grading";
 import Userinfo from "./pages/common/Userinfo";
+import TeacherMain from "./pages/teacher/TeacherMain";
+import SpotManagerMain from "./pages/spot_manager/SpotManagerMain";
+import ManagerMain from "./pages/manager/ManagerMain";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
 
 function App() {
+
     return (
         <>
             {/*/!* 네비게이션 바 *!/*/}
@@ -86,6 +89,21 @@ function App() {
                             <StudentMain />
                         </Layout>
                     }/>
+                    <Route path="/teacher" element={
+                        <Layout>
+                            <TeacherMain />
+                        </Layout>
+                    }/>
+                    <Route path="/spot-manager" element={
+                        <Layout>
+                            <SpotManagerMain />
+                        </Layout>
+                    }/>
+                    <Route path="/manager" element={
+                        <Layout>
+                            <ManagerMain />
+                        </Layout>
+                    }/>
                     <Route path="/userInfo" element={
                         <Layout>
                             <Userinfo />
@@ -97,6 +115,8 @@ function App() {
                             <Grading />
                         </Layout>
                     }/>
+
+
                 </Routes>
             </main>
         </>
