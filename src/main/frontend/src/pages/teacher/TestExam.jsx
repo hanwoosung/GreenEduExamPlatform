@@ -163,10 +163,12 @@ const TestExam = () => {
                     test={test}
                 />
             )}
-
-            {(showSuccess && questionGubn.number > 0) && (
+            <hr/>
+            임시구분용
+            <hr/>
+            {(showSuccess && questionGubn.short > 0) && (
                 <HandleQuestion
-                    number={questionGubn.number}
+                    number={questionGubn.short}
                     questions={questions}
                     setQuestions={setQuestions}
                     details={details}
@@ -175,9 +177,13 @@ const TestExam = () => {
                 />
             )}
 
-            {(showSuccess && questionGubn.number > 0) && (
+            <hr/>
+            임시구분용
+            <hr/>
+
+            {(showSuccess && questionGubn.long > 0) && (
                 <HandleQuestion
-                    number={questionGubn.number}
+                    number={questionGubn.long}
                     questions={questions}
                     setQuestions={setQuestions}
                     details={details}
