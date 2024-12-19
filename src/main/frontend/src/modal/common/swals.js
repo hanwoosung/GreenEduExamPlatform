@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const handleDelete = (action) => {
+export const swalDelete = (action) => {
     Swal.fire({
         title: '정말 삭제하시겠습니까?',
         icon: 'warning',

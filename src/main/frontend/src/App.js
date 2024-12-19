@@ -14,6 +14,8 @@ import Login from "./pages/common/Login";
 import TestExam from "./pages/teacher/TestExam";
 import Regist from "./pages/common/Regist";
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
+import RoomAdd from "./pages/spotmanager/room/RoomAdd";
+
 
 function App() {
 
@@ -125,6 +127,13 @@ function App() {
                             <Grading />
                         </Layout>
                     } />
+
+                    <Route path="/room-register" element={
+                        <Layout>
+                            <RoomAdd/>
+                        </Layout>
+                    }/>
+
                     <Route path="/crs-rgst" element={
                         <Layout>
                             <CrsRgst />
