@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import useApi from "../../hooks/useApi";
 import useFetch from "../../hooks/useFetch";
 import HandleQuestion from "../../components/teacher/HandleQuestion"
-import "../../assets/css/teacher/test/test.css"
+// import "../../assets/css/teacher/test/test.css"
 import useSessionStorage from "../../hooks/useSessionStorage";
 import TestSideBar from "../../components/teacher/TestSideBar";
 

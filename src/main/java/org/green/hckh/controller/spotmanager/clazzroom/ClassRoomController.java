@@ -3,11 +3,10 @@ package org.green.hckh.controller.spotmanager.clazzroom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.green.hckh.entity.ClassRoomEntity;
+import org.green.hckh.repository.jpa.spotmanager.ClassRoomRepository;
 import org.green.hckh.service.spotmanager.clazzroom.ClassRoomService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +19,22 @@ import java.util.List;
 @Slf4j
 public class ClassRoomController {
     private final ClassRoomService classRoomService;
+    private final ClassRoomRepository classRoomRepository;
 
     @GetMapping("/{spotNo}")
     public List<ClassRoomEntity> getClassRoom(@PathVariable int spotNo) {
         return classRoomService.findBySpotNoOrderByClassName(spotNo);
+    }
+
+    @PostMapping
+    public void insertUpdateRoom(@RequestBody ClassRoomEntity classRoom) {
+        classRoom.setDeleteYn('N');
+        classRoomRepository.save(classRoom);
+    }
+
+    @Transactional
+    @DeleteMapping("/{roomNo}")
+    public void deleteClassRoom(@PathVariable int roomNo) {
+        classRoomRepository.updateDeleteYnByRoomNo(roomNo);
     }
 }

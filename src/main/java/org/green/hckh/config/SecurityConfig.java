@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,6 +28,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -59,17 +61,20 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers(
-                                "/login"
-                                , "/logout"
+//                        .requestMatchers(
+//                                "/api/v1/**" // 인증 필요한 엔드포인트
+//                        ).authenticated()
 
-                        ).permitAll()
-
-                        .anyRequest().permitAll()
+                        .anyRequest().permitAll() // 그 외는 허용
                 );
 
         http
                 .csrf(csrf -> csrf.disable());
+
+        http
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 기본값: 세션 필요 시 생성
+                );
 
         return http.build();
     }

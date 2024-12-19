@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-
 // 성적 확정 함수
 export const confirmGrades = async (checkedStudents, selectedSubject, put, handleSubjectSelect, setCheckedStudents) => {
     try {
@@ -109,10 +108,10 @@ export const scheduleRetest = async (checkedStudents, selectedSubject, put, hand
     }
 };
 
-export const fetchSubjects = async (lecture, get, setSubjects, setStep, setSelectedLecture) => {
-    setSelectedLecture(lecture.className);
+export const fetchSubjects = async (userId,lecture, get, setSubjects, setStep, setSelectedLecture) => {
+    setSelectedLecture(lecture);
     try {
-        const response = await get(`/api/v1/grading/schedule/teacher1`, {
+        const response = await get(`/api/v1/grading/schedule/${userId}`, {
             params: {num: lecture.id},
         });
         setSubjects(response);
@@ -122,10 +121,10 @@ export const fetchSubjects = async (lecture, get, setSubjects, setStep, setSelec
     setStep(2);
 };
 
-export const fetchGrades = async (subject, get, setGrades, setStep, setSelectedSubject) => {
+export const fetchGrades = async (userId,subject, get, setGrades, setStep, setSelectedSubject) => {
     setSelectedSubject(subject);
     try {
-        const response = await get(`/api/v1/grading/teacher1`, {
+        const response = await get(`/api/v1/grading/${userId}`, {
             params: {scheduleNo: subject.id},
         });
         setGrades(response);

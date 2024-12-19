@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GradingDto {
+public class GradingDTO {
     private int shortAs;
     private int testNo;
     private int longAs;
@@ -37,4 +37,5 @@ public class GradingDto {
     private String deleteYn;
     private String confirmYn;
     private int testCnt;
+    private int isPossibleDetail;
 }
