@@ -17,9 +17,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleDao scheduleDao;
 
     @Override
-    public List<ScheduleDto> findSubjectList(String id) {
+    public List<ScheduleDto> findSubjectList(String id, String userRoleCode) {
 
-        List<ScheduleEntity> scheduleEntityList = scheduleDao.findSubjectList(id);
+        List<ScheduleEntity> scheduleEntityList = scheduleDao.findSubjectList(id, userRoleCode);
 
         return scheduleEntityList.stream()
                 .map(item -> ScheduleDto.builder()
@@ -49,7 +49,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public int addCalendarEvent(CalendarDto calendarDto) {
         CalendarEntity calendarEntity = CalendarEntity.builder()
-                .userId("teacher1")
+                .userId(calendarDto.getUserId())
                 .calendarTitle(calendarDto.getTitle())
                 .calendarContent(calendarDto.getDescription())
                 .startDate(calendarDto.getStart())

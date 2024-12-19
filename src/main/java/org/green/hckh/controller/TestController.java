@@ -37,7 +37,7 @@ public class TestController {
 
     @GetMapping("/4")
     public List<ScheduleDto> test4() {
-        return scheduleService.findSubjectList("teacher1");
+        return null;
     }
 
 

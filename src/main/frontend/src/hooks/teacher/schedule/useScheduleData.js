@@ -1,9 +1,16 @@
 import {useEffect, useState} from "react";
 import useFetch from "../../../hooks/useFetch";
+import useSessionStorage from "../../useSessionStorage";
 
 export const useScheduleData = () => {
-    const {data: fetchedEvents, loading: loadingEvents} = useFetch("/api/v1/calendar");
-    const {data: fetchedReadOnlyEvents, loading: loadingReadOnly} = useFetch("/api/v1/calendar/schedule");
+
+    const {sessionValues} = useSessionStorage();
+
+    const userId = sessionValues?.user?.userId;
+    const userRoleCode = sessionValues?.user?.userRoleCode;
+
+    const {data: fetchedEvents, loading: loadingEvents} = useFetch("/api/v1/calendar/" + userId);
+    const {data: fetchedReadOnlyEvents, loading: loadingReadOnly} = useFetch("/api/v1/calendar/schedule/" + userId + "/" + userRoleCode);
 
     const [events, setEvents] = useState([]);
     const [localEvents, setLocalEvents] = useState([]);
