@@ -22,8 +22,18 @@ public class QuestionController {
         return questionServiceImpl.insertTotalQuestion(questions);
     }
 
+    @GetMapping("/{testNo}")
+    public List<QuestionDto> question(@PathVariable("testNo") int testNo) {
+        return questionServiceImpl.selectByTestNo(testNo);
+    }
+
     @PostMapping("/detail")
     public int detail(@RequestBody List<QuestionDetailDto> question) {
         return questionDetailDao.insert(question);
+    }
+
+    @GetMapping("/detail/{testNo}")
+    public List<QuestionDetailDto> detail(@PathVariable("testNo") int testNo) {
+        return questionDetailDao.selectByTestNo(testNo);
     }
 }

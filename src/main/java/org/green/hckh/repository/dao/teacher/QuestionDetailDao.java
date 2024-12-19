@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface QuestionDetailDao {
     int insert(@Param("list") List<QuestionDetailDto> list);
+    List<QuestionDetailDto> selectByTestNo(@Param("tno") int tno);
 }

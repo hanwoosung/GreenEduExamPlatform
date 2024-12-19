@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import useApi from "../../hooks/useApi";
 import useFetch from "../../hooks/useFetch";
 import HandleQuestion from "../../components/teacher/HandleQuestion"
-// import "../../assets/css/teacher/test/test.css"
+import "../../assets/css/teacher/test/test.css"
 import useSessionStorage from "../../hooks/useSessionStorage";
 import TestSideBar from "../../components/teacher/TestSideBar";
 
@@ -62,7 +62,7 @@ const TestExam = () => {
         }
     };
 
-    const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule");
+    const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule/" + userData.userId + "/" + userData.userRoleCode);
     const {post: testPost} = useApi("/api/v1/test", {
         headers: {"Content-Type": "application/json"}
     });
@@ -113,7 +113,7 @@ const TestExam = () => {
     }
 
     return (
-        <div className={"container" + (showSuccess ? " add-sidebar" : "")}>
+        <div className={"container"}>
             <div className={"grid-box"}>
                 <span>과목</span>
                 <select

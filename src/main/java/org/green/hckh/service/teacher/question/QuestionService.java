@@ -9,4 +9,5 @@ import java.util.List;
 public interface QuestionService {
 
     public int insertTotalQuestion(List<QuestionDto> questionList);
+    List<QuestionDto> selectByTestNo(int testNo);
 }

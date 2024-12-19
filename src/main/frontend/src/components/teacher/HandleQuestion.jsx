@@ -37,7 +37,7 @@ const HandleQuestion = (props) => {
             questionNo: qno,
             questionDetailNo: dno,
             questionContent: "",
-            correctYn: (props.gubn === "N") ? "N" : "Y"
+            correctYn: "N"
         }]);
     };
 
@@ -200,6 +200,7 @@ const HandleQuestion = (props) => {
             <button className="add-question-btn" onClick={() => addTotalQuestion(props.questions.length + 1)}>
                 문제 추가하기
             </button>
+            <button onClick={viewConsole}>로그</button>
         </div>
     );
 };

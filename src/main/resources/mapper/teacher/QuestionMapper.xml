@@ -23,4 +23,14 @@
             )
         </foreach>
     </insert>
+    <select id="selectByTestNo" resultType="org.green.hckh.dto.teacher.test.QuestionDto">
+        SELECT
+        test_no,
+        question_no,
+        question_title,
+        question_code,
+        question_score
+        FROM tbl_question
+        WHERE test_no = #{tno}
+    </select>
 </mapper>
