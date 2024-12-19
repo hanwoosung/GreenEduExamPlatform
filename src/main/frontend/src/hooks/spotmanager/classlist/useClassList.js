@@ -35,7 +35,7 @@ const useClassList = () => {
     }
 
     const handleViewApplications = (classNo) => {
-        navigate("/main",
+        navigate("/class-apply-student-list",
             {
                 state: {
                     classNo: classNo

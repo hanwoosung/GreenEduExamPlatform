@@ -22,7 +22,7 @@ public class CrsRgstServiceImpl implements CrsRgstService {
     }
 
     @Override
-    public List<ClassDto> insertClass(String userId, String classNo, String startDate) throws SQLException {
+    public List<ClassDto> insertClass(String userId, int classNo, String startDate) throws SQLException {
 
         int cnt = crsRgstDao.getClassCnt(userId, classNo);
         if (cnt > 0) {
@@ -44,6 +44,23 @@ public class CrsRgstServiceImpl implements CrsRgstService {
         crsRgstDao.insertClass(userId, classNo);
 
         return crsRgstDao.getClasses(userId);
+    }
+
+    @Override
+    public List<ClassDto> getApplyStudents(int classNo) {
+        return crsRgstDao.getApplyStudents(classNo);
+    }
+
+    @Override
+    public void updateStatus(ClassDto classDto) throws SQLException {
+        if(classDto.getGraduateCode().equals("NO")) {
+            //정원체크 남은 인원수 만큼 리턴해줌
+            int cnt = crsRgstDao.getNowPeopleCnt(classDto.getClassNo());
+            if (cnt == 0) {
+                throw new SQLException("정원 초과 입니다.");
+            }
+        }
+        crsRgstDao.updateStatus(classDto.getClassNo(), classDto.getUserId(), classDto.getGraduateCode());
     }
 
 }

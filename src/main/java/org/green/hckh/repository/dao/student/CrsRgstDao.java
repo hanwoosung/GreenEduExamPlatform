@@ -10,12 +10,15 @@ public interface CrsRgstDao {
 
     List<ClassDto> getClasses(String userId);
 
-    void insertClass(String userId, String classNo);
+    void insertClass(String userId, int classNo);
 
-    int getClassCnt(String userId, String classNo);
+    int getClassCnt(String userId, int classNo);
 
-    int getNowPeopleCnt(String classNo);
+    int getNowPeopleCnt(int classNo);
 
     int chkPossible(String userId, String startDate);
 
+    List<ClassDto> getApplyStudents(int classNo);
+
+    void updateStatus(int classNo, String userId, String graduateCode);
 }

@@ -15,7 +15,7 @@
             a.end_date,
             a.delete_yn,
             a.max_people,
-            SUM(IF(IFNULL(b.graduate_code, 'APPLY') != 'APPLY', 1, 0)) AS now_people, -- 정상적인 집계
+            SUM(IF(IFNULL(b.graduate_code, 'APPLY') NOT IN('APPLY','H'), 1, 0)) AS now_people, -- 정상적인 집계
             IF(MAX(b.user_id) IN (#{userId}), IFNULL(MAX(b.graduate_code), ''), '') AS graduate_code, -- MAX()로 한 명만 선택
             c.name,
             d.room_name
@@ -49,12 +49,12 @@
                 a.max_people -
                 (SELECT COUNT(*)
                  FROM tbl_user_class b
-                 WHERE b.class_no = a.class_no AND b.graduate_code != 'APPLY'),
+                 WHERE b.class_no = a.class_no AND b.graduate_code NOT IN ('APPLY', 'H')),
                 a.max_people
             ) AS remaining_people
         FROM
             tbl_class a
-        WHERE a.class_no = 9
+        WHERE a.class_no = #{classNo}
           AND a.delete_yn = 'N'
         ORDER BY a.class_no;
 
@@ -82,6 +82,38 @@
 
     </select>
 
+    <select id="getApplyStudents">
+        SELECT
+            B.user_id,
+            C.name,
+            C.user_birth,
+            B.create_dt,
+            B.graduate_code,
+            A.max_people,
+            SUM(IF(B.graduate_code NOT IN ('APPLY', 'H'), 1, 0)) AS now_people
+        FROM
+            tbl_class A
+                LEFT JOIN
+            tbl_user_class B ON A.class_no = B.class_no
+                JOIN
+            tbl_user C ON B.user_id = C.user_id AND C.delete_yn = 'N'
+        WHERE
+            A.class_no = #{classNo}
+        GROUP BY
+            B.user_id, C.name, C.user_birth, B.create_dt, B.graduate_code, A.max_people
+        ORDER BY
+            CASE WHEN B.graduate_code = 'NO' THEN 2 ELSE 1 END,
+            B.create_dt DESC;
 
+
+
+    </select>
+
+    <update id="updateStatus">
+        UPDATE tbl_user_class
+        SET graduate_code = #{graduateCode}
+        WHERE user_id = #{userId}
+        AND class_no = #{classNo}
+    </update>
 
 </mapper>

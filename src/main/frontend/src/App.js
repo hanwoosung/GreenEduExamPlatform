@@ -17,6 +17,7 @@ import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
 import SpotAdd from "./pages/manager/spot/SpotAdd";
 import ClassList from "./pages/spotmanager/class/ClassList";
+import StudentList from "./pages/spotmanager/class/StudentList";
 
 
 function App() {
@@ -123,6 +124,12 @@ function App() {
                     <Route path={"/class-list"} element={
                         <Layout>
                             <ClassList/>
+                        </Layout>
+                    }/>
+
+                    <Route path={"/class-apply-student-list"} element={
+                        <Layout>
+                            <StudentList/>
                         </Layout>
                     }/>
 
