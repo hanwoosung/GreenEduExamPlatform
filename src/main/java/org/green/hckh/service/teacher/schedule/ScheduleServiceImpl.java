@@ -23,6 +23,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return scheduleEntityList.stream()
                 .map(item -> ScheduleDto.builder()
+                        .no(item.getScheduleNo())
                         .title(item.getScheduleName())
                         .start(item.getStartDate())
                         .end(item.getEndDate())
@@ -78,5 +79,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public int maxCountCalendar() {
         return scheduleDao.maxCountCalendar();
+    }
+
+    @Override
+    public List<ScheduleEntity> findByClassNo(int classNo) {
+        return scheduleDao.findByClassNo(classNo);
+    }
+
+    @Override
+    public int updateDeleteYSchedule(int scheduleNo) {
+        return scheduleDao.updateDeleteYSchedule(scheduleNo);
     }
 }

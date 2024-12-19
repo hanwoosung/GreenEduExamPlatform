@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ScheduleDto {
+    private int no;
     private String title;
     private String content;
     private Date start;

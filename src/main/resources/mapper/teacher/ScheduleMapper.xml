@@ -4,7 +4,7 @@
 <mapper namespace="org.green.hckh.repository.dao.teacher.ScheduleDao">
 
     <select id="findSubjectList" resultType="org.green.hckh.entity.teacher.schedule.ScheduleEntity">
-        SELECT a.schedule_name, a.start_date, a.end_date
+        SELECT a.schedule_no, a.schedule_name, a.start_date, a.end_date
         FROM tbl_schedule a
                  LEFT JOIN tbl_class b ON a.class_no = b.class_no
                  LEFT JOIN tbl_user c ON b.user_id = c.user_id
@@ -44,5 +44,24 @@
         SELECT Max(calendar_no)
         FROM tbl_calendar;
     </select>
+    
+    <select id="findByClassNo">
+        SELECT schedule_no,
+               schedule_name,
+               class_no,
+               start_date,
+               end_date
+
+        FROM tbl_schedule
+        WHERE class_no = #{classNo}
+          AND delete_yn = 'N'
+        ORDER BY start_date
+    </select>
+
+    <update id="updateDeleteYSchedule">
+        UPDATE tbl_schedule
+        SET delete_yn = 'Y'
+        WHERE schedule_no = #{scheduleNo}
+    </update>
 
 </mapper>

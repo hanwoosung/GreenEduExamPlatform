@@ -21,7 +21,7 @@ public class UserDto implements UserDetails {
     private String userRoleCode; // 사용자 역할 (STUDENT: 학생, TEACHER: 선생님, SPOT_ADMIN : 지점 관리자, ADMIN: 관리자)
     private String deleteYn; // 삭제 여부, 기본값은 "N"
     private int spotNo;
-    private String spotNm;
+    private String spotName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -7,7 +7,7 @@ export const useLoginHandler = () => {
 
     const {loginEvent} = useLoginEventService();
 
-    const {sessionValues, setSession, removeSession} = useSessionStorage();
+    const {setSession} = useSessionStorage();
 
     const navigate = useNavigate();
 
@@ -52,16 +52,12 @@ export const useLoginHandler = () => {
 
                 setErrors((prevData) => ({
                     ...prevData,
-                    userId: res.body.userId === "" ? "아이디 및 비밀번호 오류입니다." : "",
+                    userId: res.body.userId === null ? "아이디 및 비밀번호 오류입니다." : "",
                 }));
 
-                if (res.body.userId !== "") {
-
+                if (res.body.userId != null) {
                     setSession("user", res.body);
-
-                    if (res.body.userRoleCode === "ROLE_STUDENT") {
-                        navigate("/student");
-                    }
+                    window.location.href = getUrl(res.body.userRoleCode);
                 }
 
             } catch (e) {
@@ -72,6 +68,28 @@ export const useLoginHandler = () => {
             console.log("로그인 실패");
         }
     };
+
+    const getUrl = (userRoleCode) => {
+
+        let url;
+
+        switch (userRoleCode) {
+            case "ROLE_TEACHER":
+                url = "/teacher";
+                break;
+            case "ROLE_SPOT_MANAGER" :
+                url = "/spot-manager";
+                break;
+            case "ROLE_MANAGER" :
+                url = "/manager";
+                break;
+            default:
+                url = "/student";
+                break;
+        }
+
+        return url;
+    }
 
     return {
         loginData,

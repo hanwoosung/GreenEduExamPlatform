@@ -111,7 +111,7 @@ export const scheduleRetest = async (checkedStudents, selectedSubject, put, hand
 export const fetchSubjects = async (userId,lecture, get, setSubjects, setStep, setSelectedLecture) => {
     setSelectedLecture(lecture);
     try {
-        const response = await get(`/api/v1/grading/schedule/teacher1/${userId}`, {
+        const response = await get(`/api/v1/grading/schedule/${userId}`, {
             params: {num: lecture.id},
         });
         setSubjects(response);

@@ -20,8 +20,8 @@ import useSessionStorage from "../../hooks/useSessionStorage";
 
 const Grading = () => {
 
-    const {sessionValues} = useSessionStorage().getSession();
-    const userId = sessionValues.userId;
+    const {sessionValues, getSession, setSession} = useSessionStorage();
+    const userId = sessionValues?.user.userId;
     const {data: lectures, loading} = useFetch(`/api/v1/grading/class/${userId}`);
     const {get, put} = useApi2();
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ const Grading = () => {
                 console.log(location.state.selectedLecture);
                 console.log(location.state.selectedSubject);
                 console.log(location.state.checkedStudents);
-                fetchGrades(location.state.selectedSubject, get, setGrades, setStep, setSelectedSubject);
+                fetchGrades(userId,location.state.selectedSubject, get, setGrades, setStep, setSelectedSubject);
 
                 navigate(location.pathname, {replace: true});
             } else {
@@ -61,7 +61,7 @@ const Grading = () => {
     useEffect(() => {
         if (step === 2 && selectedLecture) {
             console.log("작동")
-            fetchSubjects(selectedLecture, get, setSubjects, setStep, setSelectedLecture);
+            fetchSubjects(userId,selectedLecture, get, setSubjects, setStep, setSelectedLecture);
         }
     }, [step, selectedLecture]);
 
@@ -151,7 +151,7 @@ const Grading = () => {
                                     checkedStudents,
                                     selectedSubject,
                                     put,
-                                    (subject) => fetchGrades(subject, get, setGrades, setStep, setSelectedSubject),
+                                    (subject) => fetchGrades(userId,subject, get, setGrades, setStep, setSelectedSubject),
                                     setCheckedStudents
                                 )
                             }
@@ -165,7 +165,7 @@ const Grading = () => {
                                     checkedStudents,
                                     selectedSubject,
                                     put,
-                                    (subject) => fetchGrades(subject, get, setGrades, setStep, setSelectedSubject),
+                                    (subject) => fetchGrades(userId,subject, get, setGrades, setStep, setSelectedSubject),
                                     setCheckedStudents
                                 )
                             }

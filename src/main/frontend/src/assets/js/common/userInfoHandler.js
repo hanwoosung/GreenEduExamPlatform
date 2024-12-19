@@ -8,9 +8,7 @@ export const useUserInfoHandler = () => {
     const navigate = useNavigate();
     const {updateEvent, spotEvent} = useUserinfoService();
 
-    const {sessionValues, getSession} = useSessionStorage();
-
-    console.log(sessionValues);
+    const {sessionValues, getSession, setSession} = useSessionStorage();
 
     const [userData, setUserData] = useState({
         userId: sessionValues?.user.userId,
@@ -19,7 +17,9 @@ export const useUserInfoHandler = () => {
         confirmPassword: "",
         userRoleCode: sessionValues?.user.userRoleCode,
         userBirth: sessionValues?.user.userBirth,
-        spot: {spotName: sessionValues?.user.spotNm, spotNo: sessionValues?.user.spotCd}
+        deleteYn: sessionValues?.user.deleteYn,
+        spotNo: sessionValues?.user.spotNo,
+        spotName: sessionValues?.user.spotName,
     });
     const [errors, setErrors] = useState({});
 
@@ -36,7 +36,6 @@ export const useUserInfoHandler = () => {
             if (res.status === "SUCCESS") {
                 setLoading(false);
                 setOptions(res.body.map((data) => {
-                    console.log(data);
                     return {spotNo: data.spotNo, spotName: data.spotName}
                 }));
             }
@@ -69,10 +68,9 @@ export const useUserInfoHandler = () => {
 
     const validate = () => {
         return {
-            userId: userData.userId ? (userData.idChk ? "" : "중복체크를 진행해 주세요.") : "아이디를 입력해주세요.",
+            userId: userData.userId ? "" : "아이디를 입력해주세요.",
             name: userData.name ? "" : "이름을 입력해주세요.",
             userBirth: userData.userBirth ? "" : "생년월일을 입력해주세요.",
-            idChk: userData.idChk ? "" : "중복체크를 진행해 주세요.",
             userPassword: userData.userPassword.length >= 8
                 ? ""
                 : "비밀번호는 최소 8자 이상이어야 합니다.",
@@ -95,22 +93,18 @@ export const useUserInfoHandler = () => {
                 const res = await updateEvent(userData);
 
                 if (res.status == "SUCCESS") {
-                    navigate("/login");
+                    setSession("user", res.body);
+                    window.location.href = "/student";
+                    // navigate("/student");
                 }
 
             } catch (e) {
                 console.log(e);
             }
         } else {
-            console.log("회원가입 실패");
+            console.log("정보수정 실패");
         }
     };
-
-    const topFilms = [
-
-        {spotName: '서면점', spotNo: 1},
-        {spotName: '경성대점', spotNo: 2},
-    ];
 
     return {
         userData,
