@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import '../../../assets/css/spotmanager/studentList.css';
 import {useLocation} from "react-router-dom";
 import useApi2 from "../../../hooks/useApi2";
 import Swal from 'sweetalert2';
 import useFetch from "../../../hooks/useFetch";
 import useClassInfo from "../../../hooks/class/useClassInfo";
+import {formatDate} from "@fullcalendar/core";
 
 const StudentList = () => {
     const {get, put} = useApi2();
@@ -52,17 +52,6 @@ const StudentList = () => {
             .catch(error => {
                 Swal.fire('실패', error.response.data.body.message, 'error');
             });
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const seconds = String(date.getSeconds()).padStart(2, '0');
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
 
     if (loading) return <div>로딩 중...</div>;
