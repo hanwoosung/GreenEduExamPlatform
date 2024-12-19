@@ -28,8 +28,8 @@
     color: #333;
 }
 
-select,
-input {
+#schedule,
+.test-input {
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ddd;
@@ -38,13 +38,13 @@ input {
     transition: border-color 0.3s;
 }
 
-select:focus,
-input:focus {
+#schedule:focus,
+.test-input:focus {
     border-color: #007bff;
     outline: none;
 }
 
-button {
+.test-page-btn {
     width: 100%;
     padding: 12px;
     background-color: #007bff;
@@ -56,28 +56,13 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.test-page-btn:hover {
     background-color: #0056b3;
 }
 
-button:disabled {
+.test-page-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-}
-
-textarea {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    resize: none;
-    transition: border-color 0.3s;
-}
-
-textarea:focus {
-    border-color: #007bff;
-    outline: none;
 }
 
 .question-container {

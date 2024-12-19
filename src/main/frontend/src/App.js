@@ -14,6 +14,8 @@ import Userinfo from "./pages/common/Userinfo";
 import TeacherMain from "./pages/teacher/TeacherMain";
 import SpotManagerMain from "./pages/spot_manager/SpotManagerMain";
 import ManagerMain from "./pages/manager/ManagerMain";
+import StudentTest from "./pages/student/StudentTest"
+import StudentTestDetail from "./pages/student/StudentTestDetail";
 
 {/* Route 만 쳐 복사해서 엘리먼트안에 레이아웃안에 화면 넣으면 된다잉? */
 }
@@ -122,7 +124,17 @@ function App() {
                         </Layout>
                     }/>
 
+                    <Route path="/student-test" element={
+                        <Layout>
+                            <StudentTest/>
+                        </Layout>
+                    }/>
 
+                    <Route path="/student-test-detail" element={
+                        <Layout>
+                            <StudentTestDetail/>
+                        </Layout>
+                    }/>
                 </Routes>
             </main>
         </>

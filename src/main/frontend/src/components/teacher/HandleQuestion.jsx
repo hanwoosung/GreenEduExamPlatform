@@ -197,9 +197,6 @@ const HandleQuestion = (props) => {
                         />
                     </div>
                 ))}
-            <button onClick={viewConsole}>
-                로그보기
-            </button>
             <button className="add-question-btn" onClick={() => addTotalQuestion(props.questions.length + 1)}>
                 문제 추가하기
             </button>

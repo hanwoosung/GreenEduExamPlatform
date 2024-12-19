@@ -13,7 +13,7 @@ import java.util.List;
 public class ExamTestController {
     private final ExamTestDao examTestDao;
 
-    @GetMapping("")
+    @GetMapping
     public List<ExamTestDto> selectAll() {
         return examTestDao.selectAllTest();
     }
@@ -23,13 +23,13 @@ public class ExamTestController {
         return examTestDao.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public int insert(@RequestBody ExamTestDto examTestDto) {
         int result = examTestDao.insertTest(examTestDto);
         return examTestDto.getTestInsertedId();
     }
 
-    @PutMapping("")
+    @PutMapping
     public int update(@RequestBody ExamTestDto examTestDto) {
         return examTestDao.updateTest(examTestDto);
     }
