@@ -18,10 +18,21 @@ import RoomAdd from "./pages/spotmanager/room/RoomAdd";
 import SpotAdd from "./pages/manager/spot/SpotAdd";
 import ClassList from "./pages/spotmanager/class/ClassList";
 import StudentList from "./pages/spotmanager/class/StudentList";
+import useSessionStorage from "./hooks/useSessionStorage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import MyTestResult from "./pages/student/MyTestResult";
 
 
 function App() {
+    const {sessionValues} = useSessionStorage();
+    const userRole = sessionValues?.user?.userRoleCode;
 
+    const roles = {
+        student: "ROLE_STUDENT",
+        teacher: "ROLE_TEACHER",
+        spot: "ROLE_SPOT_MANAGER",
+        manager: "ROLE_MANAGER",
+    }
     return (
         <>
 
@@ -29,6 +40,7 @@ function App() {
             }
             <main className="p-6">
                 <Routes>
+
                     <Route path="/" element={
                         <Layout>
                             {/*<Home />*/}
@@ -40,68 +52,82 @@ function App() {
                         </Layout>
                     }/>
                     <Route path="/schedule" element={
-                        <Layout>
-                            <Schedule/>
-                        </Layout>
-                    }/>
+                        <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
+                            <Layout>
+                                <Schedule />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
+
                     <Route path="/class-register" element={
                         <Layout>
-                            <ClassAdd/>
+                            <ClassAdd />
                         </Layout>
-                    }/>
+                    } />
                     <Route path="/regist" element={
                         <Layout>
-                            <Regist/>
+                            <Regist />
                         </Layout>
-                    }/>
+                    } />
                     <Route path="/test-exam" element={
                         <Layout>
-                            <TestExam/>
+                            <TestExam />
                         </Layout>
-                    }/>
+                    } />
                     <Route path="/login" element={
                         <Layout>
-                            <Login/>
+                            <Login />
                         </Layout>
-                    }/>
+                    } />
+
                     <Route path="/student" element={
                         <Layout>
-                            <StudentMain/>
+                            <StudentMain />
                         </Layout>
-                    }/>
+                    } />
+
                     <Route path="/teacher" element={
-                        <Layout>
-                            <TeacherMain/>
-                        </Layout>
-                    }/>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
+                            <Layout>
+                                <TeacherMain />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
+
                     <Route path="/spot-manager" element={
                         <Layout>
-                            <SpotManagerMain/>
+                            <SpotManagerMain />
                         </Layout>
-                    }/>
+                    } />
                     <Route path="/manager" element={
                         <Layout>
-                            <ManagerMain/>
+                            <ManagerMain />
                         </Layout>
-                    }/>
-                    <Route path="/userInfo" element={
-                        <Layout>
-                            <Userinfo/>
-                        </Layout>
-                    }/>
+                    } />
+
+                    <Route path="/user-info" element={
+                        <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
+                            <Layout>
+                                <Userinfo />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
 
                     <Route path="/grading-detail" element={
-                        <Layout>
-                            <GradingDetail/>
-                        </Layout>
-                    }/>
-
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
+                            <Layout>
+                                <GradingDetail />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
 
                     <Route path="/grading" element={
-                        <Layout>
-                            <Grading/>
-                        </Layout>
-                    }/>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
+                            <Layout>
+                                <Grading />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
 
                     <Route path="/room-register" element={
                         <Layout>
@@ -110,10 +136,12 @@ function App() {
                     }/>
 
                     <Route path="/crs-rgst" element={
-                        <Layout>
-                            <CrsRgst/>
-                        </Layout>
-                    }/>
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <CrsRgst />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
 
                     <Route path={"/spot-register"} element={
                         <Layout>
@@ -132,6 +160,21 @@ function App() {
                             <StudentList/>
                         </Layout>
                     }/>
+                    <Route path="/crs-rgst" element={
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <CrsRgst />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/test-result" element={
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <MyTestResult />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
 
                 </Routes>
             </main>
