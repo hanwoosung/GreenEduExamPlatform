@@ -6,12 +6,18 @@
     <select id="findSubjectList" resultType="org.green.hckh.entity.teacher.schedule.ScheduleEntity">
         SELECT a.schedule_no, a.schedule_name, a.start_date, a.end_date
         FROM tbl_schedule a
-                 LEFT JOIN tbl_class b ON a.class_no = b.class_no
-                 LEFT JOIN tbl_user c ON b.user_id = c.user_id
-        WHERE b.user_id = #{id}
-          AND a.delete_yn = 'N'
-          AND b.delete_yn = 'N'
-          AND c.delete_yn = 'N'
+        LEFT JOIN tbl_class b ON a.class_no = b.class_no
+        LEFT JOIN tbl_user c ON b.user_id = c.user_id
+        LEFT JOIN tbl_user_class d ON b.class_no = d.class_no AND d.graduate_code != 'APPLY'
+        WHERE
+            CASE
+                WHEN #{userRoleCode} = 'ROLE_TEACHER' THEN b.user_id = #{id}
+                ELSE d.user_id = #{id}
+            END
+        AND a.delete_yn = 'N'
+        AND b.delete_yn = 'N'
+        AND c.delete_yn = 'N'
+        GROUP BY a.schedule_no
     </select>
 
     <select id="findCalendarList" resultType="org.green.hckh.entity.teacher.schedule.CalendarEntity">

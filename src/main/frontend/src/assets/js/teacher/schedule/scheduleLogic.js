@@ -3,10 +3,20 @@ import useFetch from "../../../../hooks/useFetch";
 import {useScheduleEventService} from "../../../../services/teacher/useScheduleEventService";
 import {showAddEventPopup, showDeleteConfirmation, showEditEventPopup} from "../../../../modal/teacher/ScheduleModal";
 import Swal from "sweetalert2";
+import useSessionStorage from "../../../../hooks/useSessionStorage";
 
 export const useScheduleHandlers = () => {
-    const {data: fetchedEvents, loading: loadingEvents} = useFetch("/api/v1/calendar");
-    const {data: fetchedReadOnlyEvents, loading: loadingReadOnly} = useFetch("/api/v1/calendar/schedule");
+
+    const {sessionValues} = useSessionStorage();
+
+    const userId = sessionValues?.user?.userId;
+    const userRoleCode = sessionValues?.user?.userRoleCode;
+
+    console.log(userId);
+    console.log(userRoleCode);
+
+    const {data: fetchedEvents, loading: loadingEvents} = useFetch("/api/v1/calendar/" + userId);
+    const {data: fetchedReadOnlyEvents, loading: loadingReadOnly} = useFetch("/api/v1/calendar/schedule/" + userId + "/" + userRoleCode);
     const {createEvent, updateEvent, deleteEvent} = useScheduleEventService();
 
     const [events, setEvents] = useState([]);
@@ -49,6 +59,7 @@ export const useScheduleHandlers = () => {
         if (formValues) {
             const newEvent = {
                 title: formValues.title,
+                userId: userId,
                 description: formValues.description || "",
                 start: selectInfo.startStr,
                 importantYn: formValues.isImportant ? "Y" : "N",
@@ -60,6 +71,7 @@ export const useScheduleHandlers = () => {
                 const addedEvent = {
                     ...newEvent,
                     id: response.body.toString(),
+                    userId: userId,
                     title: formValues.isImportant ? `[중요] ${formValues.title}` : formValues.title,
                     backgroundColor: formValues.isImportant ? "red" : "#3788d8",
                     textColor: "white",

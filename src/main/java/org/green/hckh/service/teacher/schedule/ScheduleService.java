@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ScheduleService {
 
-    List<ScheduleDto> findSubjectList(String id);
+    List<ScheduleDto> findSubjectList(String id, String userRoleCode);
 
     List<CalendarDto> findCalendarList(String id);
 

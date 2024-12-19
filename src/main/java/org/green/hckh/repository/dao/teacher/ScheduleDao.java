@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface ScheduleDao {
-    List<ScheduleEntity> findSubjectList(String id);
+    List<ScheduleEntity> findSubjectList(String id, String userRoleCode);
 
     List<CalendarEntity> findCalendarList(String id);
 

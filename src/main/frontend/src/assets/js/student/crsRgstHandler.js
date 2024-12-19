@@ -7,7 +7,7 @@ const useCrsRgstHandler = () => {
 
     const filterButtons = [
         {title: "전체", value: ""},
-        {title: "신청중", value: "APPLY"},
+        {title: "신청", value: "APPLY"},
         {title: "반려", value: "H"},
         {title: "진행중", value: "NO"},
         {title: "중도탈락", value: "DEL"},
