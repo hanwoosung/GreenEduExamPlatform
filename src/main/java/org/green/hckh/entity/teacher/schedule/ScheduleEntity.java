@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleEntity {
-    private String scheduleNo;
+    private int scheduleNo;
     private String scheduleName;
     private Integer classNo;
     private Date startDate;
