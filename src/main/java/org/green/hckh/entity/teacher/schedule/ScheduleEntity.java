@@ -10,8 +10,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ScheduleEntity {
-    private String scheduleNo;
+    private int scheduleNo;
     private String scheduleName;
     private Integer classNo;
     private Date startDate;
