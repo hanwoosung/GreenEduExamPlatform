@@ -2,6 +2,7 @@ package org.green.hckh.controller.teacher.test;
 
 import lombok.RequiredArgsConstructor;
 import org.green.hckh.dto.teacher.test.ExamTestDto;
+import org.green.hckh.dto.teacher.test.TestByScheduleDto;
 import org.green.hckh.repository.dao.teacher.ExamTestDao;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,11 @@ public class ExamTestController {
     @GetMapping
     public List<ExamTestDto> selectAll() {
         return examTestDao.selectAllTest();
+    }
+
+    @GetMapping("/test-by-schedule")
+    public List<TestByScheduleDto> selectBySchedule() {
+        return examTestDao.selectTestBySchedule();
     }
 
     @GetMapping("/{id}")
