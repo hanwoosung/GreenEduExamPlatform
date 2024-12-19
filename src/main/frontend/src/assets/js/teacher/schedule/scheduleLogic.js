@@ -4,6 +4,7 @@ import {useScheduleEventService} from "../../../../services/teacher/useScheduleE
 import {showAddEventPopup, showDeleteConfirmation, showEditEventPopup} from "../../../../modal/teacher/ScheduleModal";
 import Swal from "sweetalert2";
 import useSessionStorage from "../../../../hooks/useSessionStorage";
+import {addDay} from "../../common/convert";
 
 export const useScheduleHandlers = () => {
 
@@ -31,7 +32,7 @@ export const useScheduleHandlers = () => {
             id: `readonly-${event.id || index}`,
             title: event.title,
             start: event.start,
-            end: event.end,
+            end: addDay(event.end),
             readonly: true,
             backgroundColor: colors[index % colors.length],
         })) || [];

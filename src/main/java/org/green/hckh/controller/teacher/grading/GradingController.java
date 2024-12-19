@@ -3,10 +3,7 @@ package org.green.hckh.controller.teacher.grading;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.green.hckh.dto.teacher.grading.GradingDTO;
-import org.green.hckh.dto.teacher.grading.GradingScheduleDTO;
-import org.green.hckh.dto.teacher.grading.QuestionDTO;
-import org.green.hckh.dto.teacher.grading.ScoreDto;
+import org.green.hckh.dto.teacher.grading.*;
 import org.green.hckh.entity.teacher.grading.GradingClassEntity;
 import org.green.hckh.service.teacher.grading.GradingService;
 import org.springframework.web.bind.annotation.*;
@@ -65,5 +62,10 @@ public class GradingController {
         System.out.println(scoreDto.toString());
         gradingService.updateUserScore(scoreDto);
         return "성공";
+    }
+
+    @GetMapping("/test-avg/{id}")
+    public List<ScheduleTestScoreDto> getTestAvgScore(@PathVariable("id") String id) {
+        return gradingService.scheduleTestAge(id);
     }
 }
