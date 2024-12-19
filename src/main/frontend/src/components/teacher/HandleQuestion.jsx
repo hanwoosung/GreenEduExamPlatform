@@ -8,8 +8,6 @@ import {useEffect} from "react";
 const HandleQuestion = (props) => {
 
     useEffect(() => {
-        console.log(props.score.toFixed(1));
-        console.log("유즈이펙트 작동")
         for (let qno = props.startNum; qno < props.startNum + props.number; qno++) {
             addTotalQuestion(qno);
         }
@@ -29,7 +27,7 @@ const HandleQuestion = (props) => {
             questionNo: qno,
             questionTitle: "",
             questionCode: props.gubn,
-            questionScore: 0
+            questionScore: props.score.toFixed(0)
         }]);
     };
 

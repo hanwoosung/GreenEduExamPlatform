@@ -96,16 +96,19 @@ const TestExam = () => {
     const questionRegist = async (questions, details) => {
         // todo 유효성 검사 코드
 
-        const total = questions.reduce((sum, question) => sum + question.questionScore, 0);
+        const total = questions.reduce((sum, question) => sum + parseFloat(question.questionScore), 0);
+        console.log(total)
 
-        //if()
-
-        if (questions != null && details != null) {
-            const questionRes = await questionPost(questions, {}, "");
-            const detailRes = await detailPost(details, {}, "");
-            if (questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
-                alert("문제 추가 완료");
+        if (total === 100) {
+            if (questions != null && details != null) {
+                const questionRes = await questionPost(questions, {}, "");
+                const detailRes = await detailPost(details, {}, "");
+                if (questionRes.status === "SUCCESS" && detailRes.status === "SUCCESS") {
+                    alert("문제 추가 완료");
+                }
             }
+        } else {
+            alert("총 점수의 합은 100점이어야 합니다.");
         }
     }
 
@@ -187,7 +190,7 @@ const TestExam = () => {
             <button onClick={testRegist}>{examBtnTitle}</button>
             {(showSuccess && questionGubn.number > 0) && (
                 <HandleQuestion
-                    score={100/total}
+                    score={100 / total}
                     gubn={"N"}
                     startNum={1}
                     number={questionGubn.number}
@@ -202,7 +205,7 @@ const TestExam = () => {
 
             {(showSuccess && questionGubn.short > 0) && (
                 <HandleQuestion
-                    score={100/total}
+                    score={100 / total}
                     gubn={"S"}
                     startNum={1 + questionGubn.number}
                     number={questionGubn.short}
@@ -217,7 +220,7 @@ const TestExam = () => {
 
             {(showSuccess && questionGubn.long > 0) && (
                 <HandleQuestion
-                    score={100/total}
+                    score={100 / total}
                     gubn={"L"}
                     startNum={1 + questionGubn.number + questionGubn.short}
                     number={questionGubn.long}
@@ -237,6 +240,7 @@ const TestExam = () => {
                         scrollToQuestionBox={scrollToQuestionBox}
                     />
                     <button onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
+
                 </>
             )}
 
