@@ -13,7 +13,8 @@ const useCrsRgstService = () => {
     const postEvent = async (option = {}) => {
         let params = {
             userId: sessionValues?.user?.userId,
-            classNo: option.classNo
+            classNo: option.classNo,
+            startDate: option.startDate
         }
         return await post("/api/v1/crs-rgst", {params});
     };

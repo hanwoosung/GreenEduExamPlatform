@@ -97,6 +97,19 @@
     font-weight: bold;
 }
 
+.status-label.disabled{
+    width: 70px;
+    display: inline-block;
+    background-color: #c0c0c0;
+    color: #424242;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 /* 오른쪽 버튼 영역 */
 .card-action {
     align-self: flex-end; /* 버튼을 오른쪽 하단에 고정 */

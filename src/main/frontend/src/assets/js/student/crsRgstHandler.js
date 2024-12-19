@@ -1,12 +1,14 @@
 import {useState, useEffect} from "react";
 import useCrsRgstService from "../../../services/student/useCrsRgstService";
+import Swal from "sweetalert2";
 
 const useCrsRgstHandler = () => {
     const {getCrsEvent, postEvent} = useCrsRgstService();
 
     const filterButtons = [
         {title: "전체", value: ""},
-        {title: "신청", value: "APPLY"},
+        {title: "신청중", value: "APPLY"},
+        {title: "반려", value: "H"},
         {title: "진행중", value: "NO"},
         {title: "중도탈락", value: "DEL"},
         {title: "수료완료", value: "CLEAR"}
@@ -43,22 +45,37 @@ const useCrsRgstHandler = () => {
 
     // 신청 버튼 클릭 이벤트 핸들러
     const handleApplyClick = async (cls) => {
-        try {
-            let res = await postEvent(cls);
-            if (res.status === "ERROR") {
-                console.log(res.body);
-            } else {
-                setCrsList((prevData) =>
-                    prevData.map((item) =>
-                        item.classNo === cls.classNo
-                            ? { ...item, graduateCode: "APPLY" }
-                            : item
-                    )
-                );
+        Swal.fire({
+            title: '정말 신청 하시겠습니까?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText: '아니오'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                try {
+                    let res = await postEvent(cls);
+                    if (res.status !== "ERROR") {
+                        setCrsList(res);
+                    }
+                } catch (e) {
+
+                    let res = e.response.data;
+
+                    await Swal.fire({
+                        title: "오류",
+                        text: `${res.body.message}`,
+                        icon: "error",
+                        confirmButtonText: "확인",
+                    });
+                }
+
             }
-        } catch (e) {
-            console.log(e);
-        }
+        });
+
     };
 
     return {

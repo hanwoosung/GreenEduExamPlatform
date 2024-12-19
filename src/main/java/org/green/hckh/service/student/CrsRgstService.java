@@ -8,6 +8,6 @@ public interface CrsRgstService {
 
     List<ClassDto> getClasses(String userId);
 
-    int insertClass(String userId, String classNo) throws Exception;
+    List<ClassDto> insertClass(String userId, String classNo, String startDate) throws Exception;
 
 }

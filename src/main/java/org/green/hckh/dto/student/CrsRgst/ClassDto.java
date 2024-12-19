@@ -18,5 +18,6 @@ public class ClassDto {
     private Date endDate; // 강의 수료일
     private String deleteYn; // 삭제 여부
     private int maxPeople; // 최대 수강 인원
+    private int nowPeople; // 현재 수강 인원
     private String graduateCode; // 나의 상태가 빈값이면 내가 신청한 것이 아님.
 }

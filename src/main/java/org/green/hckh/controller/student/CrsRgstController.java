@@ -24,12 +24,13 @@ public class CrsRgstController {
     }
 
     @PostMapping
-    public int crsRgst(@RequestParam Map<String, Object> params) throws Exception {
+    public List<ClassDto> crsRgst(@RequestParam Map<String, Object> params) throws Exception {
 
         String userId = (String) params.get("userId");
         String classNo = (String) params.get("classNo");
+        String startDate = (String) params.get("startDate");
 
-        return crsRgstService.insertClass(userId, classNo);
+        return crsRgstService.insertClass(userId, classNo, startDate);
     }
 
 }
