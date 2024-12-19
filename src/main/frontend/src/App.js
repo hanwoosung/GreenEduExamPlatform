@@ -26,11 +26,11 @@ function App() {
             }
             <main className="p-6">
                 <Routes>
-                    {/*<Route path="/" element={*/}
-                    {/*    <Layout>*/}
-                    {/*        <Home />*/}
-                    {/*    </Layout>*/}
-                    {/*} />*/}
+                    <Route path="/" element={
+                        <Layout>
+                            {/*<Home />*/}
+                        </Layout>
+                    } />
                     <Route path="/test2" element={
                         <Layout>
                             <TestPage2 />
