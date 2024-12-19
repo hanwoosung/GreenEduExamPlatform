@@ -1,4 +1,5 @@
-import {Link, Route, Routes} from 'react-router-dom';
+import React from "react";
+import {Route, Routes} from 'react-router-dom';
 import Layout from "./components/common/Layout";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
@@ -15,10 +16,13 @@ import TestExam from "./pages/teacher/TestExam";
 import Regist from "./pages/common/Regist";
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
+import useSessionStorage from "./hooks/useSessionStorage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 
 function App() {
-
+    const {sessionValues} = useSessionStorage();
+    const userRole = sessionValues?.user?.userRoleCode;
     return (
         <>
 
@@ -37,9 +41,11 @@ function App() {
                         </Layout>
                     } />
                     <Route path="/schedule" element={
-                        <Layout>
-                            <Schedule />
-                        </Layout>
+                        <ProtectedRoute allowedRoles={["ROLE_TEACHER", "ROLE_STUDENT"]} userRole={userRole}>
+                            <Layout>
+                                <Schedule />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
                     <Route path="/class-register" element={
                         <Layout>
@@ -67,9 +73,11 @@ function App() {
                         </Layout>
                     } />
                     <Route path="/teacher" element={
-                        <Layout>
-                            <TeacherMain />
-                        </Layout>
+                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                            <Layout>
+                                <TeacherMain />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
                     <Route path="/spot-manager" element={
                         <Layout>
@@ -88,23 +96,27 @@ function App() {
                     } />
 
                     <Route path="/grading-detail" element={
-                        <Layout>
-                            <GradingDetail />
-                        </Layout>
+                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                            <Layout>
+                                <GradingDetail />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
 
 
                     <Route path="/grading" element={
-                        <Layout>
-                            <Grading />
-                        </Layout>
+                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                            <Layout>
+                                <Grading />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
 
                     <Route path="/room-register" element={
                         <Layout>
-                            <RoomAdd/>
+                            <RoomAdd />
                         </Layout>
-                    }/>
+                    } />
 
                     <Route path="/crs-rgst" element={
                         <Layout>

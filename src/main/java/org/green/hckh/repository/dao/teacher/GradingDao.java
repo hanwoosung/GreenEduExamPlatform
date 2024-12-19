@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.green.hckh.dto.teacher.grading.GradingDTO;
 import org.green.hckh.dto.teacher.grading.QuestionDTO;
+import org.green.hckh.dto.teacher.grading.ScheduleTestScoreDto;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface GradingDao {
     void updateUserQuestionResult(@Param("resultNo") int resultNo, @Param("correct") String correct);
 
     void updateGradingUserScore(@Param("userId") String userId, @Param("testNo") int testNo, @Param("score") int score);
+
+    List<ScheduleTestScoreDto> scheduleTestAge(@Param("userId") String userId);
 
 }

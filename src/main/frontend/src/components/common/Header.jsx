@@ -16,6 +16,11 @@ const Header = () => {
                 return (
                     <>
                         <li className="header-nav-item">
+                            <Link to="/teacher" className="hover:underline">
+                                홈
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
                             <Link to="/schedule" className="hover:underline">
                                 스케줄
                             </Link>

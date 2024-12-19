@@ -1,0 +1,53 @@
+.teacher-main-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    color: #333;
+}
+
+.teacher-main-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.teacher-main-chart-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.teacher-main-table-container {
+    margin-top: 40px;
+}
+.teacher-main-table-container h2{
+    margin-bottom: 20px;
+}
+
+.teacher-main-grid-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.teacher-main-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+
+.teacher-main-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.teacher-main-card p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.teacher-main-loading, .teacher-main-error {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}

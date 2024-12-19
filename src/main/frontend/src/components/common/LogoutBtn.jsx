@@ -39,7 +39,7 @@ const LogoutBtn = ({sessionValues, removeSession, setSession, getSession, classN
                 // 로그인된 경우 로그아웃 버튼 표시
                 <>
                     <a>{sessionValues?.user.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onClick={handlerLogout}>
+                    <button className={className} onClick={handlerLogout}>
                         로그아웃
                     </button>
                 </>
