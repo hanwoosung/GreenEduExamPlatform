@@ -23,6 +23,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return scheduleEntityList.stream()
                 .map(item -> ScheduleDto.builder()
+                        .no(item.getScheduleNo())
                         .title(item.getScheduleName())
                         .start(item.getStartDate())
                         .end(item.getEndDate())
