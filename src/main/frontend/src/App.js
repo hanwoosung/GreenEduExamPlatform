@@ -21,34 +21,6 @@ function App() {
 
     return (
         <>
-            {/*/!* 네비게이션 바 *!/*/}
-            <ul className="flex space-x-4">
-                <li>
-                    <Link to={"/"} className="hover:underline">
-                        홈
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/test2"} className="hover:underline">
-                        테스트 페이지 2
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/schedule"} className="hover:underline">
-                        스케줄
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/class-register"} className="hover:underline">
-                        강의 등록
-                    </Link>
-                </li>
-                <li>
-                    <Link to={"/regist"} className="hover:underline">
-                        회원가입
-                    </Link>
-                </li>
-            </ul>
 
             {/* 라우터 설정 */
             }
