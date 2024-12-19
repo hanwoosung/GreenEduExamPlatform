@@ -9,21 +9,44 @@ import useFormHandler from "../../../hooks/spotmanager/classadd/useFormHandler";
 import useSchedules from "../../../hooks/spotmanager/classadd/useSchedules";
 import useClassData from "../../../hooks/spotmanager/classadd/useClassData";
 import useSessionStorage from "../../../hooks/useSessionStorage";
-import ClassAddCalendar from "./ClassAddCalendar";
+import ClassAddCalendar from "../../../components/spotmanager/ClassAddCalendar";
 import useApi2 from "../../../hooks/useApi2";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const ClassAdd = () => {
-    const {post} = useApi2();
+    const {get, post} = useApi2();
     const {sessionValues} = useSessionStorage();
     const {user} = sessionValues;
     const {setSpotNo, classData, teachers, rooms, refreshData} = useClassData();
     const {formData, setFormData, errors, validate, handleChange, initialFormData} =
         useFormHandler();
     const [dateModifyNum, setDateModifyNum] = useState(null);
+    const location = useLocation();
+    const {state} = location;
+    const navigate = useNavigate();
 
     useEffect(() => {
         setSpotNo(user?.spotNo);
     }, []);
+
+    useEffect(() => {
+        if (state?.classNo) {
+            setClassNo(state.classNo);
+
+            const getClassData = async () => {
+                const classData = await get("api/v1/spot-manager/class?classNo=" + state.classNo);
+
+                setFormData(classData);
+                setIsReg(false);
+                setSelectedTeachers(classData.userId);
+                setSelectedRoom(classData.roomNo);
+
+                navigate(location.pathname, {replace: true, state: null});
+            }
+
+            getClassData();
+        }
+    }, [state?.classNo])
 
     const {
         schedules,

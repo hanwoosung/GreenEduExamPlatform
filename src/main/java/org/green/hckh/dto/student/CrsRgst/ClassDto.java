@@ -2,6 +2,8 @@ package org.green.hckh.dto.student.CrsRgst;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,4 +22,7 @@ public class ClassDto {
     private int maxPeople; // 최대 수강 인원
     private int nowPeople; // 현재 수강 인원
     private String graduateCode; // 나의 상태가 빈값이면 내가 신청한 것이 아님.
+    private LocalDateTime createDt; // 수강신청시간
+    private LocalDate userBirth;
+    private int possibleApplyCnt;
 }

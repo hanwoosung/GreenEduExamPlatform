@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.common.ClassDao">
+    <select id="getClassInfo">
+        SELECT
+            class_no,
+            spot_no,
+            class_name,
+            user_id,
+            room_no,
+            start_date,
+            end_date,
+            max_people,
+            (SELECT COUNT(user_id)
+             FROM tbl_user_class
+             WHERE class_no = #{classNo}
+               AND graduate_code NOT IN ('APPLY', 'H')) AS now_people
+        FROM tbl_class
+        WHERE class_no = #{classNo}
+        AND delete_yn = 'N'
+    </select>
+</mapper>

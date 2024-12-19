@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class CrsRgstServiceImpl implements CrsRgstService {
     }
 
     @Override
-    public List<ClassDto> insertClass(String userId, String classNo, String startDate) throws SQLException {
+    public List<ClassDto> insertClass(String userId, int classNo, String startDate) throws SQLException {
 
         int cnt = crsRgstDao.getClassCnt(userId, classNo);
         if (cnt > 0) {
@@ -44,6 +45,36 @@ public class CrsRgstServiceImpl implements CrsRgstService {
         crsRgstDao.insertClass(userId, classNo);
 
         return crsRgstDao.getClasses(userId);
+    }
+
+    @Override
+    public List<ClassDto> getApplyStudents(int classNo) {
+        return crsRgstDao.getApplyStudents(classNo);
+    }
+
+    @Override
+    public void updateStatus(ClassDto classDto) throws SQLException {
+
+        boolean isHeardAction = checkIsHeardAction(classDto);
+
+        if(isHeardAction) {
+            int cnt = crsRgstDao.getNowPeopleCnt(classDto.getClassNo());
+            if (cnt == 0) {
+                throw new SQLException("정원 초과 입니다.");
+            }
+        }
+
+        crsRgstDao.updateStatus(classDto.getClassNo(), classDto.getUserId(), classDto.getGraduateCode());
+    }
+
+    private boolean checkIsHeardAction(ClassDto classDto) {
+        String nowGraduateCode = crsRgstDao.getGraduateCode(classDto.getClassNo(), classDto.getUserId());
+        String changeGraduateCode = classDto.getGraduateCode();
+
+        Set<String> noHeardCodes = Set.of("APPLY", "H"); // 수강신청, 반려
+        boolean isNoHeardUser = noHeardCodes.contains(nowGraduateCode);
+
+        return isNoHeardUser && !noHeardCodes.contains(changeGraduateCode);
     }
 
 }
