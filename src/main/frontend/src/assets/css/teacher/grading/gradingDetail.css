@@ -1,0 +1,353 @@
+.grading-detail {
+    width: 1080px; /* 전체 화면 너비 키움 */
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.exam-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.back-button {
+    padding: 20px 34px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.exam-content {
+    padding: 20px;
+}
+
+.question {
+    margin-bottom: 40px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fcfcfc;
+}
+
+.question-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.marker-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.marker {
+    position: relative;
+    font-size: 75px;
+    text-align: center;
+}
+
+.marker.correct {
+    color: #27ae60; /* 초록색 O */
+}
+
+.marker.incorrect {
+    color: #e74c3c; /* 빨간색 X */
+}
+
+.marker-symbol {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -53%);
+}
+
+.question-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.question-title {
+    font-size: 18px;
+    color: #333;
+    flex: 1;
+}
+
+.options {
+    display: flex; /* Flexbox 사용 */
+    flex-wrap: wrap; /* 보기 목록이 2열로 정렬되도록 설정 */
+    gap: 10px; /* 보기 사이 여백 */
+    list-style: none;
+    padding: 0;
+}
+
+.option {
+    flex: 0 0 calc(50% - 10px); /* 보기 너비를 50%로 설정, 여백 고려 */
+    padding: 15px;
+    border-radius: 5px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+    box-sizing: border-box; /* 패딩과 여백 포함 */
+}
+
+.option.correct {
+    background-color: #e9f7ef;
+    border: 2px solid #27ae60;
+}
+
+.option.incorrect {
+    background-color: #fdecea;
+    border: 2px solid #e74c3c;
+}
+
+.submit-button-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button {
+    margin-top: 10px;
+    font-size: 18px;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.exam-content {
+    padding: 20px;
+}
+
+.grading-detail-container {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    gap: 20px;
+}
+
+/* 문제 영역 */
+.grading-detail {
+    flex: 1; /* 문제 영역이 넓게 차지하도록 설정 */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 플로팅 버튼 */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+
+.scroll-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* 호버 시 살짝 확대 */
+}
+
+.icon {
+    font-size: 20px;
+}
+
+
+.scroll-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* 호버 시 살짝 확대 */
+}
+
+.icon {
+    font-size: 20px;
+}
+
+
+.grading-detail-container {
+    display: flex;
+    max-width: 1500px;
+    margin: 0 auto;
+    position: relative;
+    gap: 20px; /* 문제 영역과 사이드바 간 간격 */
+}
+
+/* 문제 영역 */
+.grading-detail {
+    flex: 1; /* 문제 영역이 넓게 차지하도록 설정 */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 사이드바 */
+.sidebar {
+    position: sticky;
+    top: 20px;
+    right: 0;
+    width: 220px;
+    padding: 23px;
+    margin-top: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 76vh;
+    border: 1px solid #ddd;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); /* 극적인 부드러운 이동 */
+    transform: translateY(0);
+}
+
+.exam-content-ul-div {
+    overflow-y: auto;
+    max-height: 80%;
+}
+
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+/* 문제 목록 스타일 */
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* 항목 간 간격 */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* 문제 항목 */
+.sidebar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+    text-align: left;
+}
+
+/* 문제 항목 상태별 스타일 */
+.sidebar-item.correct {
+    background-color: #e8f5e9; /* 부드러운 초록 */
+    color: #388e3c;
+    border-color: #c8e6c9;
+}
+
+.sidebar-item.incorrect {
+    background-color: #ffebee; /* 부드러운 빨강 */
+    color: #d32f2f;
+    border-color: #ffcdd2;
+}
+
+.sidebar-item.not-graded {
+    background-color: lightgray; /* 부드러운 노랑 */
+    color: black;
+    border-color: lightgray;
+}
+
+/* 호버 효과 */
+.sidebar-item:hover {
+    background-color: #f4f4f4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 문제 번호 스타일 */
+.sidebar-number {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: inherit; /* 상태에 따라 색상 변경 */
+}
+
+/* 상태 아이콘 */
+.sidebar-score {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 6px;
+}
+
+.sidebar-score .icon {
+    font-size: 16px;
+}
+
+/* 플로팅 버튼 */
+.scroll-to-top {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.scroll-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* 호버 시 살짝 확대 */
+}
+
+/* 총 점수 표시 */
+.total-score {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}

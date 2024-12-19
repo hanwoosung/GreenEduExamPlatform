@@ -2,8 +2,10 @@ package org.green.hckh.service.teacher.grading;
 
 
 import lombok.AllArgsConstructor;
-import org.green.hckh.dto.teacher.grading.GradingDto;
+import org.green.hckh.dto.teacher.grading.GradingDTO;
 import org.green.hckh.dto.teacher.grading.GradingScheduleDTO;
+import org.green.hckh.dto.teacher.grading.QuestionDTO;
+import org.green.hckh.dto.teacher.grading.ScoreDto;
 import org.green.hckh.entity.teacher.grading.GradingClassEntity;
 import org.green.hckh.repository.dao.teacher.GradingDao;
 import org.green.hckh.repository.jpa.teacher.GradingRepository;
@@ -43,7 +45,7 @@ public class GradingServiceImpl implements GradingService {
     }
 
     @Override
-    public List<GradingDto> findAllGradings(String id, int scheduleNo) {
+    public List<GradingDTO> findAllGradings(String id, int scheduleNo) {
         return gradingDao.findAllGradings(id, scheduleNo);
     }
 
@@ -56,5 +58,16 @@ public class GradingServiceImpl implements GradingService {
     public void reTestGo(List<String> userId, int testNo) {
         gradingDao.deleteUserQuestionResult(userId, testNo);
         gradingDao.updateUserScore(userId, testNo);
+    }
+
+    @Override
+    public List<QuestionDTO> getQuestionsWithDetails(int testNo, String userId) {
+        return gradingDao.getQuestionsWithDetails(testNo, userId);
+    }
+
+    @Override
+    public void updateUserScore(ScoreDto scoreDto) {
+        gradingDao.updateUserQuestionResult(scoreDto.getResultNo(), scoreDto.getCorrect());
+        gradingDao.updateGradingUserScore(scoreDto.getUserId(), scoreDto.getTestNo(), scoreDto.getScore());
     }
 }
