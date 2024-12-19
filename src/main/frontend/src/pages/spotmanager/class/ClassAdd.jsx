@@ -53,10 +53,10 @@ const ClassAdd = () => {
         const isValid = validate(selectedTeachers, selectedRoom, schedules);
 
         if (isValid) {
-            console.log(formData);
-            console.log(selectedTeachers);
-            console.log(selectedRoom);
-            console.log(schedules)
+            // console.log(formData);
+            // console.log(selectedTeachers);
+            // console.log(selectedRoom);
+            // console.log(schedules)
 
             const submitData = async () => {
                 await post("api/v1/spot-manager/class", {

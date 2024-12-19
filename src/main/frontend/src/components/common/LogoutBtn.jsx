@@ -2,7 +2,7 @@ import useApi from "../../hooks/useApi";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 
-const LogoutBtn = ({sessionValues, removeSession, setSession, getSession}) => {
+const LogoutBtn = ({sessionValues, removeSession, setSession, getSession, className}) => {
 
     const navigate = useNavigate();
 
@@ -46,10 +46,10 @@ const LogoutBtn = ({sessionValues, removeSession, setSession, getSession}) => {
             ) : (
                 // 로그인이 안된 경우 로그인과 회원가입 버튼 표시
                 <>
-                    <button onClick={() => navigate("/login")}>
+                    <button className={className} onClick={() => navigate("/login")}>
                         로그인
                     </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onClick={() => navigate("/regist")}>
+                    <button className={className} onClick={() => navigate("/regist")}>
                         회원가입
                     </button>
                 </>

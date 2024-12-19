@@ -27,7 +27,6 @@ export const useScheduleHandlers = () => {
 
     useEffect(() => {
         const colors = ["green", "purple", "orange", "blue", "yellow", "pink", "brown"];
-
         const readonlyEvents = fetchedReadOnlyEvents?.map((event, index) => ({
             id: `readonly-${event.id || index}`,
             title: event.title,
