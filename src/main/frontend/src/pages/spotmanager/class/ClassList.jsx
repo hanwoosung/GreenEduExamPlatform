@@ -33,7 +33,7 @@ const ClassList = () => {
                                 className="view-applications-button"
                                 onClick={() => handleViewApplications(clazz.classNo)}
                             >
-                                수강 신청 이력
+                                수강 인원 관리
                             </button>
                             <button
                                 className="delete-button"

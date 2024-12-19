@@ -11,10 +11,10 @@ import useClassData from "../../../hooks/spotmanager/classadd/useClassData";
 import useSessionStorage from "../../../hooks/useSessionStorage";
 import ClassAddCalendar from "../../../components/spotmanager/ClassAddCalendar";
 import useApi2 from "../../../hooks/useApi2";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const ClassAdd = () => {
-    const {post} = useApi2();
+    const {get, post} = useApi2();
     const {sessionValues} = useSessionStorage();
     const {user} = sessionValues;
     const {setSpotNo, classData, teachers, rooms, refreshData} = useClassData();
@@ -23,6 +23,7 @@ const ClassAdd = () => {
     const [dateModifyNum, setDateModifyNum] = useState(null);
     const location = useLocation();
     const {state} = location;
+    const navigate = useNavigate();
 
     useEffect(() => {
         setSpotNo(user?.spotNo);
@@ -30,23 +31,22 @@ const ClassAdd = () => {
 
     useEffect(() => {
         if (state?.classNo) {
-            console.log(state.classNo);
-
             setClassNo(state.classNo);
-            console.log(classData);
-            const selectedClassData = classData
-                .filter((clazz) => clazz.classNo === state.classNo)
-                .map((clazz) => {
-                    return { ...clazz };
-                });
-            const objClassData = {...selectedClassData[0]};
-            console.log(objClassData);
-            setFormData(objClassData);
-            setIsReg(false);
-            setSelectedTeachers(objClassData.userId);
-            setSelectedRoom(objClassData.roomNo);
+
+            const getClassData = async () => {
+                const classData = await get("api/v1/spot-manager/class?classNo=" + state.classNo);
+
+                setFormData(classData);
+                setIsReg(false);
+                setSelectedTeachers(classData.userId);
+                setSelectedRoom(classData.roomNo);
+
+                navigate(location.pathname, {replace: true, state: null});
+            }
+
+            getClassData();
         }
-    }, [classData])
+    }, [state?.classNo])
 
     const {
         schedules,

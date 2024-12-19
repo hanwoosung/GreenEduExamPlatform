@@ -21,4 +21,6 @@ public interface CrsRgstDao {
     List<ClassDto> getApplyStudents(int classNo);
 
     void updateStatus(int classNo, String userId, String graduateCode);
+
+    String getGraduateCode(int classNo, String userId);
 }

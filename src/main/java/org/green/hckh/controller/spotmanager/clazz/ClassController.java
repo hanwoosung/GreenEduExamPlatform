@@ -25,6 +25,11 @@ public class ClassController {
     private final ClassService classService;
     private final ClassRepository classRepository;
 
+    @GetMapping
+    public ClassEntity getClassInfo(@RequestParam int classNo) {
+        return classRepository.findById(classNo).orElse(null);
+    }
+
     @GetMapping("/{spotNo}")
     public List<ClassEntity> getClass(@PathVariable("spotNo") int spotNo) {
         return classService.findBySpotNo(spotNo);

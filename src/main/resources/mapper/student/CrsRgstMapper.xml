@@ -90,7 +90,10 @@
             B.create_dt,
             B.graduate_code,
             A.max_people,
-            SUM(IF(B.graduate_code NOT IN ('APPLY', 'H'), 1, 0)) AS now_people
+            (SELECT COUNT(user_id)
+             FROM tbl_user_class
+             WHERE class_no = #{classNo}
+               AND graduate_code NOT IN ('APPLY', 'H')) AS now_people
         FROM
             tbl_class A
                 LEFT JOIN
@@ -104,9 +107,6 @@
         ORDER BY
             CASE WHEN B.graduate_code = 'NO' THEN 2 ELSE 1 END,
             B.create_dt DESC;
-
-
-
     </select>
 
     <update id="updateStatus">
@@ -115,5 +115,13 @@
         WHERE user_id = #{userId}
         AND class_no = #{classNo}
     </update>
+
+    <select id="getGraduateCode">
+        SELECT
+            graduate_code
+        FROM tbl_user_class
+        WHERE class_no = #{classNo}
+          AND user_id = #{userId}
+    </select>
 
 </mapper>

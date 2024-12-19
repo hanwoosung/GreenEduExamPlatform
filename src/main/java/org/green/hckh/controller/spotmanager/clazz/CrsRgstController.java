@@ -3,6 +3,8 @@ package org.green.hckh.controller.spotmanager.clazz;
 import lombok.RequiredArgsConstructor;
 import org.green.hckh.dto.common.UserDto;
 import org.green.hckh.dto.student.CrsRgst.ClassDto;
+import org.green.hckh.repository.dao.common.ClassDao;
+import org.green.hckh.repository.dao.student.CrsRgstDao;
 import org.green.hckh.service.student.CrsRgstService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,8 +20,14 @@ import java.util.Map;
 public class CrsRgstController {
 
     private final CrsRgstService crsRgstService;
+    private final ClassDao classDao;
 
-    @GetMapping("{classNo}")
+    @GetMapping
+    public ClassDto getClassInfo(@RequestParam int classNo) {
+        return classDao.getClassInfo(classNo);
+    }
+
+    @GetMapping("/{classNo}")
     public List<ClassDto> getApplyStudents(@PathVariable("classNo") int classNo) {
         return crsRgstService.getApplyStudents(classNo);
     }

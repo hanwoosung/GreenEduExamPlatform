@@ -4,6 +4,8 @@ import '../../../assets/css/spotmanager/studentList.css';
 import {useLocation} from "react-router-dom";
 import useApi2 from "../../../hooks/useApi2";
 import Swal from 'sweetalert2';
+import useFetch from "../../../hooks/useFetch";
+import useClassInfo from "../../../hooks/class/useClassInfo";
 
 const StudentList = () => {
     const {get, put} = useApi2();
@@ -12,14 +14,10 @@ const StudentList = () => {
     const [error, setError] = useState(null);
     const location = useLocation();
     const {state} = location;
-
-    const statusOptions = [
-        {value: 'APPLY', label: '신청'},
-        {value: 'CLEAR', label: '수료완료'},
-        {value: 'DEL', label: '중도탈락'},
-        {value: 'H', label: '반려'},
-        {value: 'NO', label: '승인'},
-    ];
+    const {data : statusOptions} = useFetch("/api/v1/gubn?groupCode=graduate_code");
+    const {getClassInfo} = useClassInfo();
+    const [classInfo, setClassInfo] = useState();
+    console.log(statusOptions);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,13 +25,14 @@ const StudentList = () => {
             console.log(response);
             setStudents(response);
             setLoading(false);
+
+            setClassInfo(await getClassInfo(state?.classNo));
         }
 
         fetchData();
     }, [state?.classNo]);
 
     const handleStatusChange = async (e, userId) => {
-        e.preventDefault();
         const {value} = e.target;
 
         await put(`/api/v1/spot-manager/crs-rgst`, {
@@ -42,14 +41,13 @@ const StudentList = () => {
                 graduateCode: value,
                 userId: userId
             }
-        }).then(() => {
-            Swal.fire('성공', "변경되었습니다.", 'success');
+        }).then(async () => {
+            await Swal.fire('성공', "변경되었습니다.", 'success');
 
-            setStudents((prev) =>
-                prev.map((student) =>
-                    student.userId === userId ? {...student, graduateCode: value} : student
-                )
-            );
+            const response = await get("/api/v1/spot-manager/crs-rgst/" + state?.classNo);
+            setStudents(response);
+
+            setClassInfo(await getClassInfo(state?.classNo));
         })
             .catch(error => {
                 Swal.fire('실패', error.response.data.body.message, 'error');
@@ -72,13 +70,16 @@ const StudentList = () => {
 
     return (
         <div className="student-list">
-            <h1>{students ? '수강신청 목록(' + students[0].nowPeople + ' / ' + students[0].maxPeople + ')' : '수강신청 목록'}</h1>
+            <h1>{classInfo && classInfo.className}</h1>
+            <h1>{classInfo && classInfo.startDate + ' ~ ' + classInfo.endDate}</h1>
+            <hr/>
+            <h1>수강 인원 관리{classInfo && '( ' + classInfo.nowPeople + ' / ' + classInfo.maxPeople + ' )'}</h1>
             <table className="student-table">
                 <thead>
                 <tr>
                     <th>이름</th>
                     <th>생년월일</th>
-                    <th>가입일시</th>
+                    <th>수강신청 일시</th>
                     <th>상태 변경</th>
                 </tr>
                 </thead>
@@ -94,10 +95,10 @@ const StudentList = () => {
                                 value={student.graduateCode}
                                 onChange={(e) => handleStatusChange(e, student.userId)}
                             >
-                                {statusOptions.map((option) => (
-                                    <option key={option.value} value={option.value}
-                                            selected={option.value === student.graduateCode}>
-                                        {option.label}
+                                {statusOptions?.map((option) => (
+                                    <option key={option.gubnCode} value={option.gubnCode}
+                                            selected={option.gubnCode === student.graduateCode}>
+                                        {option.gubnName}
                                     </option>
                                 ))}
                             </select>
