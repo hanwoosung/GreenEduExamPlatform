@@ -107,6 +107,7 @@
 .course-list button:hover {
     background-color: #e5e7eb;
 }
+
 .course-list button.selected {
     background-color: #2563eb;
     color: #fff;
@@ -139,7 +140,6 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
-
 
 
 /* 스케줄 입력 필드 스타일 */
@@ -214,6 +214,7 @@
     color: #374151;
     box-sizing: border-box;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 10px;
 }
 
 .room-select select:focus {
@@ -223,9 +224,9 @@
 }
 
 .room-select .error-message {
-    color: #ef4444;
-    font-size: 12px;
-    margin-top: 5px;
+    /*color: #ef4444;*/
+    /*font-size: 12px;*/
+    /*margin-top: 5px;*/
 }
 
 .date-modify-form {
@@ -233,16 +234,19 @@
     margin-top: 10px;
     gap: 10px;
 }
+
 .date-modify-form input {
     width: 60%;
 }
+
 .date-modify-form button {
-    width: 40%;
+    width: 50%;
     height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .date-form {
     width: 40%;
 }

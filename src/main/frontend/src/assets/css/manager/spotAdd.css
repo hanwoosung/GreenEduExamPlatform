@@ -1,0 +1,117 @@
+.spot-add-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 상단에 정렬 */
+    min-height: 100vh;
+    padding: 40px 20px; /* 상단 여백 추가 */
+    background: #f8f9fa;
+}
+
+.spot-add-container {
+    background: #ffffff;
+    padding: 24px 32px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.spot-add-container h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.spot-add-container form {
+    margin-bottom: 24px; /* 폼과 리스트 사이 간격 */
+}
+
+.spot-add-container form input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* 추가: 테두리와 패딩 포함 */
+}
+
+
+.spot-add-container form input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.spot-add-container form input::placeholder {
+    color: #aaa;
+}
+
+.spot-add-container form button {
+    width: 100%;
+    padding: 14px;
+    background: #007bff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.spot-add-container form button:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.spot-add-container .spot-list {
+    text-align: left;
+}
+
+.spot-add-container .spot-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.spot-add-container .spot-item:hover {
+    border-color: #007bff;
+    background: #f8f9fa;
+}
+
+.spot-add-container .spot-item.selected {
+    border-color: #007bff;
+    background: #e9f5ff;
+}
+
+.spot-add-container .spot-item span {
+    font-size: 16px;
+    color: #333;
+    flex-grow: 1;
+}
+
+.spot-add-container .spot-item button {
+    background: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.spot-add-container .spot-item button:hover {
+    background: #a71d2a;
+    transform: scale(1.05);
+}

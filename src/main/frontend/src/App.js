@@ -15,6 +15,7 @@ import TestExam from "./pages/teacher/TestExam";
 import Regist from "./pages/common/Regist";
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
+import SpotAdd from "./pages/manager/spot/SpotAdd";
 
 
 function App() {
@@ -30,75 +31,75 @@ function App() {
                         <Layout>
                             {/*<Home />*/}
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/test2" element={
                         <Layout>
-                            <TestPage2 />
+                            <TestPage2/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/schedule" element={
                         <Layout>
-                            <Schedule />
+                            <Schedule/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/class-register" element={
                         <Layout>
-                            <ClassAdd />
+                            <ClassAdd/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/regist" element={
                         <Layout>
-                            <Regist />
+                            <Regist/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/test-exam" element={
                         <Layout>
-                            <TestExam />
+                            <TestExam/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/login" element={
                         <Layout>
-                            <Login />
+                            <Login/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/student" element={
                         <Layout>
-                            <StudentMain />
+                            <StudentMain/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/teacher" element={
                         <Layout>
-                            <TeacherMain />
+                            <TeacherMain/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/spot-manager" element={
                         <Layout>
-                            <SpotManagerMain />
+                            <SpotManagerMain/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/manager" element={
                         <Layout>
-                            <ManagerMain />
+                            <ManagerMain/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/userInfo" element={
                         <Layout>
-                            <Userinfo />
+                            <Userinfo/>
                         </Layout>
-                    } />
+                    }/>
 
                     <Route path="/grading-detail" element={
                         <Layout>
-                            <GradingDetail />
+                            <GradingDetail/>
                         </Layout>
-                    } />
+                    }/>
 
 
                     <Route path="/grading" element={
                         <Layout>
-                            <Grading />
+                            <Grading/>
                         </Layout>
-                    } />
+                    }/>
 
                     <Route path="/room-register" element={
                         <Layout>
@@ -108,9 +109,15 @@ function App() {
 
                     <Route path="/crs-rgst" element={
                         <Layout>
-                            <CrsRgst />
+                            <CrsRgst/>
                         </Layout>
-                    } />
+                    }/>
+
+                    <Route path={"/spot-register"} element={
+                        <Layout>
+                            <SpotAdd/>
+                        </Layout>
+                    }/>
 
                 </Routes>
             </main>
