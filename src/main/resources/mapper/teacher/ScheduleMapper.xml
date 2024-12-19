@@ -44,5 +44,24 @@
         SELECT Max(calendar_no)
         FROM tbl_calendar;
     </select>
+    
+    <select id="findByClassNo">
+        SELECT schedule_no,
+               schedule_name,
+               class_no,
+               start_date,
+               end_date
+
+        FROM tbl_schedule
+        WHERE class_no = #{classNo}
+          AND delete_yn = 'N'
+        ORDER BY start_date
+    </select>
+
+    <update id="updateDeleteYSchedule">
+        UPDATE tbl_schedule
+        SET delete_yn = 'Y'
+        WHERE schedule_no = #{scheduleNo}
+    </update>
 
 </mapper>

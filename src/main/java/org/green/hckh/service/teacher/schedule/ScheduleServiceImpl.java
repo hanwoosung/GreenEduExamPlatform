@@ -79,4 +79,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     public int maxCountCalendar() {
         return scheduleDao.maxCountCalendar();
     }
+
+    @Override
+    public List<ScheduleEntity> findByClassNo(int classNo) {
+        return scheduleDao.findByClassNo(classNo);
+    }
+
+    @Override
+    public int updateDeleteYSchedule(int scheduleNo) {
+        return scheduleDao.updateDeleteYSchedule(scheduleNo);
+    }
 }
