@@ -17,20 +17,20 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @GetMapping("/schedule")
-    public List<ScheduleDto> getScheduleList() {
-        //TODO : 로그인 구현되면 이거 처리
-        return scheduleService.findSubjectList("teacher1");
+    @GetMapping("/schedule/{userId}/{userRoleCode}")
+    public List<ScheduleDto> getScheduleList(@PathVariable String userId,
+                                             @PathVariable("userRoleCode") String userRoleCode) {
+        return scheduleService.findSubjectList(userId, userRoleCode);
     }
 
-    @GetMapping
-    public List<CalendarDto> getCalendarList() {
-        //TODO : 로그인 구현되면 이거 처리
-        return scheduleService.findCalendarList("teacher1");
+    @GetMapping("/{userId}")
+    public List<CalendarDto> getCalendarList(@PathVariable String userId) {
+        return scheduleService.findCalendarList(userId);
     }
 
     @PostMapping
     public int addCalendarEvent(@RequestBody CalendarDto calendarDto) {
+        System.out.println(calendarDto);
         return scheduleService.addCalendarEvent(calendarDto);
     }
 
