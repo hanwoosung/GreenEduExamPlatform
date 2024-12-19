@@ -16,6 +16,7 @@ import Regist from "./pages/common/Regist";
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
 import SpotAdd from "./pages/manager/spot/SpotAdd";
+import ClassList from "./pages/spotmanager/class/ClassList";
 
 
 function App() {
@@ -116,6 +117,12 @@ function App() {
                     <Route path={"/spot-register"} element={
                         <Layout>
                             <SpotAdd/>
+                        </Layout>
+                    }/>
+
+                    <Route path={"/class-list"} element={
+                        <Layout>
+                            <ClassList/>
                         </Layout>
                     }/>
 

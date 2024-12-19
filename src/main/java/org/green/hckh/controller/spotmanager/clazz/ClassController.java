@@ -8,6 +8,7 @@ import org.green.hckh.entity.ScheduleEntity;
 import org.green.hckh.repository.jpa.spotmanager.ClassRepository;
 import org.green.hckh.repository.jpa.spotmanager.ScheduleRepository;
 import org.green.hckh.service.spotmanager.clazz.ClassService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ClassController {
 
     private final ClassService classService;
+    private final ClassRepository classRepository;
 
     @GetMapping("/{spotNo}")
     public List<ClassEntity> getClass(@PathVariable("spotNo") int spotNo) {
@@ -33,5 +35,11 @@ public class ClassController {
         System.out.println(classAndSchedulesDTO);
         System.out.println(classAndSchedulesDTO.getScheduleList().toString());
         classService.classSchedulesInsertDelete(classAndSchedulesDTO);
+    }
+
+    @Transactional
+    @DeleteMapping("/{classNo}")
+    public void deleteClass(@PathVariable("classNo") int classNo) {
+        classRepository.updateDeleteYnByClassNo(classNo);
     }
 }
