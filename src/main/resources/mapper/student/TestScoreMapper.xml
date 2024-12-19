@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.green.hckh.repository.dao.student.TestScoreDao">
+    <insert id="insert">
+        INSERT INTO tbl_score
+        (user_id, test_no, score, confirm_yn, test_cnt)
+        VALUES (#{T.userId}, #{T.testNo}, #{T.score}, 'N', DEFAULT)
+    </insert>
+</mapper>

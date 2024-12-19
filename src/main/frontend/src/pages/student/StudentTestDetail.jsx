@@ -30,6 +30,7 @@ const StudentTestDetail = () => {
         if (questionList && questionList.length > 0) {
             setQuestionResult(
                 questionList.map((_, index) => ({
+                    questionResultNo: 0,
                     testNo,
                     questionNo: index + 1,
                     userId: userData,
@@ -40,11 +41,15 @@ const StudentTestDetail = () => {
         }
     }, [questionList, testNo, userData]);
 
+    const {post: scorePost} = useApi("/api/v1/test-score", {
+        headers: {"Content-Type": "application/json"}
+    });
 
+    const {post: resultPost} = useApi("/api/v1/test/result", {
+        headers: {"Content-Type": "application/json"}
+    });
 
-    useEffect(() => {
-        console.log(questionResult); // questionResult가 변경된 후에 콘솔 출력
-    }, [questionResult]);
+    //todo 요청(스코어, 리설트) 추가하고 아래 점검용 useEffect 지웁시다.
 
     const answerEdit = (qno, answer, corr) => {
         setQuestionResult((prevResult) =>
@@ -57,27 +62,50 @@ const StudentTestDetail = () => {
     }
 
     //todo 전송시 answer와 정답값 비교
-    const submitAnswer = () => {
-        setQuestionResult((prevResult) =>
-            prevResult.map((questionResult) => {
-                if (questionResult.correctYn === "H") {
-                    return {...questionResult}
-                }
+    const submitAnswer = async () => {
+        let totalScore = 0;
 
-                const corrElement = detailList.find((detail) =>
-                    detail.correctYn === "Y" &&
-                    detail.questionNo === questionResult.questionNo
-                )
+        const updatedQuestionResult = questionResult.map((questionResult, index) => {
+            if (questionResult.correctYn === "H") {
+                return {...questionResult};
+            }
 
-                if (corrElement && corrElement.questionContent === questionResult.answer) {
-                    return {...questionResult, correctYn: "Y"};
-                }
-                return {...questionResult, correctYn: "N"};
-            })
-        );
+            const corrElement = detailList.find(
+                (detail) => detail.correctYn === "Y" && detail.questionNo === questionResult.questionNo);
 
+            if (corrElement && corrElement.questionContent === questionResult.answer) {
+                totalScore += questionList[index].questionScore;
+                return {...questionResult, correctYn: "Y"};
+            }
 
+            return {...questionResult, correctYn: "N"};
+        });
+
+        setQuestionResult(updatedQuestionResult);
+
+        try {
+            const scoreRes = await scorePost(
+                {
+                    userId: userData,
+                    testNo,
+                    score: totalScore,
+                    confirmYn: "N",
+                    testCnt: 1
+                },
+                {},
+                ""
+            );
+
+            const resultRes = await resultPost(updatedQuestionResult,{},"");
+
+            if (scoreRes !== 0 && resultRes !== 0) {
+                alert("제출 완료");
+            }
+        } catch (error) {
+            console.error("제출 중 에러 발생:", error);
+        }
     }
+
 
     if (detailLoading || questionLoading) return <div>로딩 중...</div>;
     if (detailError || questionError) return <div>에러 발생: {detailError?.message || questionError?.message}</div>;
