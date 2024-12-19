@@ -37,11 +37,11 @@ public class UserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        System.out.println(authentication);
         if (!authentication.getPrincipal().equals("anonymousUser")) {
             UserDto user = (UserDto) authentication.getPrincipal();
             result = processData(user);
         }
-
         return result;
     }
 
