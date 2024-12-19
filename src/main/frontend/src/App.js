@@ -5,6 +5,7 @@ import Schedule from "./pages/teacher/Schedule";
 // import './index.css';
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import React from "react";
+import TestExam from "./pages/teacher/TestExam";
 import StudentMain from "./pages/student/StudentMain";
 import Login from "./pages/common/Login";
 import Regist from "./pages/common/Regist";
@@ -79,6 +80,11 @@ function App() {
                     <Route path="/regist" element={
                         <Layout>
                             <Regist />
+                        </Layout>
+                    }/>
+                    <Route path="/test-exam" element={
+                        <Layout>
+                            <TestExam/>
                         </Layout>
                     }/>
                     <Route path="/login" element={

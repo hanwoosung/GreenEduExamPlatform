@@ -4,7 +4,7 @@
 <mapper namespace="org.green.hckh.repository.dao.teacher.ScheduleDao">
 
     <select id="findSubjectList" resultType="org.green.hckh.entity.teacher.schedule.ScheduleEntity">
-        SELECT a.schedule_name, a.start_date, a.end_date
+        SELECT a.schedule_no, a.schedule_name, a.start_date, a.end_date
         FROM tbl_schedule a
                  LEFT JOIN tbl_class b ON a.class_no = b.class_no
                  LEFT JOIN tbl_user c ON b.user_id = c.user_id

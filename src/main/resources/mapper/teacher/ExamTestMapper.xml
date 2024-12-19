@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.green.hckh.repository.dao.teacher.ExamTestDao">
+    <insert id="insertTest" parameterType="org.green.hckh.dto.teacher.test.ExamTestDto" useGeneratedKeys="true" keyProperty="testInsertedId">
+        INSERT INTO tbl_test
+        (schedule_no,
+        create_user_id,
+        cutline,
+        create_dt,
+        time,
+        test_dt,
+        delete_yn)
+        VALUES
+        (#{T.scheduleNo},
+        #{T.createUserId},
+        #{T.cutline},
+        NOW(),
+        #{T.time},
+        #{T.testDt},
+        #{T.deleteYn})
+    </insert>
+    <select id="selectAllTest" resultType="org.green.hckh.dto.teacher.test.ExamTestDto">
+        SELECT
+        test_no,
+        schedule_no,
+        create_user_id,
+        cutline,
+        create_dt,
+        update_dt,
+        time,
+        test_dt,
+        delete_yn
+        FROM tbl_test;
+    </select>
+    <select id="findById" resultType="org.green.hckh.dto.teacher.test.ExamTestDto">
+        SELECT
+        test_no,
+        schedule_no,
+        create_user_id,
+        cutline,
+        create_dt,
+        update_dt,
+        time,
+        test_dt,
+        delete_yn
+        FROM tbl_test WHERE test_no = #{id};
+    </select>
+    <update id="updateTest">
+        UPDATE tbl_test
+        SET
+        schedule_no = #{T.scheduleNo},
+        create_user_id = #{T.createUserId},
+        cutline = #{T.cutline},
+        update_dt = #{T.updateDt},
+        time = #{T.time},
+        test_dt = #{T.testDt},
+        delete_yn = #{T.deleteYn}
+        WHERE
+        test_no = #{T.testNo}
+    </update>
+    <delete id="deleteTest">
+        DELETE FROM tbl_test WHERE test_no=#{id};
+    </delete>
+</mapper>
