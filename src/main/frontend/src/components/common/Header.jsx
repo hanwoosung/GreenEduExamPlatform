@@ -30,20 +30,34 @@ const Header = () => {
                                 채점
                             </Link>
                         </li>
-
+                        <li className="header-nav-item">
+                            <Link to="/userInfo" className="hover:underline">
+                                내 정보
+                            </Link>
+                        </li>
                     </>
                 );
             case "ROLE_STUDENT":
                 return (
                     <>
                         <li className="header-nav-item">
-                            <Link to="/my-classes" className="hover:underline">
-                                내 강의
+                            <Link to="/crs-rgst" className="hover:underline">
+                                강의신청
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/progress" className="hover:underline">
-                                학습 진행
+                            <Link to="/userInfo" className="hover:underline">
+                                내 정보
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
+                            <Link to="/test-result" className="hover:underline">
+                                채점결과
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
+                            <Link to="/schedule" className="hover:underline">
+                                일정
                             </Link>
                         </li>
                     </>

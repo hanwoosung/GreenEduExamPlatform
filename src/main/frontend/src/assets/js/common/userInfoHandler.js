@@ -11,15 +11,15 @@ export const useUserInfoHandler = () => {
     const {sessionValues, getSession, setSession} = useSessionStorage();
 
     const [userData, setUserData] = useState({
-        userId: sessionValues?.user.userId,
-        name: sessionValues?.user.name,
+        userId: sessionValues?.user?.userId,
+        name: sessionValues?.user?.name,
         userPassword: "",
         confirmPassword: "",
-        userRoleCode: sessionValues?.user.userRoleCode,
-        userBirth: sessionValues?.user.userBirth,
-        deleteYn: sessionValues?.user.deleteYn,
-        spotNo: sessionValues?.user.spotNo,
-        spotName: sessionValues?.user.spotName,
+        userRoleCode: sessionValues?.user?.userRoleCode,
+        userBirth: sessionValues?.user?.userBirth,
+        deleteYn: sessionValues?.user?.deleteYn,
+        spotNo: sessionValues?.user?.spotNo,
+        spotName: sessionValues?.user?.spotName,
     });
     const [errors, setErrors] = useState({});
 

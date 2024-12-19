@@ -1,5 +1,4 @@
-import React from "react";
-import {Route, Routes} from 'react-router-dom';
+import {Link, Route, Routes} from 'react-router-dom';
 import Layout from "./components/common/Layout";
 import TestPage2 from "./pages/TestPage2";
 import Schedule from "./pages/teacher/Schedule";
@@ -18,11 +17,19 @@ import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
 import useSessionStorage from "./hooks/useSessionStorage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import MyTestResult from "./pages/student/MyTestResult";
 
 
 function App() {
     const {sessionValues} = useSessionStorage();
     const userRole = sessionValues?.user?.userRoleCode;
+
+    const roles = {
+        student: "ROLE_STUDENT",
+        teacher: "ROLE_TEACHER",
+        spot: "ROLE_SPOT_MANAGER",
+        manager: "ROLE_MANAGER",
+    }
     return (
         <>
 
@@ -30,82 +37,83 @@ function App() {
             }
             <main className="p-6">
                 <Routes>
-                    {/*<Route path="/" element={*/}
-                    {/*    <Layout>*/}
-                    {/*        <Home />*/}
-                    {/*    </Layout>*/}
-                    {/*} />*/}
-                    <Route path="/test2" element={
-                        <Layout>
-                            <TestPage2 />
-                        </Layout>
-                    } />
+
                     <Route path="/schedule" element={
-                        <ProtectedRoute allowedRoles={["ROLE_TEACHER", "ROLE_STUDENT"]} userRole={userRole}>
+                        <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
                             <Layout>
                                 <Schedule />
                             </Layout>
                         </ProtectedRoute>
                     } />
+
                     <Route path="/class-register" element={
                         <Layout>
                             <ClassAdd />
                         </Layout>
                     } />
+
                     <Route path="/regist" element={
                         <Layout>
                             <Regist />
                         </Layout>
                     } />
+
                     <Route path="/test-exam" element={
                         <Layout>
                             <TestExam />
                         </Layout>
                     } />
+
                     <Route path="/login" element={
                         <Layout>
                             <Login />
                         </Layout>
                     } />
+
                     <Route path="/student" element={
                         <Layout>
                             <StudentMain />
                         </Layout>
                     } />
+
                     <Route path="/teacher" element={
-                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
                                 <TeacherMain />
                             </Layout>
                         </ProtectedRoute>
                     } />
+
                     <Route path="/spot-manager" element={
                         <Layout>
                             <SpotManagerMain />
                         </Layout>
                     } />
+
                     <Route path="/manager" element={
                         <Layout>
                             <ManagerMain />
                         </Layout>
                     } />
-                    <Route path="/userInfo" element={
-                        <Layout>
-                            <Userinfo />
-                        </Layout>
+
+                    <Route path="/user-info" element={
+                        <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
+                            <Layout>
+                                <Userinfo />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
 
                     <Route path="/grading-detail" element={
-                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
                                 <GradingDetail />
                             </Layout>
                         </ProtectedRoute>
                     } />
 
-
                     <Route path="/grading" element={
-                        <ProtectedRoute allowedRoles={["ROLE_TEACHER"]} userRole={userRole}>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
                                 <Grading />
                             </Layout>
@@ -119,9 +127,19 @@ function App() {
                     } />
 
                     <Route path="/crs-rgst" element={
-                        <Layout>
-                            <CrsRgst />
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <CrsRgst />
+                            </Layout>
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/test-result" element={
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <MyTestResult />
+                            </Layout>
+                        </ProtectedRoute>
                     } />
 
                 </Routes>
