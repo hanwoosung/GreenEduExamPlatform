@@ -3,6 +3,7 @@ package org.green.hckh.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
@@ -10,6 +11,7 @@ import org.hibernate.annotations.Where;
 @Setter
 @Entity
 @Table(name = "tbl_class_room")
+@ToString
 @Where(clause = "delete_yn = 'n'")
 public class ClassRoomEntity {
     @Id

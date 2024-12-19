@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {handleDelete} from "../../../modal/common/swals";
+import {swalDelete} from "../../../modal/common/swals";
 import useApi2 from "../../useApi2";
 import {addDay} from "../../../assets/js/common/convert";
 
@@ -26,7 +26,7 @@ const useSchedules = () => {
     };
 
     const handleScheduleDelete = (index, scheduleNo) => {
-        handleDelete(() => {
+        swalDelete(() => {
             if (scheduleNo) {
                 console.log(scheduleNo);
                 put("api/v1/spot-manager/schedule/" + scheduleNo);
