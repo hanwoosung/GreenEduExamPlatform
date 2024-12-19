@@ -15,6 +15,7 @@ import TestExam from "./pages/teacher/TestExam";
 import Regist from "./pages/common/Regist";
 import ClassAdd from "./pages/spotmanager/class/ClassAdd";
 import RoomAdd from "./pages/spotmanager/room/RoomAdd";
+import MyTestResult from "./pages/student/MyTestResult";
 
 
 function App() {
@@ -109,6 +110,12 @@ function App() {
                     <Route path="/crs-rgst" element={
                         <Layout>
                             <CrsRgst />
+                        </Layout>
+                    } />
+
+                    <Route path="/test-result" element={
+                        <Layout>
+                            <MyTestResult />
                         </Layout>
                     } />
 

@@ -1,0 +1,255 @@
+/* 기본 설정 */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #e0e5ec;
+    color: #333;
+}
+
+.app-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+.class-title{
+    margin-bottom: 20px;
+}
+/* 공통 카드 스타일 (네오모피즘) */
+.app-container .card {
+    background: #e0e5ec;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-container .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+
+/* 강의 목록 */
+.app-container .class-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 카드 간격 */
+}
+
+/* 강의 카드 */
+.app-container .class-card {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-container .class-card:hover {
+    transform: translateY(-5px); /* 카드 상승 효과 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* 더 강한 그림자 */
+}
+
+/* 강의 정보 */
+.app-container .class-info {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.app-container .class-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3d5afe; /* 포인트 색상 */
+    margin-bottom: 10px;
+}
+
+.app-container .class-date {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-container .class-date span {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 과목 목록 스타일 */
+.app-container .schedule-view {
+    text-align: left;
+}
+
+.app-container .schedule-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #4d73ff;
+}
+
+.app-container .schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.app-container .schedule-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-container .schedule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+
+.app-container .schedule-info {
+    text-align: left;
+    font-size: 16px;
+}
+
+.app-container .schedule-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4d73ff;
+}
+
+.app-container .schedule-date {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* 시험 목록 스타일 */
+.app-container .test-view {
+    text-align: left;
+}
+
+.app-container .test-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #5c6bc0;
+}
+
+.app-container .test-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.app-container .test-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-container .test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+
+.app-container .test-info {
+    text-align: left;
+    font-size: 16px;
+}
+
+.app-container .test-date,
+.app-container .test-score {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.app-container .test-result {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.app-container .test-result.pass {
+    color: green;
+}
+
+.app-container .test-result.fail {
+    color: red;
+}
+
+/* 버튼 스타일 */
+.app-container .btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px #d1d9e6, -4px -4px 8px #ffffff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.app-container .btn-primary {
+    background: linear-gradient(145deg, #4d73ff, #3d5afe);
+}
+
+.app-container .btn-primary:hover {
+    background: linear-gradient(145deg, #3d5afe, #4d73ff);
+    transform: translateY(-3px);
+}
+
+/* 뒤로가기 버튼 */
+.app-container .btn-back {
+    background: linear-gradient(145deg, #a6a6a6, #919191);
+}
+
+.app-container .btn-back:hover {
+    background: linear-gradient(145deg, #919191, #a6a6a6);
+    transform: translateY(-3px);
+}
+
+/* 애니메이션 효과 */
+.app-container .view {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

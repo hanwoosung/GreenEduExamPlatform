@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.student.TestResultDao">
+
+    <select id="getTestResults" resultType="java.util.HashMap">
+
+        SELECT b.class_no,
+               b.class_name,
+               b.start_date,
+               b.end_date,
+               c.schedule_no,
+               c.schedule_name,
+               c.start_date,
+               c.end_date,
+               d.test_no,
+               d.test_dt,
+               d.cutline,
+               IFNULL(e.score, 0) AS score
+        FROM tbl_user_class a
+                 LEFT JOIN tbl_class b ON a.class_no = b.class_no
+                 LEFT JOIN tbl_schedule c ON b.class_no = c.class_no
+                 LEFT JOIN tbl_test d ON c.schedule_no = d.schedule_no
+                 LEFT JOIN tbl_score e ON d.test_no = e.test_no
+        WHERE a.user_id = #{userId}
+        AND a.graduate_code != 'APPLY'
+        GROUP BY a.class_no, b.class_no, c.schedule_no, e.score
+
+    </select>
+
+</mapper>
