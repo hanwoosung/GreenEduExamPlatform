@@ -3,7 +3,7 @@
 
 <mapper namespace="org.green.hckh.repository.dao.teacher.GradingDao">
 
-    <select id="findAllGradings" resultType="org.green.hckh.dto.teacher.grading.GradingDto">
+    <select id="findAllGradings" resultType="org.green.hckh.dto.teacher.grading.GradingDTO">
         SELECT g.user_id,
                a.test_no,
                SUM(IF(c.question_code = 'S', 1, 0))                        AS shortAs,
@@ -17,13 +17,14 @@
                e.name,
                e.delete_yn,
                f.confirm_yn,
-               f.test_cnt
+               f.test_cnt,
+               COUNT(d.user_id) as isPossibleDetail
         FROM tbl_user_class g
                  LEFT JOIN tbl_class z ON z.class_no = g.class_no
                  LEFT JOIN tbl_schedule b ON b.class_no = z.class_no AND b.schedule_no = #{scheduleNo}
                  LEFT JOIN tbl_test a ON a.schedule_no = b.schedule_no
                  LEFT JOIN tbl_question c ON a.test_no = c.test_no
-                 LEFT JOIN tbl_question_result d ON c.question_no = d.question_no AND d.user_id = g.user_id
+                 LEFT JOIN tbl_question_result d ON c.question_no = d.question_no AND d.user_id = g.user_id AND c.test_no = d.test_no
                  LEFT JOIN tbl_user e ON g.user_id = e.user_id
                  LEFT JOIN tbl_score f ON e.user_id = f.user_id
         WHERE a.create_user_id = #{id}
@@ -50,7 +51,8 @@
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
-        AND t.test_no = #{testNo};
+        AND t.test_no = #{testNo}
+        and d.test_no = #{testNo}
     </delete>
 
 
@@ -65,5 +67,66 @@
         </foreach>
         AND test_no = #{testNo}
     </update>
+
+
+    <!-- 문제와 상세보기와 매핑 -->
+    <resultMap id="QuestionResultMap" type="org.green.hckh.dto.teacher.grading.QuestionDTO">
+        <!-- 문제 정보 -->
+        <id property="questionNo" column="question_no"/>
+        <result property="testNo" column="test_no"/>
+        <result property="questionTitle" column="question_title"/>
+        <result property="questionScore" column="question_score"/>
+        <result property="questionCode" column="question_code"/>
+        <result property="questionResultNo" column="question_result_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="answer" column="answer"/>
+        <result property="correctYn" column="correct_yn"/>
+        <result property="name" column="name"/>
+
+        <!-- 문제 상세  리스트 -->
+        <collection property="details" ofType="org.green.hckh.dto.teacher.grading.QuestionDetailDTO">
+            <id property="questionDetailNo" column="question_detail_no"/>
+            <result property="questionContent" column="question_content"/>
+            <result property="correctYn" column="correct_yn"/>
+        </collection>
+    </resultMap>
+
+    <select id="getQuestionsWithDetails" resultMap="QuestionResultMap">
+        SELECT a.test_no,
+               a.question_no,
+               a.question_detail_no,
+               a.question_content,
+               b.question_title,
+               b.question_score,
+               b.question_code,
+               c.question_result_no,
+               c.user_id,
+               c.answer,
+               c.correct_yn,
+               d.name
+        FROM tbl_question_detail a
+                 LEFT JOIN tbl_question b ON a.question_no = b.question_no AND a.test_no = b.test_no
+                 LEFT JOIN tbl_question_result c ON b.question_no = c.question_no AND b.test_no = c.test_no
+                 LEFT JOIN tbl_user d on c.user_id = d.user_id
+        WHERE a.test_no = #{testNo}
+          AND c.user_id = #{userId}
+        GROUP BY a.question_detail_no, a.question_no
+        ORDER BY a.question_no ASC, a.question_detail_no ASC;
+    </select>
+
+
+    <update id="updateUserQuestionResult">
+        UPDATE tbl_question_result
+        SET correct_yn = #{correct}
+        where question_result_no = #{resultNo}
+    </update>
+
+    <update id="updateGradingUserScore">
+        update tbl_score
+        set score = #{score}
+        where user_id = #{userId}
+          and test_no = #{testNo}
+    </update>
+
 
 </mapper>

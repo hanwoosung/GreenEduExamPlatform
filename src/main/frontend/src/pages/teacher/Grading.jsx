@@ -16,10 +16,13 @@ import {
     scheduleRetest
 } from "../../assets/js/teacher/gradingLogic";
 import {useLocation, useNavigate} from 'react-router-dom';
+import useSessionStorage from "../../hooks/useSessionStorage";
 
 const Grading = () => {
 
-    const {data: lectures, loading} = useFetch("/api/v1/grading/class/teacher1");
+    const {sessionValues} = useSessionStorage().getSession();
+    const userId = sessionValues.userId;
+    const {data: lectures, loading} = useFetch(`/api/v1/grading/class/${userId}`);
     const {get, put} = useApi2();
     const navigate = useNavigate();
     const location = useLocation();
@@ -44,6 +47,7 @@ const Grading = () => {
                 console.log(location.state.selectedLecture);
                 console.log(location.state.selectedSubject);
                 console.log(location.state.checkedStudents);
+                fetchGrades(location.state.selectedSubject, get, setGrades, setStep, setSelectedSubject);
 
                 navigate(location.pathname, {replace: true});
             } else {
@@ -93,6 +97,7 @@ const Grading = () => {
 
             {/* 강의 선택 */}
             {!loading && step === 1 && (
+
                 <div className="card">
                     <GradingTitle title="강의를 선택하세요"/>
                     <div className="options">
@@ -101,7 +106,7 @@ const Grading = () => {
                                 key={lecture.id}
                                 lecture={lecture}
                                 onClick={() =>
-                                    fetchSubjects(lecture, get, setSubjects, setStep, setSelectedLecture)
+                                    fetchSubjects(userId,lecture, get, setSubjects, setStep, setSelectedLecture)
                                 }
                             />
                         ))}
@@ -116,17 +121,19 @@ const Grading = () => {
                         title={`${selectedLecture.className} 과목을 선택하세요`}
                         onBack={() => goToPreviousStep(setStep)}
                     />
+                    {subjects.length === 0 ? <h1>과목 아직 없다</h1>:
                     <div className="options">
                         {subjects?.map((subject) => (
                             <SubjectButton
                                 key={subject.id}
                                 subject={subject}
                                 onClick={() =>
-                                    fetchGrades(subject, get, setGrades, setStep, setSelectedSubject)
+                                    fetchGrades(userId,subject, get, setGrades, setStep, setSelectedSubject)
                                 }
                             />
                         ))}
                     </div>
+                    }
                 </div>
             )}
 
@@ -167,6 +174,8 @@ const Grading = () => {
                             label="재시험"
                         />
                     </div>
+                    {grades.length === 0 ? <h1>시험 내역 없다!</h1> :
+
                     <GradesTable
                         grades={grades}
                         checkedStudents={checkedStudents}
@@ -174,6 +183,7 @@ const Grading = () => {
                         onCheckStudent={handleCheckStudent}
                         onStudentClick={handleStudentClick}
                     />
+                    }
                 </div>
             )}
         </div>

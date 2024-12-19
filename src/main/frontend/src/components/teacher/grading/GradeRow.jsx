@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";  // SweetAlert2 불러오기
+import Swal from "sweetalert2";
 
 const GradeRow = ({ student, isChecked, onCheck, onStudentClick }) => {
 
@@ -7,7 +7,8 @@ const GradeRow = ({ student, isChecked, onCheck, onStudentClick }) => {
     };
 
     const handleStudentClick = (userId, testNo) => {
-        if (student.testCnt === 0) {
+        console.log(student.score + " 학생")
+        if (student.isPossibleDetail === 0) {
             Swal.fire({
                 icon: 'warning',
                 title: '시험을 제출하지 않았습니다!',
