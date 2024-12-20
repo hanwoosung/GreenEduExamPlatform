@@ -123,7 +123,7 @@ const HandleQuestion = (props) => {
                 .filter((question) => question.questionCode === props.gubn)
                 .map((question) => (
                     <div className="question-box" key={`q-${question.questionNo}`} ref={(el) => (props.questionRefs.current[question.questionNo] = el)}>
-                        <div className="question-header">
+                        <div className="question-header2">
                             <span>{question.questionNo}번 문제</span>
                             <img
                                 src={blackCloseBtn}
@@ -200,7 +200,6 @@ const HandleQuestion = (props) => {
             <button className="add-question-btn" onClick={() => addTotalQuestion(props.questions.length + 1)}>
                 문제 추가하기
             </button>
-            <button onClick={viewConsole}>로그</button>
         </div>
     );
 };
