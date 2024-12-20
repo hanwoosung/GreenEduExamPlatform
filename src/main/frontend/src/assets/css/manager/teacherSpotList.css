@@ -1,0 +1,98 @@
+.teacher-spot-list {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.teacher-spot-list__controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.teacher-spot-list__search,
+.teacher-spot-list__filter {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.teacher-spot-list__button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.teacher-spot-list__table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* 열의 너비 고정 */
+}
+
+.teacher-spot-list__table th,
+.teacher-spot-list__table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+    text-overflow: ellipsis; /* 내용이 넘칠 경우 말줄임표 추가 */
+}
+
+.teacher-spot-list__table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* 체크박스 열 너비 최적화 */
+.teacher-spot-list__table th:first-child,
+.teacher-spot-list__table td:first-child {
+    width: 50px; /* 체크박스 열 너비 */
+}
+
+/* 활성화/비활성화 열 너비 최적화 */
+.teacher-spot-list__table th:last-child,
+.teacher-spot-list__table td:last-child {
+    width: 100px; /* 활성화 상태 열 너비 */
+}
+
+.teacher-spot-list__select {
+    padding: 5px;
+    font-size: 14px;
+    width: 100%; /* 셀렉트 박스 너비 고정 */
+    box-sizing: border-box;
+}
+
+.teacher-spot-list__row--inactive {
+    background-color: #f9d6d5; /* 비활성화된 행 색상 */
+}
+
+.teacher-spot-list__disabled {
+    color: #999;
+    font-style: italic; /* 비활성화 텍스트 스타일 */
+}
+
+/* 버튼 스타일 */
+.teacher-spot-list__button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 5px; /* 버튼 간격 */
+    width: 120px; /* 버튼 너비 고정 */
+    text-align: center;
+}
+
+.teacher-spot-list__button--activate {
+    background-color: #4caf50;
+    color: white;
+}
+
+.teacher-spot-list__button--deactivate {
+    background-color: #f44336;
+    color: white;
+}
+

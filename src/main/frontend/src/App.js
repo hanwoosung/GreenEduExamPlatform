@@ -21,6 +21,7 @@ import StudentList from "./pages/spotmanager/class/StudentList";
 import useSessionStorage from "./hooks/useSessionStorage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import MyTestResult from "./pages/student/MyTestResult";
+import TeacherSpotList from "./pages/manager/TeacherSpotList";
 
 
 function App() {
@@ -175,6 +176,12 @@ function App() {
                             </Layout>
                         </ProtectedRoute>
                     } />
+
+                    <Route path={"/teacher-spot-list"} element={
+                        <Layout>
+                            <TeacherSpotList/>
+                        </Layout>
+                    }/>
 
                 </Routes>
             </main>
