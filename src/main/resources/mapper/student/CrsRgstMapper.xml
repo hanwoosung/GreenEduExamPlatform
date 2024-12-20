@@ -74,7 +74,7 @@
 
     <select id="chkPossible">
 
-        SELECT SUM(IF(DATEDIFF(IFNULL(end_date, #{startDate}), #{startDate}) >= 0, DATEDIFF(IFNULL(end_date, #{startDate}), #{startDate}), 0))
+        SELECT IFNULL(SUM(IF(DATEDIFF(IFNULL(end_date, #{startDate}), #{startDate}) >= 0, DATEDIFF(IFNULL(end_date, #{startDate}), #{startDate}), 0)), 0)
         FROM tbl_user_class a
         LEFT JOIN tbl_class b ON a.class_no = b.class_no
         WHERE a.user_id = #{userId}

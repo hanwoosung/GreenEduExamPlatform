@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class ClassDto {
-    private int classNo; // 강의 번호
+    private Integer classNo; // 강의 번호
     private int spotNo; // 지점 번호
     private int spotName; // 지점 번호
     private String className; // 강의명

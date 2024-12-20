@@ -9,7 +9,7 @@ public interface CrsRgstService {
 
     List<ClassDto> getClasses(String userId);
 
-    List<ClassDto> insertClass(String userId, int classNo, String startDate) throws Exception;
+    List<ClassDto> insertClass(String userId, Integer classNo, String startDate) throws Exception;
 
     List<ClassDto> getApplyStudents(int classNo);
 
