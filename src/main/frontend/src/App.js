@@ -57,132 +57,148 @@ function App() {
                     <Route path="/schedule" element={
                         <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
                             <Layout>
-                                <Schedule />
+                                <Schedule/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/class-register" element={
-                        <Layout>
-                            <ClassAdd />
-                        </Layout>
-                    } />
+                        <ProtectedRoute allowedRoles={[roles.spot]} userRole={userRole}>
+                            <Layout>
+                                <ClassAdd/>
+                            </Layout>
+                        </ProtectedRoute>
+                    }/>
                     <Route path="/regist" element={
                         <Layout>
-                            <Regist />
+                            <Regist/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/test-exam" element={
                         <Layout>
-                            <TestExam />
+                            <TestExam/>
                         </Layout>
-                    } />
+                    }/>
                     <Route path="/login" element={
                         <Layout>
-                            <Login />
+                            <Login/>
                         </Layout>
-                    } />
+                    }/>
 
                     <Route path="/student" element={
                         <Layout>
-                            <StudentMain />
+                            <StudentMain/>
                         </Layout>
-                    } />
+                    }/>
 
                     <Route path="/teacher" element={
                         <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
-                                <TeacherMain />
+                                <TeacherMain/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/spot-manager" element={
-                        <Layout>
-                            <SpotManagerMain />
-                        </Layout>
-                    } />
+                        <ProtectedRoute allowedRoles={[roles.spot]} userRole={userRole}>
+                            <Layout>
+                                <SpotManagerMain/>
+                            </Layout>
+                        </ProtectedRoute>
+                    }/>
                     <Route path="/manager" element={
-                        <Layout>
-                            <ManagerMain />
-                        </Layout>
-                    } />
+                        <ProtectedRoute allowedRoles={[roles.manager]} userRole={userRole}>
+                            <Layout>
+                                <ManagerMain/>
+                            </Layout>
+                        </ProtectedRoute>
+                    }/>
 
                     <Route path="/user-info" element={
                         <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
                             <Layout>
-                                <Userinfo />
+                                <Userinfo/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/grading-detail" element={
                         <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
-                                <GradingDetail />
+                                <GradingDetail/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/grading" element={
                         <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
                             <Layout>
-                                <Grading />
+                                <Grading/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/room-register" element={
-                        <Layout>
-                            <RoomAdd/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.spot]} userRole={userRole}>
+                            <Layout>
+                                <RoomAdd/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
 
                     <Route path="/crs-rgst" element={
                         <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
                             <Layout>
-                                <CrsRgst />
+                                <CrsRgst/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path={"/spot-register"} element={
-                        <Layout>
-                            <SpotAdd/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.manager]} userRole={userRole}>
+                            <Layout>
+                                <SpotAdd/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
 
                     <Route path={"/class-list"} element={
-                        <Layout>
-                            <ClassList/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.spot]} userRole={userRole}>
+                            <Layout>
+                                <ClassList/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
 
                     <Route path={"/class-apply-student-list"} element={
-                        <Layout>
-                            <StudentList/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.spot]} userRole={userRole}>
+                            <Layout>
+                                <StudentList/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
                     <Route path="/crs-rgst" element={
                         <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
                             <Layout>
-                                <CrsRgst />
+                                <CrsRgst/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path="/test-result" element={
                         <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
                             <Layout>
-                                <MyTestResult />
+                                <MyTestResult/>
                             </Layout>
                         </ProtectedRoute>
-                    } />
+                    }/>
 
                     <Route path={"/teacher-spot-list"} element={
-                        <Layout>
-                            <TeacherSpotList/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.manager]} userRole={userRole}>
+                            <Layout>
+                                <TeacherSpotList/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
 
                     <Route path="/student-test" element={
