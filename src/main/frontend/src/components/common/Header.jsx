@@ -62,7 +62,7 @@ const Header = () => {
                         </li>
                         <li className="header-nav-item">
                             <Link to="/student-test" className="hover:underline">
-                                채점결과
+                                시험 진행
                             </Link>
                         </li>
                         <li className="header-nav-item">
