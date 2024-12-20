@@ -2,6 +2,7 @@ package org.green.hckh.controller.teacher.test;
 
 import lombok.RequiredArgsConstructor;
 import org.green.hckh.dto.teacher.test.ExamTestDto;
+import org.green.hckh.dto.teacher.test.TestByScheduleDto;
 import org.green.hckh.repository.dao.teacher.ExamTestDao;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,14 @@ import java.util.List;
 public class ExamTestController {
     private final ExamTestDao examTestDao;
 
-    @GetMapping("")
+    @GetMapping
     public List<ExamTestDto> selectAll() {
         return examTestDao.selectAllTest();
+    }
+
+    @GetMapping("/test-by-schedule")
+    public List<TestByScheduleDto> selectBySchedule() {
+        return examTestDao.selectTestBySchedule();
     }
 
     @GetMapping("/{id}")
@@ -23,13 +29,13 @@ public class ExamTestController {
         return examTestDao.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public int insert(@RequestBody ExamTestDto examTestDto) {
         int result = examTestDao.insertTest(examTestDto);
         return examTestDto.getTestInsertedId();
     }
 
-    @PutMapping("")
+    @PutMapping
     public int update(@RequestBody ExamTestDto examTestDto) {
         return examTestDao.updateTest(examTestDto);
     }

@@ -19,4 +19,9 @@ public class QuestionServiceImpl implements QuestionService {
     public int insertTotalQuestion(List<QuestionDto> questionList) {
         return questionDao.insert(questionList);
     }
+
+    @Override
+    public List<QuestionDto> selectByTestNo(int testNo) {
+        return questionDao.selectByTestNo(testNo);
+    }
 }

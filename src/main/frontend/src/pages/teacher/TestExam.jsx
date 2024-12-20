@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import useApi from "../../hooks/useApi";
 import useFetch from "../../hooks/useFetch";
 import HandleQuestion from "../../components/teacher/HandleQuestion"
-// import "../../assets/css/teacher/test/test.css"
+import "../../assets/css/teacher/test/test.css"
 import useSessionStorage from "../../hooks/useSessionStorage";
 import TestSideBar from "../../components/teacher/TestSideBar";
 
@@ -62,7 +62,7 @@ const TestExam = () => {
         }
     };
 
-    const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule");
+    const {data: fetchedEvents} = useFetch("/api/v1/calendar/schedule/" + userData.userId + "/" + userData.userRoleCode);
     const {post: testPost} = useApi("/api/v1/test", {
         headers: {"Content-Type": "application/json"}
     });
@@ -113,7 +113,7 @@ const TestExam = () => {
     }
 
     return (
-        <div className={"container" + (showSuccess ? " add-sidebar" : "")}>
+        <div className={"container"}>
             <div className={"grid-box"}>
                 <span>과목</span>
                 <select
@@ -131,6 +131,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>커트라인</span>
                 <input
+                    className={"test-input"}
                     type={"number"}
                     min={0}
                     placeholder={"커트라인"}
@@ -141,6 +142,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>제한시간</span>
                 <input
+                    className={"test-input"}
                     type={"number"}
                     min={0}
                     placeholder={"제한시간"}
@@ -151,6 +153,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>시험시작 일시</span>
                 <input
+                    className={"test-input"}
                     type={"datetime-local"}
                     placeholder={"시험시작일시"}
                     onChange={(e) => setTest({...test, testDt: e.target.value})}
@@ -160,6 +163,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>객관식 갯수</span>
                 <input
+                    className={"test-input"}
                     type={"number"}
                     min={0}
                     value={questionGubn.number}
@@ -170,6 +174,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>단답형 갯수</span>
                 <input
+                    className={"test-input"}
                     type={"number"}
                     min={0}
                     value={questionGubn.short}
@@ -180,6 +185,7 @@ const TestExam = () => {
             <div className={"grid-box"}>
                 <span>서술형 갯수</span>
                 <input
+                    className={"test-input"}
                     type={"number"}
                     min={0}
                     value={questionGubn.long}
@@ -187,7 +193,7 @@ const TestExam = () => {
                     onChange={(e) => setQuestionsGubn({...questionGubn, long: parseInt(e.target.value) || 0})}
                 />
             </div>
-            <button onClick={testRegist}>{examBtnTitle}</button>
+            <button className={"test-page-btn"} onClick={testRegist}>{examBtnTitle}</button>
             {(showSuccess && questionGubn.number > 0) && (
                 <HandleQuestion
                     score={100 / total}
@@ -239,7 +245,7 @@ const TestExam = () => {
                         questions={questions}
                         scrollToQuestionBox={scrollToQuestionBox}
                     />
-                    <button onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
+                    <button className={"test-page-btn"} onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
 
                 </>
             )}

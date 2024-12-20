@@ -22,6 +22,8 @@ import useSessionStorage from "./hooks/useSessionStorage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import MyTestResult from "./pages/student/MyTestResult";
 import TeacherSpotList from "./pages/manager/TeacherSpotList";
+import StudentTest from "./pages/student/StudentTest"
+import StudentTestDetail from "./pages/student/StudentTestDetail";
 
 
 function App() {
@@ -183,6 +185,17 @@ function App() {
                         </Layout>
                     }/>
 
+                    <Route path="/student-test" element={
+                        <Layout>
+                            <StudentTest/>
+                        </Layout>
+                    }/>
+
+                    <Route path="/student-test-detail" element={
+                        <Layout>
+                            <StudentTestDetail/>
+                        </Layout>
+                    }/>
                 </Routes>
             </main>
         </>

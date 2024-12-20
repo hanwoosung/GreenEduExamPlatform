@@ -34,6 +34,34 @@
         delete_yn
         FROM tbl_test;
     </select>
+
+    <select id="selectTestBySchedule" resultType="org.green.hckh.dto.teacher.test.TestByScheduleDto">
+        SELECT
+        A.*,
+        B.test_dt,
+        B.cutline,
+        B.`time`
+
+        FROM (SELECT
+        MAX(B.test_no) AS test_no,
+        A.schedule_no,
+        A.schedule_name,
+        A.start_date,
+        A.end_date,
+        A.class_no
+        FROM tbl_test B
+        LEFT JOIN tbl_schedule A ON A.schedule_no = B.schedule_no AND B.delete_yn = 'N'
+        WHERE A.delete_yn = 'N'
+        GROUP BY
+        A.schedule_no,
+        A.schedule_name,
+        A.start_date,
+        A.end_date,
+        A.class_no) A
+
+        LEFT JOIN tbl_test B ON A.test_no = B.test_no;
+    </select>
+
     <select id="findById" resultType="org.green.hckh.dto.teacher.test.ExamTestDto">
         SELECT
         test_no,
