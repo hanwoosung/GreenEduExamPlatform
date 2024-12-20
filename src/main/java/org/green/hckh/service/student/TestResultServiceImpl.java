@@ -34,7 +34,8 @@ public class TestResultServiceImpl implements TestResultService {
         for (Map<String, Object> row : data) {
             System.out.println(data);
 
-            int classNo = (int) row.get("class_no");
+            int classNo = Integer.parseInt(row.get("class_no").toString());
+
 
             ClassDto classDto = classMap.getOrDefault(classNo, new ClassDto());
             if (classDto.getClassNo() == 0) {
