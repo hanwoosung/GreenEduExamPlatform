@@ -129,7 +129,7 @@ const TestExam = () => {
                         console.log(fetchedEvents);
                         console.log(e.target.value);
 
-                        const selectedOption = fetchedEvents?.find(event => String(event.no) == e.target.value);
+                        const selectedOption = fetchedEvents?.find(event => event.no == e.target.value);
                         console.log(selectedOption);
 
                         setTest({

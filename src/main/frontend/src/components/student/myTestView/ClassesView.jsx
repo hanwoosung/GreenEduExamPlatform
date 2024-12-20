@@ -7,15 +7,15 @@ const ClassesView = ({classes, handleClassClick}) => {
         <div className="view class-view">
             <h2 className="class-title">💼 강의 목록</h2>
             <div className="class-list">
-                {classes.map((cls) => (
-                    <div key={cls.classNo} className="class-card">
+                {classes?.map((cls) => (
+                    <div key={cls?.classNo} className="class-card">
                         <div className="class-info">
-                            <h3 className="class-name">{cls.className}</h3>
+                            <h3 className="class-name">{cls?.className}</h3>
                             <p className="class-date">
-                                <strong>📅 시작일:</strong> {cls.startDate}
+                                <strong>📅 시작일:</strong> {cls?.startDate}
                             </p>
                             <p className="class-date">
-                                <strong>⏰ 종료일:</strong> {cls.endDate}
+                                <strong>⏰ 종료일:</strong> {cls?.endDate}
                             </p>
                         </div>
                         <button

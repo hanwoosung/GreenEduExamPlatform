@@ -21,7 +21,8 @@
                  LEFT JOIN tbl_class b ON a.class_no = b.class_no
                  LEFT JOIN tbl_schedule c ON b.class_no = c.class_no
                  LEFT JOIN tbl_test d ON c.schedule_no = d.schedule_no AND d.delete_yn = 'N'
-                 LEFT JOIN tbl_score e ON d.test_no = e.test_no
+                 LEFT JOIN tbl_score e ON d.test_no = e.test_no AND e.user_id = #{userId}
+
         WHERE a.user_id = #{userId}
         AND a.graduate_code != 'APPLY'
         AND b.delete_yn = 'N'
