@@ -23,7 +23,7 @@ public class CrsRgstServiceImpl implements CrsRgstService {
     }
 
     @Override
-    public List<ClassDto> insertClass(String userId, int classNo, String startDate) throws SQLException {
+    public List<ClassDto> insertClass(String userId, Integer classNo, String startDate) throws SQLException {
 
         int cnt = crsRgstDao.getClassCnt(userId, classNo);
         if (cnt > 0) {
