@@ -24,7 +24,7 @@ public class CrsRgstController {
     public List<ClassDto> crsRgst(@RequestParam Map<String, Object> params) throws Exception {
 
         String userId = (String) params.get("userId");
-        int classNo = (Integer) params.get("classNo");
+        int classNo = Integer.parseInt(params.get("classNo").toString());
         String startDate = (String) params.get("startDate");
 
         return crsRgstService.insertClass(userId, classNo, startDate);
