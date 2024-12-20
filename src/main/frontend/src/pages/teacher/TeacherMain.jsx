@@ -82,7 +82,7 @@ const TeacherMain = () => {
 
     return (
         <div className="teacher-main-container">
-            <h1 className="teacher-main-title">{data && data[0]?.name}의 대쉬보드</h1>
+            {/*<h1 className="teacher-main-title">{data && data[0]?.name}의 대쉬보드</h1>*/}
             <div className="teacher-main-chart-container">
                 <canvas ref={chartRef} />
             </div>
