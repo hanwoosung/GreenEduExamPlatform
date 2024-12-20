@@ -31,7 +31,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/userInfo" className="hover:underline">
+                            <Link to="/user-info" className="hover:underline">
                                 내 정보
                             </Link>
                         </li>
@@ -46,7 +46,7 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/userInfo" className="hover:underline">
+                            <Link to="/user-info" className="hover:underline">
                                 내 정보
                             </Link>
                         </li>
