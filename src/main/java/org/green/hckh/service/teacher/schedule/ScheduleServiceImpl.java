@@ -27,6 +27,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .title(item.getScheduleName())
                         .start(item.getStartDate())
                         .end(item.getEndDate())
+                        .examYn(item.getExamYn())
                         .build())
                 .toList();
     }

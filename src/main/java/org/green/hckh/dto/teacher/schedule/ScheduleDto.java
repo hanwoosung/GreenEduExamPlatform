@@ -14,5 +14,6 @@ public class ScheduleDto {
     private String title;
     private String content;
     private Date start;
-    private Date end; 
+    private Date end;
+    private String examYn;
 }

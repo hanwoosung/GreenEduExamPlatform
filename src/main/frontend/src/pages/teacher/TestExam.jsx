@@ -5,6 +5,7 @@ import HandleQuestion from "../../components/teacher/HandleQuestion"
 import "../../assets/css/teacher/test/test.css"
 import useSessionStorage from "../../hooks/useSessionStorage";
 import TestSideBar from "../../components/teacher/TestSideBar";
+import swal from "sweetalert2";
 
 const TestExam = () => {
 
@@ -27,7 +28,8 @@ const TestExam = () => {
         scheduleNo: "",
         cutline: 0,
         time: 0,
-        testDt: ""
+        testDt: "",
+        testExam: "N"
     });
 
     const [questionGubn, setQuestionsGubn] = useState({
@@ -75,6 +77,10 @@ const TestExam = () => {
 
     const testRegist = async () => {
         //todo 빈값으로 이동하는 코드
+        if (test?.examYn == 'Y') {
+            swal.fire("실패", "이미 등록된 시험이 있습니다.", "error");
+            return;
+        }
 
         const response = await testPost({
             scheduleNo: test.scheduleNo,
@@ -119,14 +125,28 @@ const TestExam = () => {
                 <select
                     id={"schedule"}
                     value={test.scheduleNo}
-                    onChange={(e) => setTest({...test, scheduleNo: e.target.value})}
+                    onChange={(e) => {
+                        console.log(fetchedEvents);
+                        console.log(e.target.value);
+
+                        const selectedOption = fetchedEvents?.find(event => String(event.no) == e.target.value);
+                        console.log(selectedOption);
+
+                        setTest({
+                            ...test,
+                            scheduleNo: e.target.value,
+                            examYn: selectedOption?.examYn || "" // 선택된 값의 examYn 설정
+                        });
+                    }}
                 >
                     <option value={""}>선택</option>
-
                     {fetchedEvents?.map((element, index) => (
-                        <option key={index} value={element.no}>{element.title}</option>
+                        <option key={index} value={element.no}>
+                            {element.title}
+                        </option>
                     ))}
                 </select>
+
             </div>
             <div className={"grid-box"}>
                 <span>커트라인</span>
@@ -245,7 +265,8 @@ const TestExam = () => {
                         questions={questions}
                         scrollToQuestionBox={scrollToQuestionBox}
                     />
-                    <button className={"test-page-btn"} onClick={() => questionRegist(questions, details)}>문제 저장하기</button>
+                    <button className={"test-page-btn"} onClick={() => questionRegist(questions, details)}>문제 저장하기
+                    </button>
 
                 </>
             )}
