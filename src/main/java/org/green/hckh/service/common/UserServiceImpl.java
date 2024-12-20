@@ -3,6 +3,7 @@ package org.green.hckh.service.common;
 import lombok.RequiredArgsConstructor;
 import org.green.hckh.dto.common.UserDto;
 import org.green.hckh.repository.dao.common.UserDao;
+import org.green.hckh.repository.dao.student.CrsRgstDao;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CrsRgstDao crsRgstDao;
 
     @Override
     public int findCntById(String userId) {
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public int save(UserDto user) {
         user.setUserPassword(passwordEncode(user.getPassword()));
         user.setDeleteYn(user.getUserRoleCode().equals("ROLE_TEACHER") ? "Y" : "N");
+
+        crsRgstDao.insertClass(user.getUserId(), 1);
+
         return userDao.save(user);
     }
 
