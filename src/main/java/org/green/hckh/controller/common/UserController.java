@@ -32,12 +32,12 @@ public class UserController {
     //로그인 결과
     @GetMapping("/loginResult")
     public Map<String, Object> loginResult() {
+        System.out.println("aaaaaa");
 
         Map<String, Object> result = processData(new UserDto());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        System.out.println(authentication);
         if (!authentication.getPrincipal().equals("anonymousUser")) {
             UserDto user = (UserDto) authentication.getPrincipal();
             result = processData(user);

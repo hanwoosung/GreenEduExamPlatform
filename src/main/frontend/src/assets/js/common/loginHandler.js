@@ -52,7 +52,7 @@ export const useLoginHandler = () => {
 
                 setErrors((prevData) => ({
                     ...prevData,
-                    userId: res.body.userId === null ? "아이디 및 비밀번호 오류입니다." : "",
+                    userId: res.body.userId === null ? "아이디 및 비밀번호 오류 이거나 비활성화 된 계정입니다." : "",
                 }));
 
                 if (res.body.userId != null) {
