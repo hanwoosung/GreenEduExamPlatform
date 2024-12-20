@@ -49,11 +49,7 @@ function App() {
                             {/*<Home />*/}
                         </Layout>
                     }/>
-                    <Route path="/test2" element={
-                        <Layout>
-                            <TestPage2/>
-                        </Layout>
-                    }/>
+
                     <Route path="/schedule" element={
                         <ProtectedRoute allowedRoles={[roles.teacher, roles.student]} userRole={userRole}>
                             <Layout>
@@ -75,19 +71,15 @@ function App() {
                         </Layout>
                     }/>
                     <Route path="/test-exam" element={
-                        <Layout>
-                            <TestExam/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.teacher]} userRole={userRole}>
+                            <Layout>
+                                <TestExam/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
                     <Route path="/login" element={
                         <Layout>
                             <Login/>
-                        </Layout>
-                    }/>
-
-                    <Route path="/student" element={
-                        <Layout>
-                            <StudentMain/>
                         </Layout>
                     }/>
 
@@ -202,15 +194,19 @@ function App() {
                     }/>
 
                     <Route path="/student-test" element={
-                        <Layout>
-                            <StudentTest/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <StudentTest/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
 
                     <Route path="/student-test-detail" element={
-                        <Layout>
-                            <StudentTestDetail/>
-                        </Layout>
+                        <ProtectedRoute allowedRoles={[roles.student]} userRole={userRole}>
+                            <Layout>
+                                <StudentTestDetail/>
+                            </Layout>
+                        </ProtectedRoute>
                     }/>
                 </Routes>
             </main>

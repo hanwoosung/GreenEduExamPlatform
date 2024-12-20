@@ -16,8 +16,8 @@ const Header = () => {
                 return (
                     <>
                         <li className="header-nav-item">
-                            <Link to="/teacher" className="hover:underline">
-                                홈
+                            <Link to="/user-info" className="hover:underline">
+                                내 정보
                             </Link>
                         </li>
                         <li className="header-nav-item">
@@ -26,13 +26,18 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/grading" className="hover:underline">
-                                채점
+                            <Link to="/teacher" className="hover:underline">
+                                대시보드
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/user-info" className="hover:underline">
-                                내 정보
+                            <Link to="/test-exam" className="hover:underline">
+                                시험 등록
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
+                            <Link to="/grading" className="hover:underline">
+                                채점
                             </Link>
                         </li>
                     </>
@@ -41,23 +46,28 @@ const Header = () => {
                 return (
                     <>
                         <li className="header-nav-item">
-                            <Link to="/crs-rgst" className="hover:underline">
-                                강의신청
-                            </Link>
-                        </li>
-                        <li className="header-nav-item">
                             <Link to="/user-info" className="hover:underline">
                                 내 정보
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/test-result" className="hover:underline">
+                            <Link to="/schedule" className="hover:underline">
+                                일정
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
+                            <Link to="/crs-rgst" className="hover:underline">
+                                강의신청
+                            </Link>
+                        </li>
+                        <li className="header-nav-item">
+                            <Link to="/student-test" className="hover:underline">
                                 채점결과
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/schedule" className="hover:underline">
-                                일정
+                            <Link to="/test-result" className="hover:underline">
+                                채점결과
                             </Link>
                         </li>
                     </>
@@ -71,13 +81,13 @@ const Header = () => {
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/class-list" className="hover:underline">
-                                강의 관리
+                            <Link to="/class-register" className="hover:underline">
+                                강의 등록
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/class-register" className="hover:underline">
-                                강의 등록
+                            <Link to="/class-list" className="hover:underline">
+                                강의 관리
                             </Link>
                         </li>
                     </>
@@ -87,7 +97,7 @@ const Header = () => {
                     <>
                         <li className="header-nav-item">
                             <Link to="/spot-register" className="hover:underline">
-                                지점 등록
+                            지점 등록
                             </Link>
                         </li>
                         <li className="header-nav-item">
