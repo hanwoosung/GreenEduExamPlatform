@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fullcalendar/core": "^6.1.15",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@fullcalendar/core": "^6.1.15",
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/interaction": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
@@ -15,6 +15,7 @@
     "@mui/system": "^6.2.0",
     "@mui/x-date-pickers": "^7.23.2",
     "axios": "^1.7.9",
+    "chart.js": "^4.4.7",
     "cra-template": "1.2.0",
     "react": "^19.0.0",
     "react-cookie": "^7.2.2",

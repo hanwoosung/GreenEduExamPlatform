@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
-import Swal from "sweetalert2";
 import "../../../assets/css/spotmanager/roomAdd.css";
 import useSessionStorage from "../../../hooks/useSessionStorage";
 import useRoomData from "../../../hooks/spotmanager/room/useRoom";
-import {swalDelete} from "../../../modal/common/swals";
 
 function RoomAdd() {
     const {sessionValues} = useSessionStorage();

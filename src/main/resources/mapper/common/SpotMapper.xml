@@ -5,7 +5,9 @@
 
     <select id="findAll">
         SELECT *
-        FROM tbl_spot;
+        FROM tbl_spot
+        WHERE delete_yn = 'N'
+        ORDER BY spot_name;
     </select>
 
 </mapper>

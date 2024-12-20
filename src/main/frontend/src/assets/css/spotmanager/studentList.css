@@ -1,0 +1,46 @@
+.student-list {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.student-table th, .student-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.student-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.student-select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.approve-all-button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.approve-all-button:hover {
+    background-color: #45a049;
+}

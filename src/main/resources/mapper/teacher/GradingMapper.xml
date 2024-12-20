@@ -18,13 +18,14 @@
                e.delete_yn,
                f.confirm_yn,
                f.test_cnt,
-               COUNT(d.user_id) as isPossibleDetail
+               COUNT(d.user_id)                                            as isPossibleDetail
         FROM tbl_user_class g
                  LEFT JOIN tbl_class z ON z.class_no = g.class_no
                  LEFT JOIN tbl_schedule b ON b.class_no = z.class_no AND b.schedule_no = #{scheduleNo}
                  LEFT JOIN tbl_test a ON a.schedule_no = b.schedule_no
                  LEFT JOIN tbl_question c ON a.test_no = c.test_no
-                 LEFT JOIN tbl_question_result d ON c.question_no = d.question_no AND d.user_id = g.user_id AND c.test_no = d.test_no
+                 LEFT JOIN tbl_question_result d
+                           ON c.question_no = d.question_no AND d.user_id = g.user_id AND c.test_no = d.test_no
                  LEFT JOIN tbl_user e ON g.user_id = e.user_id
                  LEFT JOIN tbl_score f ON e.user_id = f.user_id
         WHERE a.create_user_id = #{id}
@@ -127,6 +128,25 @@
         where user_id = #{userId}
           and test_no = #{testNo}
     </update>
+
+    <select id="scheduleTestAge" resultType="org.green.hckh.dto.teacher.grading.ScheduleTestScoreDto">
+        SELECT a.schedule_no,
+               a.schedule_name,
+               a.start_date,
+               a.end_date,
+               d.name,
+               AVG(CASE WHEN c.score IS NOT NULL THEN c.score ELSE 0 END) AS avgScore
+        FROM tbl_schedule a
+                 LEFT JOIN
+             tbl_test b ON a.schedule_no = b.schedule_no
+                 LEFT JOIN
+             tbl_score c ON b.test_no = c.test_no
+                 LEFT JOIN tbl_user d ON b.create_user_id = d.user_id
+        WHERE b.create_user_id = #{userId}
+        GROUP BY a.schedule_no,
+                 a.schedule_name
+        ORDER BY a.start_date;
+    </select>
 
 
 </mapper>

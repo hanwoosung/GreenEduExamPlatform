@@ -78,13 +78,13 @@ export const useLoginHandler = () => {
                 url = "/teacher";
                 break;
             case "ROLE_SPOT_MANAGER" :
-                url = "/spot-manager";
+                url = "/class-list";
                 break;
             case "ROLE_MANAGER" :
-                url = "/manager";
+                url = "/teacher-spot-list";
                 break;
             default:
-                url = "/student";
+                url = "/crs-rgst";
                 break;
         }
 

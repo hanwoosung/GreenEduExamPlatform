@@ -135,13 +135,13 @@ const GradingDetail = () => {
     return (
         <div className="grading-detail-container">
             <div className="grading-detail">
-                <header className="exam-header">
+                <div className="exam-header">
                     <button className="back-button" onClick={handleBackButtonClick}>이전</button>
                     <h1>{selectedSubject.scheduleName} 시험</h1>
                     <div className="exam-info">
                         <p><strong>이름:</strong> {data[0]?.name}</p>
                     </div>
-                </header>
+                </div>
                 <main className="exam-content">
                     {data.map((question, index) => {
                         const isNotGraded = question.correctYn === 'H';
@@ -171,7 +171,16 @@ const GradingDetail = () => {
                                 {question.questionCode === 'N' ? (
                                     <ul className="options">
                                         {question.details.map((detail, idx) => (
-                                            <li key={idx} className={`option`}>
+                                            <li
+                                                key={idx}
+                                                className={`option ${
+                                                    question.answer === String(detail.questionDetailNo) // 사용자가 선택한 답변인 경우
+                                                        ? question.correctYn === 'Y'
+                                                            ? 'selected-correct' // 정답일 경우
+                                                            : 'selected-incorrect' // 오답일 경우
+                                                        : '' // 선택되지 않은 경우 기본 스타일
+                                                }`}
+                                            >
                                                 <label>
                                                     <input
                                                         type="radio"
@@ -180,9 +189,10 @@ const GradingDetail = () => {
                                                         checked={question.answer === String(detail.questionDetailNo)}
                                                         readOnly
                                                     />
-                                                    {detail.questionContent}
+                                                    {"   "+detail.questionContent}
                                                 </label>
                                             </li>
+
                                         ))}
                                     </ul>
                                 ) : (

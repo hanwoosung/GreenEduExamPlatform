@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.green.hckh.repository.dao.manager.TeacherSpotDao">
+    <select id="getTeacherSpots" resultType="org.green.hckh.dto.manager.TeacherSpotDto">
+        SELECT
+            A.user_id,
+            A.NAME,
+            A.user_birth,
+            A.spot_no,
+            B.spot_name,
+            A.create_dt,
+            A.delete_yn
+        FROM
+            tbl_user A
+                LEFT JOIN tbl_spot B ON A.spot_no = B.spot_no AND B.delete_yn = 'N'
+        WHERE
+            A.USER_ROLE_CODE = 'ROLE_TEACHER'
+        ORDER BY
+            CASE WHEN A.delete_yn = 'N' THEN 0
+                 WHEN A.delete_yn = 'Y' THEN 99
+                END,
+            A.create_dt DESC,
+            A.`name`
+    </select>
+
+    <update id="updateTeacherDeleteYn" parameterType="map">
+        UPDATE tbl_user
+        SET delete_yn = #{deleteYn}
+        WHERE user_id IN
+        <foreach item="userId" collection="teacherIds" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </update>
+
+    <update id="updateTeacherSpotNo">
+        UPDATE tbl_user
+        SET spot_no = #{spotNo}
+        WHERE user_id = #{userId}
+    </update>
+</mapper>

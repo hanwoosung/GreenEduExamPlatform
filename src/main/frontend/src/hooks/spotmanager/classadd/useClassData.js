@@ -10,7 +10,6 @@ const useClassData = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
-    console.log("하잉");
     if(!spotNo) return;
     const fetchData = async () => {
       const classResult = await get("api/v1/spot-manager/class/" + spotNo);

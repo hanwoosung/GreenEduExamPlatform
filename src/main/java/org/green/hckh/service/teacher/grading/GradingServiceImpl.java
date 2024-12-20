@@ -2,10 +2,7 @@ package org.green.hckh.service.teacher.grading;
 
 
 import lombok.AllArgsConstructor;
-import org.green.hckh.dto.teacher.grading.GradingDTO;
-import org.green.hckh.dto.teacher.grading.GradingScheduleDTO;
-import org.green.hckh.dto.teacher.grading.QuestionDTO;
-import org.green.hckh.dto.teacher.grading.ScoreDto;
+import org.green.hckh.dto.teacher.grading.*;
 import org.green.hckh.entity.teacher.grading.GradingClassEntity;
 import org.green.hckh.repository.dao.teacher.GradingDao;
 import org.green.hckh.repository.jpa.teacher.GradingRepository;
@@ -69,5 +66,10 @@ public class GradingServiceImpl implements GradingService {
     public void updateUserScore(ScoreDto scoreDto) {
         gradingDao.updateUserQuestionResult(scoreDto.getResultNo(), scoreDto.getCorrect());
         gradingDao.updateGradingUserScore(scoreDto.getUserId(), scoreDto.getTestNo(), scoreDto.getScore());
+    }
+
+    @Override
+    public List<ScheduleTestScoreDto> scheduleTestAge(String userId) {
+        return  gradingDao.scheduleTestAge(userId);
     }
 }

@@ -1,5 +1,7 @@
 import React, {useRef} from 'react';
+/*
 import "../../assets/css/teacher/test/TestSidebar.css";
+*/
 
 const TestSidebar = (props) => {
     const {questions, scrollToQuestionBox} = props;
