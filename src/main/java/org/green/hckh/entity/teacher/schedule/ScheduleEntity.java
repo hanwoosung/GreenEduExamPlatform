@@ -18,4 +18,5 @@ public class ScheduleEntity {
     private Date startDate;
     private Date endDate;
     private String deleteYn;
+    private String examYn;
 }

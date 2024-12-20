@@ -5,10 +5,12 @@
 
     <select id="findSubjectList" resultType="org.green.hckh.entity.teacher.schedule.ScheduleEntity">
         SELECT a.schedule_no, a.schedule_name, a.start_date, a.end_date
+        ,IF((SELECT COUNT(*) FROM tbl_test WHERE schedule_no = a.schedule_no AND delete_yn = 'N') = 0, 'N', 'Y')
+            AS exam_yn
         FROM tbl_schedule a
         LEFT JOIN tbl_class b ON a.class_no = b.class_no
         LEFT JOIN tbl_user c ON b.user_id = c.user_id
-        LEFT JOIN tbl_user_class d ON b.class_no = d.class_no AND d.graduate_code != 'APPLY'
+        LEFT JOIN tbl_user_class d ON b.class_no = d.class_no AND d.graduate_code NOT IN('APPLY', 'H')
         WHERE
             CASE
                 WHEN #{userRoleCode} = 'ROLE_TEACHER' THEN b.user_id = #{id}
