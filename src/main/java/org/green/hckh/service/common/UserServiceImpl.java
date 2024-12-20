@@ -22,10 +22,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public int save(UserDto user) {
-
         user.setUserPassword(passwordEncode(user.getPassword()));
-        user.setDeleteYn("N");
-
+        user.setDeleteYn(user.getUserRoleCode().equals("ROLE_TEACHER") ? "N" : "Y");
         return userDao.save(user);
     }
 
