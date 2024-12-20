@@ -7,7 +7,7 @@ import useApi from "../../hooks/useApi";
 
 const StudentTestDetail = () => {
     const location = useLocation();
-    const {testNo} = location.state || {};
+    const {testNo, scheduleName} = location.state || {};
 
     const {sessionValues} = useSessionStorage();
 
@@ -115,7 +115,7 @@ const StudentTestDetail = () => {
         <div className="testing-detail-container">
             <div className="testing-detail">
                 <header className="test-exam-header">
-                    <h2 className="test-exam-title">시험번호: {testNo},시험 문제 리스트</h2>
+                    <h2 className="test-exam-title">{scheduleName}</h2>
                 </header>
                 <main className="test-exam-content">
                     {questionList.map((question, index) => (
@@ -149,6 +149,7 @@ const StudentTestDetail = () => {
                             ) : question.questionCode === 'S' ? (
                                 <div>
                                     <input
+                                        className={"question-short-input"}
                                         placeholder={"단답형 정답"}
                                         onChange={(e) => answerEdit(question.questionNo, e.target.value, "H")}
                                     />

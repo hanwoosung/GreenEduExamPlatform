@@ -7,9 +7,12 @@ const StudentTest = () => {
     const {data: testList} = useFetch("/api/v1/test/test-by-schedule");
     const navigate = useNavigate();
 
-    const handleTestClick = (testNo) => {
+    const handleTestClick = (testNo, scheduleName) => {
         navigate('/student-test-detail', {
-            state: {testNo}
+            state: {
+                testNo,
+                scheduleName
+            }
         });
     };
 
@@ -17,7 +20,7 @@ const StudentTest = () => {
         <>
             <div className="test-list-header">시험 선택 목록</div>
             {testList?.map((testItem) => (
-                <div key={testItem.testNo} className="test-item" onClick={() => handleTestClick(testItem.testNo)}>
+                <div key={testItem.testNo} className="test-item" onClick={() => handleTestClick(testItem.testNo, testItem.scheduleName)}>
                     <div className="test-item-content">
                         <div><span className="label">시험명:</span> <span className="value">{testItem.scheduleName}</span>
                         </div>
