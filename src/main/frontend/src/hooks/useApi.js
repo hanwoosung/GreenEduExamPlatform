@@ -7,7 +7,7 @@ const useApi = (baseUrl, initialConfig = {}) => {
     const [error, setError] = useState(null);
 
     const axiosInstance = axios.create({
-        baseURL: "http://localhost:8080",
+        baseURL: "http://192.168.0.224:8080",
     });
     const request = async (url, method, payload = null, config = {}) => {
         setLoading(true);

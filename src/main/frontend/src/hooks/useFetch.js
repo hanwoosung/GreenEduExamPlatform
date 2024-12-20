@@ -11,7 +11,7 @@ import axios from "axios";
  * const {event, loading} = useFetch("김상준날라가용~"); 파라미터 없을 때 요로코롬
  */
 const useFetch = (url, config = {}) => {
-    const BASE_API = "http://localhost:8080"
+    const BASE_API = "http://192.168.0.224:8080"
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
