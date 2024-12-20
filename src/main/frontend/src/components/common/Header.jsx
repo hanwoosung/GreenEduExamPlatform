@@ -66,13 +66,13 @@ const Header = () => {
                 return (
                     <>
                         <li className="header-nav-item">
-                            <Link to="/spot-management" className="hover:underline">
-                                지점 관리
+                            <Link to="/room-register" className="hover:underline">
+                                강의실 등록
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/employee-management" className="hover:underline">
-                                직원 관리
+                            <Link to="/class-list" className="hover:underline">
+                                강의 관리
                             </Link>
                         </li>
                         <li className="header-nav-item">
@@ -86,13 +86,13 @@ const Header = () => {
                 return (
                     <>
                         <li className="header-nav-item">
-                            <Link to="/dashboard" className="hover:underline">
-                                대시보드
+                            <Link to="/spot-register" className="hover:underline">
+                                지점 등록
                             </Link>
                         </li>
                         <li className="header-nav-item">
-                            <Link to="/global-management" className="hover:underline">
-                                전체 관리
+                            <Link to="/teacher-spot-list" className="hover:underline">
+                                강사 관리
                             </Link>
                         </li>
                     </>
@@ -102,7 +102,7 @@ const Header = () => {
                     <>
                         <li className="header-nav-item">
                             <Link to="/" className="hover:underline">
-                                홈
+                            홈
                             </Link>
                         </li>
                     </>
